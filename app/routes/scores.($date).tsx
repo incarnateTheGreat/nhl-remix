@@ -1,0 +1,71 @@
+import { useEffect } from "react";
+import { LoaderFunctionArgs } from "@remix-run/node";
+import {
+  useLoaderData,
+  useNavigation,
+  useParams,
+  useRevalidator,
+} from "@remix-run/react";
+import { format, parseISO } from "date-fns";
+
+import DatePickerInternal from "~/components/DatePickerInternal";
+import Games from "~/components/Games";
+import Loading from "~/components/Loading";
+import { GamesType, GameWeek } from "~/types";
+
+export const loader = async ({ params }: LoaderFunctionArgs) => {
+  const date = params.date ?? "now";
+
+  const games = await fetch(`https://api-web.nhle.com/v1/score/${date}`);
+
+  return games.json();
+};
+
+export default function Scores() {
+  const revalidator = useRevalidator();
+  const navigation = useNavigation();
+  const { date } = useParams();
+  const gamesToRender = useLoaderData<GamesType>();
+
+  const dateToFilter = date ?? format(new Date(), "yyyy-MM-dd");
+
+  useEffect(() => {
+    revalidator.revalidate();
+  }, [date]);
+
+  const gameWeekProcessed = gamesToRender?.gameWeek.reduce(
+    (acc: GameWeek[], gameWeek) => {
+      const isoDate = parseISO(gameWeek.date);
+      const formattedDate = format(isoDate, "MMM d");
+
+      const gameWeekObj = {
+        ...gameWeek,
+        label: formattedDate,
+      };
+
+      acc.push(gameWeekObj);
+
+      return acc;
+    },
+    [],
+  );
+
+  return (
+    <div className="flex h-full flex-col">
+      <DatePickerInternal
+        gameWeek={gameWeekProcessed}
+        dateToFilter={dateToFilter}
+      />
+
+      {navigation.state === "loading" ? <Loading /> : null}
+
+      {navigation.state === "idle" && gamesToRender?.games.length > 0 ? (
+        <Games games={gamesToRender?.games} />
+      ) : null}
+
+      {navigation.state === "idle" && gamesToRender?.games.length === 0 ? (
+        <>No Games.</>
+      ) : null}
+    </div>
+  );
+}
