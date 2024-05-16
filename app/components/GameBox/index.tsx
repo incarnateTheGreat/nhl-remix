@@ -1,7 +1,7 @@
 import { Link } from "@remix-run/react";
 
-import GameState from "./ScoreHeader/GameState";
-import TeamRow from "./TeamRow";
+import GameState from "../ScoreHeader/GameState";
+import TeamRow from "../TeamRow";
 
 import { GameBoxType } from "~/types";
 

@@ -34,7 +34,7 @@ export default function Game() {
   } = gameDataToRender;
 
   return (
-    <div className="mx-auto flex w-full flex-col border p-2 lg:w-10/12">
+    <div className="mx-auto flex w-full flex-col">
       <ScoreHeader
         awayTeam={awayTeam}
         homeTeam={homeTeam}
@@ -45,8 +45,14 @@ export default function Game() {
       />
 
       {isGameActive(gameState) || isGameComplete(gameState) ? (
-        <div className="mt-2 flex">
-          <div className="mr-2">
+        <div className="mt-2 flex flex-col lg:flex-row">
+          <Scoring
+            awayTeamAbbrev={awayTeam.abbrev}
+            homeTeamAbbrev={homeTeam.abbrev}
+            scoring={gameDataToRender.summary.scoring}
+          />
+
+          <div className="ml-2">
             <Linescore
               byPeriod={gameDataToRender.summary.linescore.byPeriod}
               totals={gameDataToRender.summary.linescore.totals}
@@ -65,12 +71,6 @@ export default function Game() {
               />
             </div>
           </div>
-
-          <Scoring
-            awayTeamAbbrev={awayTeam.abbrev}
-            homeTeamAbbrev={homeTeam.abbrev}
-            scoring={gameDataToRender.summary.scoring}
-          />
         </div>
       ) : null}
     </div>

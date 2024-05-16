@@ -18,13 +18,11 @@ export default function Scoring({
   scoring,
 }: ScoringProps) {
   return (
-    <div className="flex flex-1 flex-col">
+    <div className="flex flex-1 flex-col border p-2">
+      <h2 className="mb-4 text-2xl font-semibold">Scoring</h2>
       {scoring.map((period) => {
         return (
-          <div
-            key={period.periodDescriptor.number}
-            className="mb-4 border border-gray-400 p-2"
-          >
+          <div key={period.periodDescriptor.number} className="mb-4">
             <h2 className="mb-2 border-b border-gray-700 font-bold">
               {PERIODS[period.periodDescriptor.number]} Period
             </h2>

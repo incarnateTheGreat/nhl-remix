@@ -1,6 +1,5 @@
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import {
-  Link,
   Links,
   Meta,
   Outlet,
@@ -8,11 +7,27 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
+import Footer from "./components/Footer";
+import Header from "./components/Header";
 import appStylesHref from "./app.css?url";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: appStylesHref },
 ];
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "NHL Scores" },
+    {
+      property: "og:title",
+      content: "NHL Scores",
+    },
+    {
+      name: "description",
+      content: "This is an app that details NHL Scores using Remix",
+    },
+  ];
+};
 
 export default function App() {
   return (
@@ -24,32 +39,16 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <header>
-          <nav className="p-0">
-            <ul className="bg-red-500items-center flex">
-              <li className="m-0 mr-2.5 flex self-start">
-                <Link to="/" className="hover:underline">
-                  <h1 className="text-xl">NHL Scores</h1>
-                </Link>
-              </li>
-              <li className="flex items-center">
-                <Link to="/scores" className="mt-1 text-xs hover:underline">
-                  <span>Scores</span>
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        </header>
-        <main className="flex flex-col overflow-y-auto">
-          <section id="detail">
+        <Header />
+        <main>
+          <section
+            id="detail"
+            className="flex w-full flex-col overflow-y-auto lg:mx-auto lg:max-w-[1280px]"
+          >
             <Outlet />
           </section>
         </main>
-        <footer>
-          <span className="font-semibold">
-            &copy; {new Date().getFullYear()} NHL Scores Inc.
-          </span>
-        </footer>
+        <Footer />
 
         <ScrollRestoration />
         <Scripts />

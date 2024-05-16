@@ -1,14 +1,14 @@
-import { Goals } from "~/types";
+import { GoalsType } from "~/types";
 import { GOALMODIFIER } from "~/utils";
 
 type GoalProps = {
-  goal: Goals;
+  goal: GoalsType;
 };
 
 export default function Goal({ goal }: GoalProps) {
   return (
     <div className="flex">
-      <span>
+      <span className="font-semibold">
         {goal.firstName.default} {goal.lastName.default}
       </span>
       <span className="ml-1 font-semibold">({goal.goalsToDate})</span>

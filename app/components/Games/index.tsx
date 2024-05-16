@@ -1,4 +1,4 @@
-import GameBox from "./GameBox";
+import GameBox from "../GameBox";
 
 import type { GameBoxType } from "~/types";
 

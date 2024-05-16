@@ -20,7 +20,7 @@ export default function ScoreHeader({
   startTimeUTC,
 }: ScoreHeaderProps) {
   return (
-    <div className="flex flex-col items-start border p-2 lg:flex-row lg:items-center">
+    <div className="flex flex-col items-start border border-slate-400 p-2 lg:flex-row lg:items-center">
       <div className="order-2 flex w-full items-center lg:order-1 lg:flex-1">
         <img
           src={awayTeam.logo}
