@@ -1,4 +1,4 @@
-# NHL sit using Remix
+# NHL site using Remix
 
 - [Remix Docs](https://remix.run/docs)
 
@@ -62,4 +62,3 @@ Make sure to deploy the output of `remix build`
 
 - `build/server`
 - `build/client`
-# nhl-remix
