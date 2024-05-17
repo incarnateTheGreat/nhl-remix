@@ -30,7 +30,7 @@ const LineScoreRow = ({
   totals,
 }: LineScoreRowProps) => {
   return (
-    <tr className="border-b border-b-slate-200/90 bg-slate-200/45">
+    <tr className="border-b border-b-slate-200/90 odd:bg-slate-200/45">
       <td className="w-16 p-2 text-center">
         <img src={logo} alt={teamAbbrev} />
       </td>

@@ -2,10 +2,8 @@ import { MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { format } from "date-fns";
 
-import Linescore from "~/components/Linescore";
+import ActiveGameData from "~/components/ActiveGameData";
 import ScoreHeader from "~/components/ScoreHeader";
-import Scoring from "~/components/Scoring";
-import ShotsOnGoal from "~/components/ShotsOnGoal";
 import type { Game } from "~/types";
 import { isGameActive, isGameComplete } from "~/utils";
 
@@ -54,6 +52,7 @@ export default function Game() {
     periodDescriptor,
     gameState,
     startTimeUTC,
+    summary,
   } = gameDataToRender;
 
   return (
@@ -68,33 +67,11 @@ export default function Game() {
       />
 
       {isGameActive(gameState) || isGameComplete(gameState) ? (
-        <div className="mt-2 flex flex-col lg:flex-row">
-          <Scoring
-            awayTeamAbbrev={awayTeam.abbrev}
-            homeTeamAbbrev={homeTeam.abbrev}
-            scoring={gameDataToRender.summary.scoring}
-          />
-
-          <div className="mt-1 lg:ml-2 lg:mt-0">
-            <Linescore
-              byPeriod={gameDataToRender.summary.linescore.byPeriod}
-              totals={gameDataToRender.summary.linescore.totals}
-              awayTeamLogo={awayTeam.logo}
-              awayTeamAbbrev={awayTeam.abbrev}
-              homeTeamLogo={homeTeam.logo}
-              homeTeamAbbrev={homeTeam.abbrev}
-            />
-
-            <div className="mt-1">
-              <ShotsOnGoal
-                awayTeamAbbrev={awayTeam.abbrev}
-                homeTeamAbbrev={homeTeam.abbrev}
-                shotsByPeriod={gameDataToRender.summary.shotsByPeriod}
-                teamGameStats={gameDataToRender.summary.teamGameStats}
-              />
-            </div>
-          </div>
-        </div>
+        <ActiveGameData
+          awayTeam={awayTeam}
+          homeTeam={homeTeam}
+          summary={summary}
+        />
       ) : null}
     </div>
   );

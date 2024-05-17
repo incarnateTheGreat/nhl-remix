@@ -60,6 +60,16 @@ type GoalsType = {
   assists: Assists[];
 };
 
+type PenaltiesType = {
+  timeInPeriod: string;
+  type: string;
+  duration: number;
+  committedByPlayer: string;
+  teamAbbrev: string;
+  drawnBy: string;
+  descKey: string;
+};
+
 type TeamGameStats = {
   category: string;
   awayValue: number | string;
@@ -71,6 +81,53 @@ type Clock = {
   secondsRemaining: number;
   running: boolean;
   inIntermission: boolean;
+};
+
+type Summary = {
+  shotsByPeriod: LinescoreByPeriodObject[];
+  teamGameStats: TeamGameStats[];
+  scoring: {
+    periodDescriptor: PeriodDescriptior;
+    goals: GoalsType[];
+  }[];
+  penalties: {
+    periodDescriptor: PeriodDescriptior;
+    penalties: PenaltiesType[];
+  }[];
+  linescore: {
+    byPeriod: LinescoreByPeriod;
+    totals: LinescoreTotals;
+
+    //   iceSurface: { awayTeam: [Object], homeTeam: [Object] },
+    //
+    //   shootout: [],
+    //   threeStars: [],
+
+    //   seasonSeries: [
+    //     [Object], [Object],
+    //     [Object], [Object],
+    //     [Object], [Object],
+    //     [Object]
+    //   ],
+    //   gameInfo: {
+    //     referees: [Array],
+    //     linesmen: [Array],
+    //     awayTeam: [Object],
+    //     homeTeam: [Object]
+    //   },
+    //   gameReports: {
+    //     gameSummary: string
+    //     eventSummary: string
+    //     playByPlay: string
+    //     faceoffSummary: string
+    //     faceoffComparison: string
+    //     rosters: string
+    //     shotSummary: string
+    //     toiAway: string
+    //     toiHome: string
+    //   },
+    //   seasonSeriesWins: { awayTeamWins: 1, homeTeamWins: 1, neededToWin: 4 }
+  };
 };
 
 type GameBoxType = {
@@ -179,49 +236,7 @@ type Game = {
   otInUse: boolean;
   tiesInUse: boolean;
   clock: Clock;
-  summary: {
-    shotsByPeriod: LinescoreByPeriodObject[];
-    teamGameStats: TeamGameStats[];
-    scoring: {
-      periodDescriptor: PeriodDescriptior;
-      goals: GoalsType[];
-    }[];
-    linescore: {
-      byPeriod: LinescoreByPeriod;
-      totals: LinescoreTotals;
-
-      //   iceSurface: { awayTeam: [Object], homeTeam: [Object] },
-      //
-      //   shootout: [],
-      //   threeStars: [],
-
-      //   penalties: [ [Object], [Object] ],
-      //   seasonSeries: [
-      //     [Object], [Object],
-      //     [Object], [Object],
-      //     [Object], [Object],
-      //     [Object]
-      //   ],
-      //   gameInfo: {
-      //     referees: [Array],
-      //     linesmen: [Array],
-      //     awayTeam: [Object],
-      //     homeTeam: [Object]
-      //   },
-      //   gameReports: {
-      //     gameSummary: string
-      //     eventSummary: string
-      //     playByPlay: string
-      //     faceoffSummary: string
-      //     faceoffComparison: string
-      //     rosters: string
-      //     shotSummary: string
-      //     toiAway: string
-      //     toiHome: string
-      //   },
-      //   seasonSeriesWins: { awayTeamWins: 1, homeTeamWins: 1, neededToWin: 4 }
-    };
-  };
+  summary: Summary;
 };
 
 type GameWeek = {
@@ -251,7 +266,9 @@ export type {
   LinescoreByPeriod,
   LinescoreByPeriodObject,
   LinescoreTotals,
+  PenaltiesType,
   PeriodDescriptior,
+  Summary,
   Team,
   TeamGameStats,
 };
