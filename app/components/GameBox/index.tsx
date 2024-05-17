@@ -55,6 +55,7 @@ export default function GameBox({ game }: GameBoxProps) {
           periodDescriptor={periodDescriptor}
           gameState={gameState}
           startTimeUTC={startTimeUTC}
+          classnames="w-[90px] flex justify-between items-center"
         />
       </div>
       <div className="mt-3">

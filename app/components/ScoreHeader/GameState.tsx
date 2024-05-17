@@ -50,9 +50,9 @@ export default function GameState({
     return (
       <div className={classnames}>
         <span className="bg-green-700 px-2 py-0.5 font-bold text-white">
-          {PERIODS[period]} {clock.inIntermission ? "INT" : ""}{" "}
+          {PERIODS[period]} {clock.inIntermission ? "INT" : ""}
         </span>
-        <span className="ml-2">{clock.timeRemaining}</span>
+        <span>{clock.timeRemaining}</span>
       </div>
     );
   }

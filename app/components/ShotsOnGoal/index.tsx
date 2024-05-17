@@ -21,7 +21,7 @@ export default function ShotsOnGoal({
   ) as TeamGameStats;
 
   return (
-    <div className="flex w-96 flex-col overflow-x-auto border p-4">
+    <div className="flex w-full flex-col overflow-x-auto border p-4 lg:w-96">
       <h3 className="font-bold">Shots on Goal</h3>
       <table className="mt-4">
         <TableHeader

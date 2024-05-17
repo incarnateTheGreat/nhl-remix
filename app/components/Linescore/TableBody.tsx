@@ -5,15 +5,40 @@ import { handlePeriodGoals } from "~/utils";
 
 const renderPeriodData = (
   periodData: LinescoreByPeriodObject[],
-  team: "home" | "away"
+  team: "home" | "away",
 ) => {
   return periodData.map((period) => {
     return (
-      <td key={period.periodDescriptor.number} className="p-2 text-center w-10">
+      <td key={period.periodDescriptor.number} className="w-10 p-2 text-center">
         {period[team]}
       </td>
     );
   });
+};
+
+type LineScoreRowProps = {
+  logo: string;
+  teamAbbrev: string;
+  periodData: LinescoreByPeriodObject[];
+  totals: number;
+};
+
+const LineScoreRow = ({
+  logo,
+  teamAbbrev,
+  periodData,
+  totals,
+}: LineScoreRowProps) => {
+  return (
+    <tr className="border-b border-b-slate-200/90 bg-slate-200/45">
+      <td className="w-16 p-2 text-center">
+        <img src={logo} alt={teamAbbrev} />
+      </td>
+      <td className="p-2 font-bold">{teamAbbrev}</td>
+      {renderPeriodData(periodData, "away")}
+      <td className="w-10 p-2 pr-4 text-center font-bold">{totals}</td>
+    </tr>
+  );
 };
 
 type TableBodyProps = LinescoreProps;
@@ -30,22 +55,18 @@ export default function TableBody({
 
   return (
     <tbody>
-      <tr className="bg-slate-200/45 border-b border-b-slate-200/90">
-        <td className="p-2 text-center w-16">
-          <img src={awayTeamLogo} alt={awayTeamAbbrev} />
-        </td>
-        <td className="p-2 text-center font-bold">{awayTeamAbbrev}</td>
-        {renderPeriodData(periodData, "away")}
-        <td className="p-2 text-center w-10 font-bold">{totals.away}</td>
-      </tr>
-      <tr>
-        <td className="p-2 text-center w-16">
-          <img src={homeTeamLogo} alt={homeTeamAbbrev} />
-        </td>
-        <td className="p-2 text-center font-bold">{homeTeamAbbrev}</td>
-        {renderPeriodData(periodData, "home")}
-        <td className="p-2 text-center font-bold w-10">{totals.home}</td>
-      </tr>
+      <LineScoreRow
+        logo={awayTeamLogo}
+        teamAbbrev={awayTeamAbbrev}
+        periodData={periodData}
+        totals={totals.away}
+      />
+      <LineScoreRow
+        logo={homeTeamLogo}
+        teamAbbrev={homeTeamAbbrev}
+        periodData={periodData}
+        totals={totals.home}
+      />
     </tbody>
   );
 }

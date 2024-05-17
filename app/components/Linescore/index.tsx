@@ -16,7 +16,7 @@ export default function Linescore(props: LinescoreProps) {
   const { byPeriod } = props;
 
   return (
-    <div className="flex w-96 flex-col overflow-x-auto border p-4">
+    <div className="flex w-full flex-col overflow-x-auto border p-4 lg:w-96">
       <h3 className="font-bold">Linescore</h3>
       <table>
         <TableHeader byPeriod={byPeriod} />

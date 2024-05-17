@@ -52,7 +52,7 @@ export default function Game() {
             scoring={gameDataToRender.summary.scoring}
           />
 
-          <div className="ml-2">
+          <div className="mt-1 lg:ml-2 lg:mt-0">
             <Linescore
               byPeriod={gameDataToRender.summary.linescore.byPeriod}
               totals={gameDataToRender.summary.linescore.totals}

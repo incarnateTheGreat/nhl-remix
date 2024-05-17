@@ -8,7 +8,7 @@ type TableHeaderProps = {
 export default function TableHeader({ byPeriod }: TableHeaderProps) {
   // If multiple OT games are present, separate and keep the last one to display.
   const periodData = [...byPeriod].filter(
-    (game) => game.periodDescriptor.periodType !== "OT"
+    (game) => game.periodDescriptor.periodType !== "OT",
   );
   const OTPeriods = [...byPeriod]
     .filter((game) => game.periodDescriptor.periodType === "OT")
@@ -29,13 +29,13 @@ export default function TableHeader({ byPeriod }: TableHeaderProps) {
           return (
             <th
               key={period.periodDescriptor.number}
-              className="p-2 text-center w-12"
+              className="w-12 p-2 text-center"
             >
               {periodLabel}
             </th>
           );
         })}
-        <th className="p-2 text-center">T</th>
+        <th className="p-2 pr-4 text-center">T</th>
       </tr>
     </thead>
   );

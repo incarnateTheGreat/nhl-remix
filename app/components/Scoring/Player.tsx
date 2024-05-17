@@ -8,10 +8,8 @@ type PlayerProps = {
 };
 
 export default function Player({ goal }: PlayerProps) {
-  console.log(goal);
-
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center">
       <img
         className="rounded-full border border-slate-400"
         src={goal.headshot}

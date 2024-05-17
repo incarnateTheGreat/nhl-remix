@@ -35,7 +35,7 @@ export default function Goals({
     }
 
     return (
-      <div key={goal.playerId} className="mb-1 flex">
+      <div key={goal.playerId} className="mb-3 flex flex-col lg:flex-row">
         <Player goal={goal} />
 
         <Scenario

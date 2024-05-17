@@ -7,7 +7,7 @@ export default function Header() {
         <ul className="flex w-full items-center lg:mx-auto lg:w-[1280px]">
           <li className="m-0 mr-2.5 flex self-start">
             <Link to="/" className="hover:underline">
-              <h1 className="text-xl">NHL Scores</h1>
+              <h1 className="text-xl font-bold">NHL</h1>
             </Link>
           </li>
           <li className="flex items-center">

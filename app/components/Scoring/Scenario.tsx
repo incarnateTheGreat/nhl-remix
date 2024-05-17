@@ -1,8 +1,13 @@
+import { cn } from "~/utils";
+
 type ScenarioProps = {
   scoreSituation: string;
   timeInPeriod: string;
   shotType: string;
 };
+
+const scoreSituationClasses =
+  "flex w-full lg:w-24 flex-col items-center bg-black p-2 text-white";
 
 export default function Scenario({
   scoreSituation,
@@ -10,16 +15,16 @@ export default function Scenario({
   shotType,
 }: ScenarioProps) {
   return (
-    <div className="flex flex-1 justify-end">
-      <div className="mr-2 flex w-24 flex-col items-center bg-slate-500 p-2 text-white">
+    <div className="my-2 flex flex-1 lg:m-0 lg:justify-end">
+      <div className={cn("mr-2", scoreSituationClasses)}>
         <div className="font-bold capitalize">{scoreSituation}</div>
         <div>Score</div>
       </div>
-      <div className="mr-2 flex w-24 flex-col items-center bg-slate-500 p-2 text-white">
+      <div className={cn("mr-2", scoreSituationClasses)}>
         <div className="font-bold">{timeInPeriod}</div>
         <div>Time</div>
       </div>
-      <div className="mr-0 flex w-24 flex-col items-center bg-slate-500 p-2 text-white">
+      <div className={cn("mr-0", scoreSituationClasses)}>
         <div className="font-bold capitalize">{shotType}</div>
         <div>Shot</div>
       </div>
