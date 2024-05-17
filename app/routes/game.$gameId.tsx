@@ -1,4 +1,6 @@
+import { MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import { format } from "date-fns";
 
 import Linescore from "~/components/Linescore";
 import ScoreHeader from "~/components/ScoreHeader";
@@ -11,6 +13,27 @@ type LoaderProps = {
   params: {
     gameId: string;
   };
+};
+
+export const meta: MetaFunction = (e) => {
+  const { awayTeam, homeTeam, startTimeUTC } = e.data as Game;
+  const date = format(startTimeUTC, "MMM d, yyyy");
+
+  const title = `${awayTeam.placeName.default} ${awayTeam.name.default} - ${homeTeam.placeName.default} ${homeTeam.name.default} ${date}`;
+
+  return [
+    {
+      title,
+    },
+    {
+      property: "og:title",
+      content: title,
+    },
+    {
+      name: "description",
+      content: `This is the Game detail page for ${awayTeam.placeName.default} ${awayTeam.name.default} vs. ${homeTeam.placeName.default} ${homeTeam.name.default}`,
+    },
+  ];
 };
 
 export const loader = async ({ params }: LoaderProps) => {

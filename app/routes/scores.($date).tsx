@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { LoaderFunctionArgs } from "@remix-run/node";
+import { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import {
   useLoaderData,
   useNavigation,
@@ -12,6 +12,27 @@ import DatePickerInternal from "~/components/DatePickerInternal";
 import Games from "~/components/Games";
 import Loading from "~/components/Loading";
 import { GamesType, GameWeek } from "~/types";
+
+export const meta: MetaFunction = (e) => {
+  const { currentDate } = e.data as GamesType;
+  const date = format(currentDate, "MMM d, yyyy");
+
+  const title = `Games for ${date}`;
+
+  return [
+    {
+      title,
+    },
+    {
+      property: "og:title",
+      content: title,
+    },
+    {
+      name: "description",
+      content: `This is the Games page for ${date}`,
+    },
+  ];
+};
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const date = params.date ?? "now";
