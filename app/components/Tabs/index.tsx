@@ -27,7 +27,7 @@ export default function Tabs({ data }: TabsProps) {
               role="menuitem"
               key={tab.id}
               className={cn(tabClasses, {
-                "border-b-2 border-black": activeTabId === tab.id,
+                "border-b-2 border-black font-semibold": activeTabId === tab.id,
               })}
               onClick={() => {
                 setActiveTabId(data[tab.id].id);

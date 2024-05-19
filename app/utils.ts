@@ -15,6 +15,40 @@ const GOALMODIFIER: { [k: string]: string } = {
   en: "en",
 };
 
+const SKATERS = [
+  { "#": "sweaterNumber" },
+  {
+    Skater: {
+      name: "default",
+    },
+  },
+  { G: "goals" },
+  { A: "assists" },
+  { P: "points" },
+  { "+/-": "plusMinus" },
+  { PIM: "pim" },
+  { S: "shots" },
+  { PPG: "powerPlayGoals" },
+  { H: "hits" },
+  { TOI: "toi" },
+  { "FO%": "faceoffWinningPctg" },
+];
+
+const GOALTENDERS = [
+  { "#": "sweaterNumber" },
+  {
+    Skater: {
+      name: "default",
+    },
+  },
+  { EV: "evenStrengthShotsAgainst" },
+  { PP: "powerPlayShotsAgainst" },
+  { SH: "shorthandedShotsAgainst" },
+  { "Saves-Shots": "saveShotsAgainst" },
+  { "SV%": "savePctg" },
+  { TOI: "toi" },
+];
+
 const handlePeriodLabel = (periodDescriptor: PeriodDescriptior) => {
   if (periodDescriptor.periodType === "OT") {
     return `${periodDescriptor.otPeriods ?? ""}OT`;
@@ -50,12 +84,39 @@ const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
 };
 
+const isObject = (item: object) => {
+  return item && typeof item === "object" && !Array.isArray(item);
+};
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+const deepMerge = (target, ...sources) => {
+  if (!sources.length) return target;
+  const source = sources.shift();
+
+  if (isObject(target) && isObject(source)) {
+    for (const key in source) {
+      if (isObject(source[key])) {
+        if (!target[key]) Object.assign(target, { [key]: {} });
+        deepMerge(target[key], source[key]);
+      } else {
+        Object.assign(target, { [key]: source[key] });
+      }
+    }
+  }
+
+  return deepMerge(target, ...sources);
+};
+
 export {
   cn,
+  deepMerge,
   GOALMODIFIER,
+  GOALTENDERS,
   handlePeriodGoals,
   handlePeriodLabel,
   isGameActive,
   isGameComplete,
   PERIODS,
+  SKATERS,
 };

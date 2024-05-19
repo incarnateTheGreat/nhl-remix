@@ -1,7 +1,7 @@
 import Goals from "./Goals";
 
 import type { GoalsType, PeriodDescriptior } from "~/types";
-import { PERIODS } from "~/utils";
+import { handlePeriodLabel } from "~/utils";
 
 type ScoringProps = {
   awayTeamAbbrev: string;
@@ -24,7 +24,7 @@ export default function Scoring({
         return (
           <div key={period.periodDescriptor.number} className="mb-4">
             <h2 className="mb-2 border-b border-gray-700 font-bold">
-              {PERIODS[period.periodDescriptor.number]} Period
+              {handlePeriodLabel(period.periodDescriptor)} Period
             </h2>
             <Goals
               awayTeamAbbrev={awayTeamAbbrev}

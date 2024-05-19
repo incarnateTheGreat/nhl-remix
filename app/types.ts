@@ -83,6 +83,60 @@ type Clock = {
   inIntermission: boolean;
 };
 
+type SkaterStats = {
+  playerId: number;
+  sweaterNumber: number;
+  name: {
+    default: string;
+  };
+  position: string;
+  goals: number;
+  assists: number;
+  points: number;
+  plusMinus: number;
+  pim: number;
+  hits: number;
+  powerPlayGoals: number;
+  shots: number;
+  faceoffWinningPctg: number;
+  toi: string;
+};
+
+type GoalieStats = {
+  playerId: number;
+  sweaterNumber: number;
+  name: {
+    default: string;
+  };
+  position: string;
+  evenStrengthShotsAgainst: string;
+  powerPlayShotsAgainst: string;
+  shorthandedShotsAgainst: string;
+  saveShotsAgainst: string;
+  savePctg: string;
+  evenStrengthGoalsAgainst: number;
+  powerPlayGoalsAgainst: number;
+  shorthandedGoalsAgainst: number;
+  pim: number;
+  goalsAgainst: number;
+  toi: string;
+  starter: boolean;
+  decision: string;
+};
+
+type PlayerByGameStats = {
+  awayTeam: {
+    forwards: SkaterStats[];
+    defense: SkaterStats[];
+    goalies: GoalieStats[];
+  };
+  homeTeam: {
+    forwards: SkaterStats[];
+    defense: SkaterStats[];
+    goalies: GoalieStats[];
+  };
+};
+
 type Summary = {
   shotsByPeriod: LinescoreByPeriodObject[];
   teamGameStats: TeamGameStats[];
@@ -237,6 +291,7 @@ type Game = {
   tiesInUse: boolean;
   clock: Clock;
   summary: Summary;
+  playerByGameStats: PlayerByGameStats;
 };
 
 type GameWeek = {
@@ -262,12 +317,15 @@ export type {
   GameState,
   GamesType,
   GameWeek,
+  GoalieStats,
   GoalsType,
   LinescoreByPeriod,
   LinescoreByPeriodObject,
   LinescoreTotals,
   PenaltiesType,
   PeriodDescriptior,
+  PlayerByGameStats,
+  SkaterStats,
   Summary,
   Team,
   TeamGameStats,

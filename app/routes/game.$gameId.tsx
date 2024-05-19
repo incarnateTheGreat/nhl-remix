@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import ActiveGameData from "~/components/ActiveGameData";
 import ScoreHeader from "~/components/ScoreHeader";
 import type { Game } from "~/types";
-import { isGameActive, isGameComplete } from "~/utils";
+import { deepMerge, isGameActive, isGameComplete } from "~/utils";
 
 type LoaderProps = {
   params: {
@@ -35,11 +35,25 @@ export const meta: MetaFunction = (e) => {
 };
 
 export const loader = async ({ params }: LoaderProps) => {
-  const gameData = await fetch(
-    `https://api-web.nhle.com/v1/gamecenter/${params.gameId}/landing`,
-  );
+  const fetchGameDataUrls = [
+    fetch(`https://api-web.nhle.com/v1/gamecenter/${params.gameId}/landing`),
+    fetch(`https://api-web.nhle.com/v1/gamecenter/${params.gameId}/boxscore`),
+  ];
 
-  return gameData.json();
+  try {
+    const [gameDataResponse, boxscoreDataResponse]: Response[] =
+      await Promise.all(fetchGameDataUrls);
+
+    const gameData = await gameDataResponse.json();
+    const boxscoreData = await boxscoreDataResponse.json();
+
+    return deepMerge(gameData, boxscoreData);
+  } catch (e) {
+    return {
+      gameData: [],
+      boxscoreData: [],
+    };
+  }
 };
 
 export default function Game() {
@@ -71,6 +85,7 @@ export default function Game() {
           awayTeam={awayTeam}
           homeTeam={homeTeam}
           summary={summary}
+          playerByGameStats={gameDataToRender.playerByGameStats}
         />
       ) : null}
     </div>

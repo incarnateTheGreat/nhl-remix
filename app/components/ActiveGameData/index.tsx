@@ -1,37 +1,30 @@
+import Boxscore from "../Boxscore";
 import Linescore from "../Linescore";
 import Penalties from "../Penalties";
 import Scoring from "../Scoring";
 import ShotsOnGoal from "../ShotsOnGoal";
 import Tabs from "../Tabs";
 
-import { Summary, Team } from "~/types";
+import { PlayerByGameStats, Summary, Team } from "~/types";
 
 type ActiveGameDataProps = {
   awayTeam: Team;
   homeTeam: Team;
   summary: Summary;
+  playerByGameStats: PlayerByGameStats;
 };
 
 const tabData = [
   {
     id: 0,
-    title: "One",
-    component: () => {
-      return <div className="p-2">Component one</div>;
-    },
+    title: "Stats",
+    component: () => <div />,
   },
   {
     id: 1,
-    title: "Two",
+    title: "Boxscore",
     component: () => {
       return <div className="p-2">Component two</div>;
-    },
-  },
-  {
-    id: 2,
-    title: "Three",
-    component: () => {
-      return <div className="p-2">Component three</div>;
     },
   },
 ];
@@ -40,6 +33,7 @@ export default function ActiveGameData({
   awayTeam,
   homeTeam,
   summary,
+  playerByGameStats,
 }: ActiveGameDataProps) {
   const {
     scoring,
@@ -49,19 +43,36 @@ export default function ActiveGameData({
     teamGameStats,
   } = summary;
 
+  tabData[0].component = () => (
+    <div className="p-2">
+      <Scoring
+        awayTeamAbbrev={awayTeam.abbrev}
+        homeTeamAbbrev={homeTeam.abbrev}
+        scoring={scoring}
+      />
+      <div className="mt-1">
+        <Penalties penalties={penalties} />
+      </div>
+    </div>
+  );
+
+  tabData[1].component = () => {
+    return (
+      <div className="p-2">
+        <Boxscore
+          awayTeamName={awayTeam.name.default}
+          homeTeamName={homeTeam.name.default}
+          data={playerByGameStats}
+        />
+      </div>
+    );
+  };
+
   return (
     <div className="mt-2 flex flex-col lg:flex-row">
       <div className="flex-1">
         <div>
           <Tabs data={tabData} />
-        </div>
-        <Scoring
-          awayTeamAbbrev={awayTeam.abbrev}
-          homeTeamAbbrev={homeTeam.abbrev}
-          scoring={scoring}
-        />
-        <div className="mt-1">
-          <Penalties penalties={penalties} />
         </div>
       </div>
 
