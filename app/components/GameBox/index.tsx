@@ -26,11 +26,20 @@ export default function GameBox({ game }: GameBoxProps) {
     gameNumberOfSeries,
     topSeedTeamAbbrev,
     topSeedWins,
+    neededToWin,
     bottomSeedTeamAbbrev,
     bottomSeedWins,
   } = seriesStatus;
 
   const roundStatus = () => {
+    if (bottomSeedWins === neededToWin || topSeedWins === neededToWin) {
+      if (bottomSeedWins > topSeedWins) {
+        return `${bottomSeedTeamAbbrev} wins ${bottomSeedWins}-${topSeedWins}`;
+      } else if (topSeedWins > bottomSeedWins) {
+        return `${topSeedTeamAbbrev} wins ${topSeedWins}-${bottomSeedWins}`;
+      }
+    }
+
     if (bottomSeedWins > topSeedWins) {
       return `${bottomSeedTeamAbbrev} leads ${bottomSeedWins}-${topSeedWins}`;
     } else if (topSeedWins > bottomSeedWins) {
