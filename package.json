@@ -16,6 +16,7 @@
     "@remix-run/node": "^2.9.2",
     "@remix-run/react": "^2.9.2",
     "@remix-run/serve": "^2.9.2",
+    "@tanstack/react-table": "^8.17.3",
     "carbon-components": "^10.58.12",
     "carbon-components-react": "^8.57.0",
     "date-fns": "^3.6.0",

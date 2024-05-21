@@ -15,40 +15,6 @@ const GOALMODIFIER: { [k: string]: string } = {
   en: "en",
 };
 
-const SKATERS = [
-  { "#": "sweaterNumber" },
-  {
-    Skater: {
-      name: "default",
-    },
-  },
-  { G: "goals" },
-  { A: "assists" },
-  { P: "points" },
-  { "+/-": "plusMinus" },
-  { PIM: "pim" },
-  { S: "shots" },
-  { PPG: "powerPlayGoals" },
-  { H: "hits" },
-  { TOI: "toi" },
-  { "FO%": "faceoffWinningPctg" },
-];
-
-const GOALTENDERS = [
-  { "#": "sweaterNumber" },
-  {
-    Skater: {
-      name: "default",
-    },
-  },
-  { EV: "evenStrengthShotsAgainst" },
-  { PP: "powerPlayShotsAgainst" },
-  { SH: "shorthandedShotsAgainst" },
-  { "Saves-Shots": "saveShotsAgainst" },
-  { "SV%": "savePctg" },
-  { TOI: "toi" },
-];
-
 const handlePeriodLabel = (periodDescriptor: PeriodDescriptior) => {
   if (periodDescriptor.periodType === "OT") {
     return `${periodDescriptor.otPeriods ?? ""}OT`;
@@ -112,11 +78,9 @@ export {
   cn,
   deepMerge,
   GOALMODIFIER,
-  GOALTENDERS,
   handlePeriodGoals,
   handlePeriodLabel,
   isGameActive,
   isGameComplete,
   PERIODS,
-  SKATERS,
 };
