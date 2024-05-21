@@ -14,6 +14,7 @@ const columns = [
   columnHelper.accessor("name", {
     header: () => <span>Forwards</span>,
     cell: (info) => info.cell.getValue().default,
+    sortDescFirst: true,
   }),
   columnHelper.accessor("goals", {
     header: () => <span>G</span>,

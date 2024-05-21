@@ -23,9 +23,7 @@ const tabData = [
   {
     id: 1,
     title: "Boxscore",
-    component: () => {
-      return <div className="p-2">Component two</div>;
-    },
+    component: () => <div />,
   },
 ];
 
@@ -58,7 +56,7 @@ export default function ActiveGameData({
 
   tabData[1].component = () => {
     return (
-      <div className="p-2">
+      <div className="mt-4">
         <Boxscore
           awayTeamName={awayTeam.name.default}
           homeTeamName={homeTeam.name.default}

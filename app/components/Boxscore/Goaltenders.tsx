@@ -33,7 +33,7 @@ const columns = [
   }),
   columnHelper.accessor("savePctg", {
     header: () => <span>SV%</span>,
-    cell: (info) => info.getValue(),
+    cell: (info) => info.getValue() ?? "--",
   }),
   columnHelper.accessor("toi", {
     header: () => <span>TOI</span>,
