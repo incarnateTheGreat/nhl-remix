@@ -1,4 +1,5 @@
 import { PenaltiesType } from "~/types";
+import { getLogo } from "~/utils";
 
 type PenaltiesTableBodyProps = {
   penalties: PenaltiesType[];
@@ -19,7 +20,7 @@ export default function TableBody({ penalties }: PenaltiesTableBodyProps) {
             <td className="w-12 p-2">
               <img
                 width={40}
-                src={`https://assets.nhle.com/logos/nhl/svg/${teamAbbrev}_light.svg`}
+                src={getLogo(teamAbbrev)}
                 alt={`${committedByPlayer} - ${descKey}`}
               />
             </td>

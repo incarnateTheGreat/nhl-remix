@@ -1,26 +1,23 @@
+import { useRouteLoaderData } from "@remix-run/react";
+
 import GameState from "./GameState";
 
-import { Clock, PeriodDescriptior, Team } from "~/types";
+import { Game } from "~/types";
 
-type ScoreHeaderProps = {
-  awayTeam: Team;
-  homeTeam: Team;
-  periodDescriptor: PeriodDescriptior;
-  clock: Clock;
-  gameState: string;
-  startTimeUTC: string;
-};
+export default function ScoreHeader() {
+  const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
 
-export default function ScoreHeader({
-  awayTeam,
-  homeTeam,
-  periodDescriptor,
-  clock,
-  gameState,
-  startTimeUTC,
-}: ScoreHeaderProps) {
+  const {
+    awayTeam,
+    homeTeam,
+    clock,
+    periodDescriptor,
+    gameState,
+    startTimeUTC,
+  } = gameDataToRender;
+
   return (
-    <div className="flex flex-col items-start border border-slate-400 p-2 lg:flex-row lg:items-center">
+    <div className="flex flex-col items-start border border-slate-500 p-2 lg:flex-row lg:items-center">
       <div className="order-2 flex w-full items-center lg:order-1 lg:flex-1">
         <img
           src={awayTeam.logo}

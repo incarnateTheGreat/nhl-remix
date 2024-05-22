@@ -1,10 +1,12 @@
+import { useRouteLoaderData } from "@remix-run/react";
+
 import Tabs from "../Tabs";
 
 import Defensemen from "./Defensemen";
 import Forwards from "./Forwards";
 import Goaltenders from "./Goaltenders";
 
-import { PlayerByGameStats } from "~/types";
+import { Game } from "~/types";
 
 const tabData = [
   {
@@ -19,35 +21,29 @@ const tabData = [
   },
 ];
 
-type BoxscoreProps = {
-  data: PlayerByGameStats;
-  awayTeamName: string;
-  homeTeamName: string;
-};
+export default function Boxscore() {
+  const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
 
-export default function Boxscore({
-  data,
-  awayTeamName,
-  homeTeamName,
-}: BoxscoreProps) {
-  tabData[0].title = awayTeamName;
+  const { awayTeam, homeTeam, playerByGameStats } = gameDataToRender;
+
+  tabData[0].title = awayTeam.name.default;
   tabData[0].component = () => {
     return (
       <>
-        <Forwards forwards={data.awayTeam.forwards} />
-        <Defensemen defensemen={data.awayTeam.defense} />
-        <Goaltenders goaltenders={data.awayTeam.goalies} />
+        <Forwards forwards={playerByGameStats.awayTeam.forwards} />
+        <Defensemen defensemen={playerByGameStats.awayTeam.defense} />
+        <Goaltenders goaltenders={playerByGameStats.awayTeam.goalies} />
       </>
     );
   };
 
-  tabData[1].title = homeTeamName;
+  tabData[1].title = homeTeam.name.default;
   tabData[1].component = () => {
     return (
       <>
-        <Forwards forwards={data.homeTeam.forwards} />
-        <Defensemen defensemen={data.homeTeam.defense} />
-        <Goaltenders goaltenders={data.homeTeam.goalies} />
+        <Forwards forwards={playerByGameStats.homeTeam.forwards} />
+        <Defensemen defensemen={playerByGameStats.homeTeam.defense} />
+        <Goaltenders goaltenders={playerByGameStats.homeTeam.goalies} />
       </>
     );
   };

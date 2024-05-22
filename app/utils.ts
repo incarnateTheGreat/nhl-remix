@@ -38,6 +38,10 @@ const handlePeriodGoals = (byPeriod: LinescoreByPeriod) => {
   return periodData;
 };
 
+const isPreGame = (gameState: GameState) => {
+  return gameState === "PRE" || gameState === "FUT";
+};
+
 const isGameActive = (gameState: GameState) => {
   return gameState === "CRIT" || gameState === "LIVE" || gameState === "ON";
 };
@@ -52,6 +56,10 @@ const cn = (...inputs: ClassValue[]) => {
 
 const isObject = (item: object) => {
   return item && typeof item === "object" && !Array.isArray(item);
+};
+
+const getLogo = (teamAbbrev: string) => {
+  return `https://assets.nhle.com/logos/nhl/svg/${teamAbbrev}_light.svg`;
 };
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -77,10 +85,12 @@ const deepMerge = (target, ...sources) => {
 export {
   cn,
   deepMerge,
+  getLogo,
   GOALMODIFIER,
   handlePeriodGoals,
   handlePeriodLabel,
   isGameActive,
   isGameComplete,
+  isPreGame,
   PERIODS,
 };

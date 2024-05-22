@@ -81,7 +81,7 @@ export default function Scores() {
       {navigation.state === "loading" ? <Loading /> : null}
 
       {navigation.state === "idle" && gamesToRender?.games.length > 0 ? (
-        <Games games={gamesToRender?.games} />
+        <Games />
       ) : null}
 
       {navigation.state === "idle" && gamesToRender?.games.length === 0 ? (

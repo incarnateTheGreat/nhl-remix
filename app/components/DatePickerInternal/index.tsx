@@ -1,4 +1,4 @@
-import { DatePicker, DatePickerInput } from "@carbon/react";
+// import { DatePicker, DatePickerInput } from "@carbon/react";
 import { Link } from "@remix-run/react";
 
 // import "carbon-components/css/carbon-components.css";
@@ -19,9 +19,9 @@ export default function DatePickerInternal({
       {/* <RangeSelector gameWeek={gameWeek} />
        */}
 
-      <DatePicker datePickerType="simple">
+      {/* <DatePicker datePickerType="simple">
         <DatePickerInput placeholder="mm/dd/yyyy" id="id" labelText="Range" />
-      </DatePicker>
+      </DatePicker> */}
       {/* <DatePicker datePickerType="single">
         <DatePickerInput
           placeholder="mm/dd/yyyy"

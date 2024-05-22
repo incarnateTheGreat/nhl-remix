@@ -1,22 +1,22 @@
+import { useRouteLoaderData } from "@remix-run/react";
+
 import Player from "./Player";
 import Scenario from "./Scenario";
 
-import type { GoalsType, PeriodDescriptior } from "~/types";
+import type { Game, GoalsType, PeriodDescriptior } from "~/types";
 
 type GoalsProps = {
-  awayTeamAbbrev: string;
-  homeTeamAbbrev: string;
   period: {
     periodDescriptor: PeriodDescriptior;
     goals: GoalsType[];
   };
 };
 
-export default function Goals({
-  period,
-  awayTeamAbbrev,
-  homeTeamAbbrev,
-}: GoalsProps) {
+export default function Goals({ period }: GoalsProps) {
+  const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
+
+  const { awayTeam, homeTeam } = gameDataToRender;
+
   if (period.goals.length === 0) {
     return "No scoring.";
   }
@@ -27,9 +27,9 @@ export default function Goals({
     let scoreSituation = "";
 
     if (awayScore > homeScore) {
-      scoreSituation = `${awayScore}-${homeScore} ${awayTeamAbbrev}`;
+      scoreSituation = `${awayScore}-${homeScore} ${awayTeam.abbrev}`;
     } else if (homeScore > awayScore) {
-      scoreSituation = `${homeScore}-${awayScore} ${homeTeamAbbrev}`;
+      scoreSituation = `${homeScore}-${awayScore} ${homeTeam.abbrev}`;
     } else {
       scoreSituation = `${homeScore}-${awayScore} Tied`;
     }

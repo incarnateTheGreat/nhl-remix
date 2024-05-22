@@ -3,9 +3,10 @@ import { useLoaderData } from "@remix-run/react";
 import { format } from "date-fns";
 
 import ActiveGameData from "~/components/ActiveGameData";
+import PreGameData from "~/components/PreGameData";
 import ScoreHeader from "~/components/ScoreHeader";
 import type { Game } from "~/types";
-import { deepMerge, isGameActive, isGameComplete } from "~/utils";
+import { deepMerge, isGameActive, isGameComplete, isPreGame } from "~/utils";
 
 type LoaderProps = {
   params: {
@@ -59,34 +60,16 @@ export const loader = async ({ params }: LoaderProps) => {
 export default function Game() {
   const gameDataToRender = useLoaderData<Game>();
 
-  const {
-    awayTeam,
-    homeTeam,
-    clock,
-    periodDescriptor,
-    gameState,
-    startTimeUTC,
-    summary,
-  } = gameDataToRender;
+  const { gameState } = gameDataToRender;
 
   return (
     <div className="mx-auto flex w-full flex-col">
-      <ScoreHeader
-        awayTeam={awayTeam}
-        homeTeam={homeTeam}
-        clock={clock}
-        periodDescriptor={periodDescriptor}
-        gameState={gameState}
-        startTimeUTC={startTimeUTC}
-      />
+      <ScoreHeader />
+
+      {isPreGame(gameState) ? <PreGameData /> : null}
 
       {isGameActive(gameState) || isGameComplete(gameState) ? (
-        <ActiveGameData
-          awayTeam={awayTeam}
-          homeTeam={homeTeam}
-          summary={summary}
-          playerByGameStats={gameDataToRender.playerByGameStats}
-        />
+        <ActiveGameData />
       ) : null}
     </div>
   );

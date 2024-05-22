@@ -5,15 +5,6 @@ import Scoring from "../Scoring";
 import ShotsOnGoal from "../ShotsOnGoal";
 import Tabs from "../Tabs";
 
-import { PlayerByGameStats, Summary, Team } from "~/types";
-
-type ActiveGameDataProps = {
-  awayTeam: Team;
-  homeTeam: Team;
-  summary: Summary;
-  playerByGameStats: PlayerByGameStats;
-};
-
 const tabData = [
   {
     id: 0,
@@ -27,29 +18,12 @@ const tabData = [
   },
 ];
 
-export default function ActiveGameData({
-  awayTeam,
-  homeTeam,
-  summary,
-  playerByGameStats,
-}: ActiveGameDataProps) {
-  const {
-    scoring,
-    penalties,
-    linescore: { byPeriod, totals },
-    shotsByPeriod,
-    teamGameStats,
-  } = summary;
-
+export default function ActiveGameData() {
   tabData[0].component = () => (
     <div className="p-2">
-      <Scoring
-        awayTeamAbbrev={awayTeam.abbrev}
-        homeTeamAbbrev={homeTeam.abbrev}
-        scoring={scoring}
-      />
+      <Scoring />
       <div className="mt-1">
-        <Penalties penalties={penalties} />
+        <Penalties />
       </div>
     </div>
   );
@@ -57,11 +31,7 @@ export default function ActiveGameData({
   tabData[1].component = () => {
     return (
       <div className="mt-4">
-        <Boxscore
-          awayTeamName={awayTeam.name.default}
-          homeTeamName={homeTeam.name.default}
-          data={playerByGameStats}
-        />
+        <Boxscore />
       </div>
     );
   };
@@ -75,22 +45,10 @@ export default function ActiveGameData({
       </div>
 
       <div className="mt-1 lg:ml-2 lg:mt-0">
-        <Linescore
-          byPeriod={byPeriod}
-          totals={totals}
-          awayTeamLogo={awayTeam.logo}
-          awayTeamAbbrev={awayTeam.abbrev}
-          homeTeamLogo={homeTeam.logo}
-          homeTeamAbbrev={homeTeam.abbrev}
-        />
+        <Linescore />
 
         <div className="mt-1">
-          <ShotsOnGoal
-            awayTeamAbbrev={awayTeam.abbrev}
-            homeTeamAbbrev={homeTeam.abbrev}
-            shotsByPeriod={shotsByPeriod}
-            teamGameStats={teamGameStats}
-          />
+          <ShotsOnGoal />
         </div>
       </div>
     </div>

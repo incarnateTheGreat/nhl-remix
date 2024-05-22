@@ -1,12 +1,16 @@
+import { useRouteLoaderData } from "@remix-run/react";
+
 import GameBox from "../GameBox";
 
-import type { GameBoxType } from "~/types";
+import type { GamesType } from "~/types";
 
-type GamesProps = {
-  games: GameBoxType[];
-};
+export default function Games() {
+  const gameDataToRender = useRouteLoaderData(
+    "routes/scores.($date)",
+  ) as GamesType;
 
-export default function Games({ games }: GamesProps) {
+  const { games } = gameDataToRender;
+
   return (
     <section className="mb-4">
       <div className="flex flex-col py-2 md:flex-row">

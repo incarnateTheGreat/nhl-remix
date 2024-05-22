@@ -1,22 +1,17 @@
+import { useRouteLoaderData } from "@remix-run/react";
+
 import Goals from "./Goals";
 
-import type { GoalsType, PeriodDescriptior } from "~/types";
+import type { Game } from "~/types";
 import { handlePeriodLabel } from "~/utils";
 
-type ScoringProps = {
-  awayTeamAbbrev: string;
-  homeTeamAbbrev: string;
-  scoring: {
-    periodDescriptor: PeriodDescriptior;
-    goals: GoalsType[];
-  }[];
-};
+export default function Scoring() {
+  const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
 
-export default function Scoring({
-  awayTeamAbbrev,
-  homeTeamAbbrev,
-  scoring,
-}: ScoringProps) {
+  const {
+    summary: { scoring },
+  } = gameDataToRender;
+
   return (
     <div className="flex flex-1 flex-col border p-2">
       <h2 className="mb-4 text-2xl font-semibold">Scoring</h2>
@@ -26,11 +21,7 @@ export default function Scoring({
             <h2 className="mb-2 border-b border-gray-700 font-bold">
               {handlePeriodLabel(period.periodDescriptor)} Period
             </h2>
-            <Goals
-              awayTeamAbbrev={awayTeamAbbrev}
-              homeTeamAbbrev={homeTeamAbbrev}
-              period={period}
-            />
+            <Goals period={period} />
           </div>
         );
       })}

@@ -1,16 +1,17 @@
+import { useRouteLoaderData } from "@remix-run/react";
+
 import PenaltyByPeriod from "./PenaltyByPeriod";
 
-import { PenaltiesType, PeriodDescriptior } from "~/types";
+import { Game } from "~/types";
 import { PERIODS } from "~/utils";
 
-type PenaltiesProps = {
-  penalties: {
-    periodDescriptor: PeriodDescriptior;
-    penalties: PenaltiesType[];
-  }[];
-};
+export default function Penalties() {
+  const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
 
-export default function Penalties({ penalties }: PenaltiesProps) {
+  const {
+    summary: { penalties },
+  } = gameDataToRender;
+
   return (
     <div className="flex flex-1 flex-col border p-2">
       <h2 className="mb-4 text-2xl font-semibold">Penalties</h2>

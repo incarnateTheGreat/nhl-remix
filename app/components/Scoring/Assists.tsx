@@ -1,18 +1,15 @@
 import type { Assists } from "~/types";
+import { getLogo } from "~/utils";
 
 type AssistsProps = {
   assists: Assists[];
-  teamAbbrev?: string;
+  teamAbbrev: string;
 };
 
 export default function Assists({ assists, teamAbbrev }: AssistsProps) {
   return (
     <div className="flex items-center">
-      <img
-        width={30}
-        src={`https://assets.nhle.com/logos/nhl/svg/${teamAbbrev}_light.svg`}
-        alt={teamAbbrev}
-      />
+      <img width={30} src={getLogo(teamAbbrev)} alt={teamAbbrev} />
       {assists.length > 0 ? (
         assists.map((assist) => {
           return (

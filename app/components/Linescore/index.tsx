@@ -1,7 +1,9 @@
+import { useRouteLoaderData } from "@remix-run/react";
+
 import TableBody from "./TableBody";
 import TableHeader from "./TableHeader";
 
-import { LinescoreByPeriod, LinescoreTotals } from "~/types";
+import { Game, LinescoreByPeriod, LinescoreTotals } from "~/types";
 
 export type LinescoreProps = {
   byPeriod: LinescoreByPeriod;
@@ -12,15 +14,21 @@ export type LinescoreProps = {
   homeTeamLogo: string;
 };
 
-export default function Linescore(props: LinescoreProps) {
-  const { byPeriod } = props;
+export default function Linescore() {
+  const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
+
+  const {
+    summary: {
+      linescore: { byPeriod },
+    },
+  } = gameDataToRender;
 
   return (
     <div className="flex w-full flex-col overflow-x-auto border p-4 lg:w-96">
       <h3 className="font-bold">Linescore</h3>
       <table>
         <TableHeader byPeriod={byPeriod} />
-        <TableBody {...props} />
+        <TableBody />
       </table>
     </div>
   );

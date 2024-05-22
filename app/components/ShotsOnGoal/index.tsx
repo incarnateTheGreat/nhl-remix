@@ -1,21 +1,19 @@
+import { useRouteLoaderData } from "@remix-run/react";
+
 import TableBody from "./TableBody";
 import TableHeader from "./TableHeader";
 
-import { LinescoreByPeriodObject, TeamGameStats } from "~/types";
+import { Game, TeamGameStats } from "~/types";
 
-type ShotsOnGoalProps = {
-  awayTeamAbbrev: string;
-  homeTeamAbbrev: string;
-  shotsByPeriod: LinescoreByPeriodObject[];
-  teamGameStats: TeamGameStats[];
-};
+export default function ShotsOnGoal() {
+  const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
 
-export default function ShotsOnGoal({
-  awayTeamAbbrev,
-  homeTeamAbbrev,
-  shotsByPeriod,
-  teamGameStats,
-}: ShotsOnGoalProps) {
+  const {
+    awayTeam,
+    homeTeam,
+    summary: { shotsByPeriod, teamGameStats },
+  } = gameDataToRender;
+
   const totalSOG = teamGameStats.find(
     (stat) => stat.category === "sog",
   ) as TeamGameStats;
@@ -25,8 +23,8 @@ export default function ShotsOnGoal({
       <h3 className="font-bold">Shots on Goal</h3>
       <table className="mt-4">
         <TableHeader
-          homeTeamAbbrev={homeTeamAbbrev}
-          awayTeamAbbrev={awayTeamAbbrev}
+          homeTeamAbbrev={awayTeam.abbrev}
+          awayTeamAbbrev={homeTeam.abbrev}
         />
         <TableBody shotsByPeriod={shotsByPeriod} totalSOG={totalSOG} />
       </table>

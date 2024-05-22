@@ -81,5 +81,5 @@ export default function GameState({
     );
   }
 
-  return time;
+  return <span className="text-xl font-bold">{time}</span>;
 }

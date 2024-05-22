@@ -1,32 +1,35 @@
-import LineScoreRow from "./LinescoreRow";
-import { LinescoreProps } from ".";
+import { useRouteLoaderData } from "@remix-run/react";
 
+import LineScoreRow from "./LinescoreRow";
+
+import { Game } from "~/types";
 import { handlePeriodGoals } from "~/utils";
 
-type TableBodyProps = LinescoreProps;
+export default function TableBody() {
+  const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
 
-export default function TableBody({
-  byPeriod,
-  totals,
-  awayTeamAbbrev,
-  awayTeamLogo,
-  homeTeamAbbrev,
-  homeTeamLogo,
-}: TableBodyProps) {
+  const {
+    awayTeam,
+    homeTeam,
+    summary: {
+      linescore: { byPeriod, totals },
+    },
+  } = gameDataToRender;
+
   const periodData = handlePeriodGoals(byPeriod);
 
   return (
     <tbody>
       <LineScoreRow
-        logo={awayTeamLogo}
-        teamAbbrev={awayTeamAbbrev}
+        logo={awayTeam.logo}
+        teamAbbrev={awayTeam.abbrev}
         periodData={periodData}
         totals={totals.away}
         homeAway="away"
       />
       <LineScoreRow
-        logo={homeTeamLogo}
-        teamAbbrev={homeTeamAbbrev}
+        logo={homeTeam.logo}
+        teamAbbrev={homeTeam.abbrev}
         periodData={periodData}
         totals={totals.home}
         homeAway="home"

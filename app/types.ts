@@ -37,7 +37,7 @@ type Assists = {
   assistsToDate: 4;
 };
 
-type GameState = "FUT" | "LIVE" | "CRIT" | "ON" | "OFF" | "FINAL";
+type GameState = "PRE" | "FUT" | "LIVE" | "CRIT" | "ON" | "OFF" | "FINAL";
 
 type GoalsType = {
   situationCode: string;
@@ -137,6 +137,60 @@ type PlayerByGameStats = {
   };
 };
 
+type TeamLeadersL5 = {
+  category: string;
+  awayLeader: {
+    playerId: number;
+    name: {
+      default: string;
+    };
+    firstName: {
+      default: string;
+    };
+    lastName: {
+      default: string;
+    };
+    sweaterNumber: number;
+    positionCode: string;
+    headshot: string;
+    value: number;
+  };
+  homeLeader: {
+    playerId: number;
+    name: {
+      default: string;
+    };
+    firstName: {
+      default: string;
+    };
+    lastName: {
+      default: string;
+    };
+    sweaterNumber: number;
+    positionCode: string;
+    headshot: string;
+    value: number;
+  };
+};
+
+type Matchup = {
+  season: number;
+  gameType: number;
+  teamLeadersL5: TeamLeadersL5[];
+  gameInfo: {
+    awayTeam: {
+      headCoach: {
+        default: string;
+      };
+    };
+    homeTeam: {
+      headCoach: {
+        default: string;
+      };
+    };
+  };
+};
+
 type Summary = {
   shotsByPeriod: LinescoreByPeriodObject[];
   teamGameStats: TeamGameStats[];
@@ -163,12 +217,7 @@ type Summary = {
     //     [Object], [Object],
     //     [Object]
     //   ],
-    //   gameInfo: {
-    //     referees: [Array],
-    //     linesmen: [Array],
-    //     awayTeam: [Object],
-    //     homeTeam: [Object]
-    //   },
+
     //   gameReports: {
     //     gameSummary: string
     //     eventSummary: string
@@ -237,50 +286,15 @@ type Game = {
   venueUTCOffset: string;
   venueTimezone: string;
   periodDescriptor: PeriodDescriptior;
-  // tvBroadcasts: [
-  //   {
-  //     id: 385,
-  //     market: string
-  //     countryCode: string
-  //     network: string
-  //     sequenceNumber: 4
-  //   },
-  //   {
-  //     id: 501,
-  //     market: string
-  //     countryCode: string
-  //     network: string
-  //     sequenceNumber: 6
-  //   },
-  //   {
-  //     id: 519,
-  //     market: string
-  //     countryCode: string
-  //     network: string
-  //     sequenceNumber: 9
-  //   },
-  //   {
-  //     id: 282,
-  //     market: string
-  //     countryCode: string
-  //     network: string
-  //     sequenceNumber: 21
-  //   },
-  //   {
-  //     id: 284,
-  //     market: string
-  //     countryCode: string
-  //     network: string
-  //     sequenceNumber: 22
-  //   },
-  //   {
-  //     id: 281,
-  //     market: string
-  //     countryCode: string
-  //     network: string
-  //     sequenceNumber: 31
-  //   }
-  // ],
+  tvBroadcasts: [
+    {
+      id: number;
+      market: string;
+      countryCode: string;
+      network: string;
+      sequenceNumber: number;
+    },
+  ];
   gameState: GameState;
   gameScheduleState: string;
   awayTeam: Team;
@@ -292,6 +306,7 @@ type Game = {
   clock: Clock;
   summary: Summary;
   playerByGameStats: PlayerByGameStats;
+  matchup: Matchup;
 };
 
 type GameWeek = {
@@ -322,6 +337,7 @@ export type {
   LinescoreByPeriod,
   LinescoreByPeriodObject,
   LinescoreTotals,
+  Matchup,
   PenaltiesType,
   PeriodDescriptior,
   PlayerByGameStats,
@@ -329,4 +345,5 @@ export type {
   Summary,
   Team,
   TeamGameStats,
+  TeamLeadersL5,
 };
