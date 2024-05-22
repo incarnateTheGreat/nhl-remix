@@ -38,7 +38,7 @@ export default function PlayersToWatch() {
                 </div>
                 <div className="flex">
                   <div className="my-4 flex w-1/2 items-center justify-between pl-4">
-                    <div className="flex flex-col items-center">
+                    <div className="flex w-12 flex-col items-center">
                       <span className="text-3xl font-extrabold">
                         {awayLeader.value}
                       </span>
@@ -84,7 +84,7 @@ export default function PlayersToWatch() {
                         </span>
                       </div>
                     </div>
-                    <div className="flex flex-col items-center">
+                    <div className="flex w-12 flex-col items-center">
                       <span className="text-3xl font-extrabold">
                         {homeLeader.value}
                       </span>
