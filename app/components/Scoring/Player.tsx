@@ -16,7 +16,7 @@ export default function Player({ goal }: PlayerProps) {
         width={50}
         alt={`${goal.firstName.default} ${goal.lastName.default}`}
       />
-      <div className="ml-2 flex w-80 flex-col">
+      <div className="mx-2 flex w-full flex-col">
         <Goal goal={goal} />
         <Assists teamAbbrev={goal.teamAbbrev.default} assists={goal.assists} />
       </div>

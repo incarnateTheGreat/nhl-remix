@@ -7,20 +7,17 @@ type AssistsProps = {
 };
 
 export default function Assists({ assists, teamAbbrev }: AssistsProps) {
+  const assistsStr =
+    assists
+      .map((assist) => {
+        return `${assist.name.default} (${assist.assistsToDate})`;
+      })
+      .join(", ") || "Unassisted";
+
   return (
     <div className="flex items-center">
       <img width={30} src={getLogo(teamAbbrev)} alt={teamAbbrev} />
-      {assists.length > 0 ? (
-        assists.map((assist) => {
-          return (
-            <span key={assist.playerId} className="mr-1 text-sm text-gray-600">
-              {assist.firstName.default} {assist.lastName.default}
-            </span>
-          );
-        })
-      ) : (
-        <span className="mr-1 text-sm text-gray-600">Unassisted</span>
-      )}
+      <span className="mr-1 text-sm text-gray-600">{assistsStr}</span>
     </div>
   );
 }
