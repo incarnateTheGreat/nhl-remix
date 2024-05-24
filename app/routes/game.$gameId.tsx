@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { MetaFunction } from "@remix-run/node";
 import { useLoaderData, useRevalidator } from "@remix-run/react";
 import { format } from "date-fns";
@@ -64,14 +64,14 @@ export default function Game() {
 
   const { gameState } = gameDataToRender;
 
-  const visibilityChange = () => {
+  const visibilityChange = useCallback(() => {
     if (
       document.visibilityState === "visible" &&
       (isPreGame(gameState) || isGameActive(gameState))
     ) {
       revalidator.revalidate();
     }
-  };
+  }, [gameState, revalidator]);
 
   useEffect(() => {
     document.addEventListener("visibilitychange", visibilityChange);
@@ -79,7 +79,7 @@ export default function Game() {
     return () => {
       document.removeEventListener("visibilitychange", visibilityChange);
     };
-  }, []);
+  }, [visibilityChange]);
 
   return (
     <div className="mx-auto flex w-full flex-col">
