@@ -1,4 +1,5 @@
-import { Team } from "~/types";
+import { GameState, Team } from "~/types";
+import { isPreGame } from "~/utils";
 
 const CLASSES = {
   away: {
@@ -20,9 +21,14 @@ const CLASSES = {
 type TeamHeaderProps = {
   team: Team;
   homeAway: "home" | "away";
+  gameState: GameState;
 };
 
-export default function TeamHeader({ team, homeAway }: TeamHeaderProps) {
+export default function TeamHeader({
+  team,
+  homeAway,
+  gameState,
+}: TeamHeaderProps) {
   const { logo, placeName, name, sog, score } = team;
   const { parentClasses, scoreClasses, teamClasses, imageClasses } =
     CLASSES[homeAway];
@@ -38,7 +44,13 @@ export default function TeamHeader({ team, homeAway }: TeamHeaderProps) {
       <div className={teamClasses}>
         <span className="text-md">{placeName.default}</span>
         <span className="text-xl font-bold">{name.default}</span>
-        <span className="text-sm">SOG: {sog}</span>
+        <div>
+          {isPreGame(gameState) ? (
+            <>{team.record}</>
+          ) : (
+            <span className="text-sm">SOG: {sog}</span>
+          )}
+        </div>
       </div>
       <div className={scoreClasses}>{score}</div>
     </div>

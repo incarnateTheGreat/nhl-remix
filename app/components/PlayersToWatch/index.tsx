@@ -32,47 +32,47 @@ export default function PlayersToWatch() {
 
           return (
             <div key={category} className="flex flex-col">
-              <div className="flex justify-center lg:justify-start">
+              <div className="flex justify-start lg:justify-center">
                 <span className="uppercase">{category}</span>
               </div>
-              <div className="flex">
-                <div className="my-4 flex w-1/2 items-center justify-between pl-4">
-                  <div className="flex w-12 flex-col items-center">
+              <div className="flex flex-col lg:flex-row">
+                <div className="my-4 flex items-center justify-between lg:w-1/2 lg:pl-4">
+                  <div className="order-3 flex w-12 flex-col items-center lg:order-none">
                     <span className="text-3xl font-extrabold">
                       {awayLeader.value}
                     </span>
                     <span>{STATCODES[category]}</span>
                   </div>
-                  <div className="flex w-full justify-end border-r border-yellow-600 pr-8">
-                    <div className="mr-8 flex flex-col">
-                      <span className="text-right">
+                  <div className="order-2 flex w-full border-none border-yellow-600 pr-8 lg:order-none lg:justify-end lg:border-r">
+                    <div className="order-2 mr-8 flex flex-col lg:order-none">
+                      <span className="lg:text-right">
                         {awayLeader.firstName.default}
                       </span>
                       <span className="text-xl font-bold">
                         {awayLeader.lastName.default}
                       </span>
-                      <span className="text-right text-sm">
+                      <span className="text-sm lg:text-right">
                         #{awayLeader.sweaterNumber} &#8226;{" "}
                         {awayLeader.positionCode}
                       </span>
                     </div>
                     <img
-                      className="rounded-full border border-slate-500"
+                      className="order-1 mr-4 rounded-full border border-slate-500 lg:order-none lg:mr-0"
                       src={awayLeader.headshot}
                       alt={awayLeader.name.default}
                       width={75}
                     />
                   </div>
                 </div>
-                <div className="my-4 flex w-1/2 items-center justify-between pr-4">
-                  <div className="flex w-full pl-8">
+                <div className="my-4 flex items-center justify-between lg:w-1/2 lg:pr-4">
+                  <div className="flex w-full lg:pl-8">
                     <img
                       className="rounded-full border border-slate-500"
                       src={homeLeader.headshot}
                       alt={homeLeader.name.default}
                       width={75}
                     />
-                    <div className="ml-8 flex flex-col">
+                    <div className="ml-4 flex flex-col lg:ml-8">
                       <span>{homeLeader.firstName.default}</span>
                       <span className="text-xl font-bold">
                         {homeLeader.lastName.default}
@@ -83,8 +83,8 @@ export default function PlayersToWatch() {
                       </span>
                     </div>
                   </div>
-                  <div className="flex w-12 flex-col items-center">
-                    <span className="text-3xl font-extrabold">
+                  <div className="flex w-12 flex-col text-center">
+                    <span className="w-12 text-3xl font-extrabold">
                       {homeLeader.value}
                     </span>
                     <span>{STATCODES[category]}</span>

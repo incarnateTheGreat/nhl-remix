@@ -25,8 +25,6 @@ export default function RangeSelector({ gameWeek }: RangeSelectorProps) {
   //     str = `${firstDayMonth} ${firstDayNumber} - ${lastDayMonth} ${lastDayNumber}`;
   //   }
 
-  //   console.log(value);
-
   return (
     <div className="self-start rounded border border-[#e3e3e3] px-4 py-2 text-sm font-semibold">
       {/* {str} */}

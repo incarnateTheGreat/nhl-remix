@@ -1,14 +1,11 @@
+import { useState } from "react";
 import {
   flexRender,
   getCoreRowModel,
+  getSortedRowModel,
+  SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-
-type BoxscoreTableProps = {
-  data: object[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  columns: any;
-};
 
 const sweaterNumberCol = {
   minWidth: "38px",
@@ -41,11 +38,36 @@ const handleColumnWidth = (id: string): object => {
   return defaultCol;
 };
 
-export default function BoxscoreTable({ data, columns }: BoxscoreTableProps) {
+type BoxscoreTableProps = {
+  data: object[];
+  initSortById: string;
+  initSortDirection?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  columns: any;
+};
+
+export default function BoxscoreTable({
+  data,
+  columns,
+  initSortById,
+  initSortDirection = "desc",
+}: BoxscoreTableProps) {
+  const [sorting, setSorting] = useState<SortingState>([
+    {
+      id: initSortById,
+      desc: initSortDirection === "desc" ? true : false,
+    },
+  ]);
+
   const table = useReactTable({
     data,
     columns,
+    state: {
+      sorting,
+    },
+    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
   });
 
   return (
@@ -84,7 +106,7 @@ export default function BoxscoreTable({ data, columns }: BoxscoreTableProps) {
                 return (
                   <td
                     key={cell.id}
-                    className="p-2 odd:bg-slate-200/45"
+                    className="p-2 text-sm odd:bg-slate-200/45"
                     style={handleColumnWidth(cell.column.id)}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

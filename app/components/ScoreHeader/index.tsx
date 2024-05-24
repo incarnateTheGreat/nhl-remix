@@ -19,17 +19,17 @@ export default function ScoreHeader() {
 
   return (
     <div className="flex flex-col items-start border border-slate-500 p-2 lg:flex-row lg:items-center">
-      <TeamHeader team={awayTeam} homeAway="away" />
-      <div className="order-1 ml-auto flex justify-end text-center lg:order-2 lg:w-2/12 lg:justify-center">
+      <TeamHeader team={awayTeam} homeAway="away" gameState={gameState} />
+      <div className="order-1 ml-auto flex w-full justify-end lg:order-2 lg:w-2/12 lg:justify-center">
         <GameState
           clock={clock}
           periodDescriptor={periodDescriptor}
           gameState={gameState}
           startTimeUTC={startTimeUTC}
-          classnames="flex flex-col"
+          classnames="flex flex-col text-center"
         />
       </div>
-      <TeamHeader team={homeTeam} homeAway="home" />
+      <TeamHeader team={homeTeam} homeAway="home" gameState={gameState} />
     </div>
   );
 }

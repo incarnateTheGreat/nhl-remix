@@ -1,8 +1,9 @@
-import { Team } from "~/types";
+import { GameState, Team } from "~/types";
+import { isPreGame } from "~/utils";
 
 type TeamRowProps = {
   team: Team;
-  gameState: string;
+  gameState: GameState;
   situation?: {
     teamAbbrev: string;
     timeRemaining: string;
@@ -21,13 +22,7 @@ export default function TeamRow({ team, gameState }: TeamRowProps) {
       <img src={logo} alt={name.default} width={50} />
       <div className="text-sm">
         <div className="font-semibold">{teamName.join(" ")}</div>
-        <div>
-          {gameState === "FUT" || gameState === "PRE" ? (
-            <>{team.record}</>
-          ) : (
-            <>SOG: {sog}</>
-          )}{" "}
-        </div>
+        <div>{isPreGame(gameState) ? <>{team.record}</> : <>SOG: {sog}</>}</div>
       </div>
       <div className="flex-1 text-right text-lg font-bold">
         {scoreIndicator}

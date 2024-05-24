@@ -1,50 +1,36 @@
-import { createColumnHelper } from "@tanstack/react-table";
-
+import goalieActiveGame from "./utils/Goalies/goalieActiveGame";
+import goaliePreGame from "./utils/Goalies/goaliePreGame";
 import BoxscoreTable from "./BoxscoreTable";
 
-import { GoalieStats } from "~/types";
-
-const columnHelper = createColumnHelper<GoalieStats>();
-
-const columns = [
-  columnHelper.accessor("sweaterNumber", {
-    header: () => <span>#</span>,
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("name", {
-    header: () => <span>Forwards</span>,
-    cell: (info) => info.cell.getValue().default,
-  }),
-  columnHelper.accessor("evenStrengthShotsAgainst", {
-    header: () => <span>EV</span>,
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("powerPlayShotsAgainst", {
-    header: () => <span>PP</span>,
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("shorthandedShotsAgainst", {
-    header: () => <span>SH</span>,
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("saveShotsAgainst", {
-    header: () => <span>Saves-Shots</span>,
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("savePctg", {
-    header: () => <span>SV%</span>,
-    cell: (info) => info.getValue() ?? "--",
-  }),
-  columnHelper.accessor("toi", {
-    header: () => <span>TOI</span>,
-    cell: (info) => info.getValue(),
-  }),
-];
+import { GameState, GoalieStats } from "~/types";
+import { isPreGame } from "~/utils";
 
 type GoaltendersProps = {
   goaltenders: GoalieStats[];
+  gameState: GameState;
 };
 
-export default function Goaltenders({ goaltenders }: GoaltendersProps) {
-  return <BoxscoreTable data={goaltenders} columns={columns} />;
+export default function Goaltenders({
+  goaltenders,
+  gameState,
+}: GoaltendersProps) {
+  let columns,
+    initSortById = "toi";
+
+  if (isPreGame(gameState)) {
+    columns = goaliePreGame;
+    initSortById = "gamesPlayed";
+  } else {
+    columns = goalieActiveGame;
+  }
+
+  return (
+    <div className="overflow-x-auto overflow-y-hidden">
+      <BoxscoreTable
+        data={goaltenders}
+        columns={columns}
+        initSortById={initSortById}
+      />
+    </div>
+  );
 }

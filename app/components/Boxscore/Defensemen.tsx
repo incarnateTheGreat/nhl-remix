@@ -1,62 +1,34 @@
-import { createColumnHelper } from "@tanstack/react-table";
-
+import defensemenActiveGame from "./utils/Defensemen/defensemenActiveGame";
+import defensemenPreGame from "./utils/Defensemen/defensemenPreGame";
 import BoxscoreTable from "./BoxscoreTable";
 
-import { SkaterStats } from "~/types";
-
-const columnHelper = createColumnHelper<SkaterStats>();
-
-const columns = [
-  columnHelper.accessor("sweaterNumber", {
-    header: () => <span>#</span>,
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("name", {
-    header: () => <span>Forwards</span>,
-    cell: (info) => info.cell.getValue().default,
-  }),
-  columnHelper.accessor("goals", {
-    header: () => <span>G</span>,
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("assists", {
-    header: () => <span>A</span>,
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("points", {
-    header: () => <span>P</span>,
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("plusMinus", {
-    header: () => <span>+/-</span>,
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("pim", {
-    header: () => <span>POM</span>,
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("shots", {
-    header: () => <span>S</span>,
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("powerPlayGoals", {
-    header: () => <span>PPG</span>,
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("hits", {
-    header: () => <span>H</span>,
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("toi", {
-    header: () => <span>TOI</span>,
-    cell: (info) => info.getValue(),
-  }),
-];
+import { GameState, SkaterStats } from "~/types";
+import { isPreGame } from "~/utils";
 
 type DefensemenProps = {
   defensemen: SkaterStats[];
+  gameState: GameState;
 };
 
-export default function Defensemen({ defensemen }: DefensemenProps) {
-  return <BoxscoreTable data={defensemen} columns={columns} />;
+export default function Defensemen({ defensemen, gameState }: DefensemenProps) {
+  let columns,
+    initSortById = "sweaterNumber";
+
+  if (isPreGame(gameState)) {
+    columns = defensemenPreGame;
+    initSortById = "gamesPlayed";
+  } else {
+    columns = defensemenActiveGame;
+  }
+
+  return (
+    <div className="overflow-x-auto overflow-y-hidden">
+      <BoxscoreTable
+        data={defensemen}
+        columns={columns}
+        initSortById={initSortById}
+        initSortDirection="asc"
+      />
+    </div>
+  );
 }

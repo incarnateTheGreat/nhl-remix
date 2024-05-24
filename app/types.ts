@@ -84,6 +84,7 @@ type Clock = {
 };
 
 type SkaterStats = {
+  gamesPlayed: number;
   playerId: number;
   sweaterNumber: number;
   name: {
@@ -99,7 +100,9 @@ type SkaterStats = {
   powerPlayGoals: number;
   shots: number;
   faceoffWinningPctg: number;
-  toi: string;
+  avgTimeOnIce: string;
+  teamId: number;
+  toi: number;
 };
 
 type GoalieStats = {
@@ -113,15 +116,23 @@ type GoalieStats = {
   powerPlayShotsAgainst: string;
   shorthandedShotsAgainst: string;
   saveShotsAgainst: string;
-  savePctg: string;
+  savePctg: number;
   evenStrengthGoalsAgainst: number;
   powerPlayGoalsAgainst: number;
   shorthandedGoalsAgainst: number;
   pim: number;
   goalsAgainst: number;
-  toi: string;
+  min: string;
   starter: boolean;
   decision: string;
+  teamId: number;
+  gamesPlayed: number;
+  wins: number;
+  losses: number;
+  otLosses: number;
+  goalsAgainstAvg: number;
+  shotsAgainst: number;
+  toi: number;
 };
 
 type PlayerByGameStats = {
@@ -189,6 +200,8 @@ type Matchup = {
       };
     };
   };
+  goalieSeasonStats: GoalieStats[];
+  skaterSeasonStats: SkaterStats[];
 };
 
 type Summary = {
@@ -242,7 +255,7 @@ type GameBoxType = {
   startTimeUTC: string;
   easternUTCOffset: string;
   venueUTCOffset: string;
-  gameState: string;
+  gameState: GameState;
   gameScheduleState: string;
   awayTeam: Team;
   homeTeam: Team;

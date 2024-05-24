@@ -1,5 +1,6 @@
+import { useEffect } from "react";
 import { MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useRevalidator } from "@remix-run/react";
 import { format } from "date-fns";
 
 import ActiveGameData from "~/components/ActiveGameData";
@@ -18,7 +19,7 @@ export const meta: MetaFunction = (e) => {
   const { awayTeam, homeTeam, startTimeUTC } = e.data as Game;
   const date = format(startTimeUTC, "MMM d, yyyy");
 
-  const title = `${awayTeam.placeName.default} ${awayTeam.name.default} - ${homeTeam.placeName.default} ${homeTeam.name.default} ${date}`;
+  const title = `${awayTeam.placeName.default} ${awayTeam.name.default} vs. ${homeTeam.placeName.default} ${homeTeam.name.default} - ${date}`;
 
   return [
     {
@@ -59,8 +60,26 @@ export const loader = async ({ params }: LoaderProps) => {
 
 export default function Game() {
   const gameDataToRender = useLoaderData<Game>();
+  const revalidator = useRevalidator();
 
   const { gameState } = gameDataToRender;
+
+  const visibilityChange = () => {
+    if (
+      document.visibilityState === "visible" &&
+      (isPreGame(gameState) || isGameActive(gameState))
+    ) {
+      revalidator.revalidate();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("visibilitychange", visibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", visibilityChange);
+    };
+  }, []);
 
   return (
     <div className="mx-auto flex w-full flex-col">

@@ -31,7 +31,7 @@ export default function GameState({
           <span className="bg-red-700 px-2 py-0.5 font-bold text-white">
             OT
           </span>
-          <span className="ml-2">{clock.timeRemaining}</span>
+          <span>{clock.timeRemaining}</span>
         </div>
       );
     }
@@ -42,7 +42,7 @@ export default function GameState({
           <span className="bg-red-700 px-2 py-0.5 font-bold text-white">
             {`${periodDescriptor.otPeriods}OT`}
           </span>
-          <span className="ml-2">{clock.timeRemaining}</span>
+          <span>{clock.timeRemaining}</span>
         </div>
       );
     }
@@ -81,5 +81,5 @@ export default function GameState({
     );
   }
 
-  return <span className="text-xl font-bold">{time}</span>;
+  return <span className="font-bold">{time}</span>;
 }
