@@ -79,7 +79,7 @@ export default function BoxscoreTable({
               return (
                 <th
                   key={header.id}
-                  className="p-2"
+                  className="p-2 text-sm"
                   style={handleColumnWidth(header.column.id)}
                   onClick={header.column.getToggleSortingHandler()}
                 >

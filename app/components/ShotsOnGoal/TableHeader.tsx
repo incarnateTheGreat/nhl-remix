@@ -10,9 +10,9 @@ export default function TableHeader({
   return (
     <thead>
       <tr>
-        <th className="text-center w-1/3">Period</th>
-        <th className="text-center w-1/3">{awayTeamAbbrev}</th>
-        <th className="text-center w-1/3">{homeTeamAbbrev}</th>
+        <th className="w-1/3 text-center text-sm">Period</th>
+        <th className="w-1/3 text-center text-sm">{awayTeamAbbrev}</th>
+        <th className="w-1/3 text-center text-sm">{homeTeamAbbrev}</th>
       </tr>
     </thead>
   );
