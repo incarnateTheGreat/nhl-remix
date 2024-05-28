@@ -12,11 +12,13 @@ type ForwardsProps = {
 
 export default function Forwards({ forwards, gameState }: ForwardsProps) {
   let columns,
-    initSortById = "sweaterNumber";
+    initSortById = "sweaterNumber",
+    initSortDirection = "asc";
 
   if (isPreGame(gameState)) {
     columns = forwardPreGame;
     initSortById = "gamesPlayed";
+    initSortDirection = "desc";
   } else {
     columns = forwardActiveGame;
   }
@@ -27,7 +29,7 @@ export default function Forwards({ forwards, gameState }: ForwardsProps) {
         data={forwards}
         columns={columns}
         initSortById={initSortById}
-        initSortDirection="asc"
+        initSortDirection={initSortDirection}
       />
     </div>
   );

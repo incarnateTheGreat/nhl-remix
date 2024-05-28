@@ -15,11 +15,13 @@ export default function Goaltenders({
   gameState,
 }: GoaltendersProps) {
   let columns,
-    initSortById = "toi";
+    initSortById = "toi",
+    initSortDirection = "desc";
 
   if (isPreGame(gameState)) {
     columns = goaliePreGame;
     initSortById = "gamesPlayed";
+    initSortDirection = "asc";
   } else {
     columns = goalieActiveGame;
   }
@@ -30,6 +32,7 @@ export default function Goaltenders({
         data={goaltenders}
         columns={columns}
         initSortById={initSortById}
+        initSortDirection={initSortDirection}
       />
     </div>
   );
