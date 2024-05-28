@@ -215,6 +215,44 @@ type Matchup = {
   };
   goalieSeasonStats: GoalieStats[];
   skaterSeasonStats: SkaterStats[];
+  seasonSeries: SeasonSeries[];
+};
+
+type SeasonSeries = {
+  id: number;
+  season: number;
+  gameType: number;
+  gameDate: string;
+  startTimeUTC: string;
+  easternUTCOffset: string;
+  venueUTCOffset: string;
+  gameState: GameState;
+  gameScheduleState: string;
+  awayTeam: {
+    id: number;
+    abbrev: string;
+    logo: string;
+    score: number;
+  };
+  homeTeam: {
+    id: number;
+    abbrev: string;
+    logo: string;
+    score: number;
+  };
+  clock: {
+    timeRemaining: string;
+    secondsRemaining: number;
+    running: false;
+    inIntermission: false;
+  };
+  gameCenterLink: string;
+  periodDescriptor: {
+    number: number;
+    periodType: string;
+    maxRegulationPeriods: number;
+  };
+  gameOutcome: { lastPeriodType: string };
 };
 
 type Summary = {
@@ -357,6 +395,7 @@ export type {
   PenaltiesType,
   PeriodDescriptior,
   PlayerByGameStats,
+  SeasonSeries,
   SeriesStatus,
   SkaterStats,
   Summary,
