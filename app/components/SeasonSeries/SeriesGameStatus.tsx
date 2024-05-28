@@ -7,11 +7,11 @@ export default function SeriesGameStatus({
 }: SeriesGameStatusProps) {
   const time = new Date(startTimeUTC).toLocaleString("en-US", {
     month: "long",
-    day: "2-digit",
+    day: "numeric",
   });
 
   return (
-    <div className="flex justify-between text-xs text-gray-500">
+    <div className="mt-1 flex justify-between text-xs text-gray-500">
       <span>&nbsp;</span>
       <span>{time}</span>
     </div>

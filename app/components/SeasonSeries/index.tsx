@@ -12,10 +12,13 @@ export default function SeasonSeries() {
   } = gameDataToRender;
 
   return (
-    <div className="grid grid-cols-2 gap-3">
-      {seasonSeries.map((game) => {
-        return <SeriesGameBox key={game.id} game={game} />;
-      })}
+    <div className="flex flex-col">
+      <h2 className="heading">Series History</h2>
+      <div className="grid grid-cols-2 gap-3">
+        {seasonSeries.map((game) => {
+          return <SeriesGameBox key={game.id} game={game} />;
+        })}
+      </div>
     </div>
   );
 }

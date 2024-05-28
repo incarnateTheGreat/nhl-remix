@@ -37,13 +37,13 @@ export default function TeamHeader({
     <div className={parentClasses}>
       <img
         src={logo}
-        width={150}
+        width={125}
         alt={`${placeName.default} ${name.default}`}
         className={imageClasses}
       />
       <div className={teamClasses}>
         <span className="text-md">{placeName.default}</span>
-        <span className="text-xl font-bold">{name.default}</span>
+        <span className="text-xl font-bold leading-none">{name.default}</span>
         <div>
           {isPreGame(gameState) ? (
             <>{team.record}</>

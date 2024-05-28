@@ -17,20 +17,20 @@ export default function GameInfo() {
 
   return (
     <div>
-      <h2 className="mb-4 text-2xl font-semibold">Game Info</h2>
-      <div className="flex">
+      <h2 className="heading">Game Info</h2>
+      <div className="mb-1 grid grid-cols-[110px_auto] text-sm last:mb-0">
         <span className="mr-1 font-semibold">Networks:</span>
         <div>{tvBroadcastsStr}</div>
       </div>
-      <div className="flex">
+      <div className="mb-1 grid grid-cols-[110px_auto] text-sm last:mb-0">
         <span className="mr-1 font-semibold">Location:</span>
         <div>{venue.default}</div>
       </div>
-      <div className="flex">
+      <div className="mb-1 grid grid-cols-[110px_auto] text-sm last:mb-0">
         <span className="mr-1 font-semibold">{awayTeam.abbrev} Coach:</span>
         <div>{gameInfo.awayTeam.headCoach.default}</div>
       </div>
-      <div className="flex">
+      <div className="mb-1 grid grid-cols-[110px_auto] text-sm last:mb-0">
         <span className="mr-1 font-semibold">{homeTeam.abbrev} Coach:</span>
         <div>{gameInfo.homeTeam.headCoach.default}</div>
       </div>

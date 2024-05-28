@@ -21,7 +21,7 @@ export default function PlayersToWatch() {
 
   return (
     <div className="flex flex-col">
-      <h2 className="mb-4 text-2xl font-semibold">Players to Watch</h2>
+      <h2 className="heading">Players to Watch</h2>
       <div className="flex justify-between">
         <img src={getLogo(awayTeam.abbrev)} alt={awayTeam.abbrev} width={75} />
         <img src={getLogo(homeTeam.abbrev)} alt={homeTeam.abbrev} width={75} />

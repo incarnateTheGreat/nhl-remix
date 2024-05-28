@@ -14,7 +14,7 @@ export default function Penalties() {
 
   return (
     <div className="flex flex-1 flex-col border p-2">
-      <h2 className="mb-4 text-2xl font-semibold">Penalties</h2>
+      <h2 className="heading">Penalties</h2>
       {penalties.map((periodPenalty, idx) => {
         return (
           <div key={idx} className="mb-4">

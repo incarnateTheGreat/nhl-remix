@@ -15,7 +15,9 @@ export default function PreGameData() {
       </div>
       <div className="mt-2 flex w-full flex-col overflow-x-auto border border-slate-500 px-4 py-2 lg:mt-0 lg:w-96">
         <SeasonSeries />
-        <GameInfo />
+        <div className="mt-4">
+          <GameInfo />
+        </div>
       </div>
     </div>
   );
