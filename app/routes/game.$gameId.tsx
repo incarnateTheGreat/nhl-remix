@@ -82,7 +82,7 @@ export default function Game() {
   }, [visibilityChange]);
 
   return (
-    <div className="mx-auto flex w-full flex-col">
+    <div className="mx-auto mt-4 flex w-full flex-col bg-white px-4 py-2">
       <ScoreHeader />
 
       {isPreGame(gameState) ? <PreGameData /> : null}

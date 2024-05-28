@@ -25,7 +25,7 @@ export default function GameBox({ game }: GameBoxProps) {
 
   return (
     <Link
-      className="mb-4 mr-2.5 cursor-pointer rounded-sm border border-gray-300 p-4 transition-all hover:border-gray-800"
+      className="mb-4 mr-2.5 cursor-pointer rounded border border-gray-300 p-4 transition-all hover:border-gray-800"
       to={`/game/${id}`}
     >
       {gameType === 3 ? <RoundStatus seriesStatus={game.seriesStatus} /> : null}

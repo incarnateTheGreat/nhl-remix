@@ -9,10 +9,10 @@ const PERIODS: { [k: string]: string } = {
   3: "3rd",
 };
 
-const GOALMODIFIER: { [k: string]: string } = {
-  sh: "ppg",
-  pp: "shg",
-  en: "en",
+const GOAL_MODIFIER: { [k: string]: string } = {
+  sh: "sh",
+  pp: "ppg",
+  ["empty-net"]: "en",
 };
 
 const handlePeriodLabel = (periodDescriptor: PeriodDescriptior) => {
@@ -149,7 +149,7 @@ export {
   cn,
   deepMerge,
   getLogo,
-  GOALMODIFIER,
+  GOAL_MODIFIER,
   handlePeriodGoals,
   handlePeriodLabel,
   isGameActive,
