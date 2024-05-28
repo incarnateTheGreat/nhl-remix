@@ -188,6 +188,7 @@ type SeriesStatus = {
   round: number;
   seriesAbbrev: string;
   seriesLetter: string;
+  seriesTitle: string;
   neededToWin: number;
   topSeedTeamAbbrev: string;
   topSeedWins: number;

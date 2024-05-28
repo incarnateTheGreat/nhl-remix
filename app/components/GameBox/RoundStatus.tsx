@@ -6,13 +6,13 @@ type RoundStatusProps = {
 
 export default function RoundStatus({ seriesStatus }: RoundStatusProps) {
   const {
-    round,
     gameNumberOfSeries,
     topSeedTeamAbbrev,
     topSeedWins,
     neededToWin,
     bottomSeedTeamAbbrev,
     bottomSeedWins,
+    seriesTitle,
   } = seriesStatus;
 
   const roundStatus = () => {
@@ -34,8 +34,8 @@ export default function RoundStatus({ seriesStatus }: RoundStatusProps) {
   };
 
   return (
-    <div>
-      <div>{`Round ${round}, Gm ${gameNumberOfSeries}`}</div>
+    <div className="flex flex-col items-center justify-center rounded bg-slate-200 p-1 text-sm">
+      <div className="font-semibold">{`${seriesTitle}, Game ${gameNumberOfSeries}`}</div>
       {roundStatus()}
     </div>
   );
