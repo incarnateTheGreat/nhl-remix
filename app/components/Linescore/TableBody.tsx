@@ -16,7 +16,7 @@ export default function TableBody() {
     },
   } = gameDataToRender;
 
-  const periodData = handlePeriodGoals(byPeriod);
+  const periodData = [...handlePeriodGoals(byPeriod)];
 
   return (
     <tbody>

@@ -3,6 +3,8 @@ import { Link } from "@remix-run/react";
 import GameState from "../ScoreHeader/GameState";
 import TeamRow from "../TeamRow";
 
+import RoundStatus from "./RoundStatus";
+
 import { GameBoxType } from "~/types";
 
 type GameBoxProps = {
@@ -12,52 +14,22 @@ type GameBoxProps = {
 export default function GameBox({ game }: GameBoxProps) {
   const {
     id,
-    seriesStatus,
     awayTeam,
     homeTeam,
     startTimeUTC,
     gameState,
     periodDescriptor,
     clock,
+    gameType,
   } = game;
-
-  const {
-    round,
-    gameNumberOfSeries,
-    topSeedTeamAbbrev,
-    topSeedWins,
-    neededToWin,
-    bottomSeedTeamAbbrev,
-    bottomSeedWins,
-  } = seriesStatus;
-
-  const roundStatus = () => {
-    if (bottomSeedWins === neededToWin || topSeedWins === neededToWin) {
-      if (bottomSeedWins > topSeedWins) {
-        return `${bottomSeedTeamAbbrev} wins ${bottomSeedWins}-${topSeedWins}`;
-      } else if (topSeedWins > bottomSeedWins) {
-        return `${topSeedTeamAbbrev} wins ${topSeedWins}-${bottomSeedWins}`;
-      }
-    }
-
-    if (bottomSeedWins > topSeedWins) {
-      return `${bottomSeedTeamAbbrev} leads ${bottomSeedWins}-${topSeedWins}`;
-    } else if (topSeedWins > bottomSeedWins) {
-      return `${topSeedTeamAbbrev} leads ${topSeedWins}-${bottomSeedWins}`;
-    }
-
-    return `Series tied ${bottomSeedWins}-${topSeedWins}`;
-  };
 
   return (
     <Link
-      className="mb-4 mr-2.5 cursor-pointer rounded-sm border border-gray-300 p-4 transition-all hover:border-gray-800 md:w-80"
+      className="mb-4 mr-2.5 cursor-pointer rounded-sm border border-gray-300 p-4 transition-all hover:border-gray-800"
       to={`/game/${id}`}
     >
-      <div>
-        <div>{`Round ${round}, Gm ${gameNumberOfSeries}`}</div>
-        {roundStatus()}
-      </div>
+      {gameType === 3 ? <RoundStatus seriesStatus={game.seriesStatus} /> : null}
+
       <div className="my-2 text-sm">
         <GameState
           clock={clock}

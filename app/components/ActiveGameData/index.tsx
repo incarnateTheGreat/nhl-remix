@@ -1,4 +1,5 @@
 import Boxscore from "../Boxscore";
+import GameStats from "../GameStats";
 import Linescore from "../Linescore";
 import Penalties from "../Penalties";
 import Scoring from "../Scoring";
@@ -49,6 +50,10 @@ export default function ActiveGameData() {
 
         <div className="mt-1">
           <ShotsOnGoal />
+        </div>
+
+        <div className="mt-1">
+          <GameStats />
         </div>
       </div>
     </div>

@@ -72,8 +72,8 @@ type PenaltiesType = {
 
 type TeamGameStats = {
   category: string;
-  awayValue: number | string;
-  homeValue: number | string;
+  awayValue: number;
+  homeValue: number;
 };
 
 type Clock = {
@@ -184,6 +184,18 @@ type TeamLeadersL5 = {
   };
 };
 
+type SeriesStatus = {
+  round: number;
+  seriesAbbrev: string;
+  seriesLetter: string;
+  neededToWin: number;
+  topSeedTeamAbbrev: string;
+  topSeedWins: number;
+  bottomSeedTeamAbbrev: string;
+  bottomSeedWins: number;
+  gameNumberOfSeries: number;
+};
+
 type Matchup = {
   season: number;
   gameType: number;
@@ -259,17 +271,7 @@ type GameBoxType = {
   gameScheduleState: string;
   awayTeam: Team;
   homeTeam: Team;
-  seriesStatus: {
-    round: number;
-    seriesAbbrev: string;
-    seriesLetter: string;
-    neededToWin: number;
-    topSeedTeamAbbrev: string;
-    topSeedWins: number;
-    bottomSeedTeamAbbrev: string;
-    bottomSeedWins: number;
-    gameNumberOfSeries: number;
-  };
+  seriesStatus: SeriesStatus;
   period: number;
   periodDescriptor: PeriodDescriptior;
   clock: Clock;
@@ -354,6 +356,7 @@ export type {
   PenaltiesType,
   PeriodDescriptior,
   PlayerByGameStats,
+  SeriesStatus,
   SkaterStats,
   Summary,
   Team,

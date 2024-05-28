@@ -1,22 +1,12 @@
 import { LinescoreByPeriod } from "~/types";
-import { handlePeriodLabel } from "~/utils";
+import { handlePeriodGoals, handlePeriodLabel } from "~/utils";
 
 type TableHeaderProps = {
   byPeriod: LinescoreByPeriod;
 };
 
 export default function TableHeader({ byPeriod }: TableHeaderProps) {
-  // If multiple OT games are present, separate and keep the last one to display.
-  const periodData = [...byPeriod].filter(
-    (game) => game.periodDescriptor.periodType !== "OT",
-  );
-  const OTPeriods = [...byPeriod]
-    .filter((game) => game.periodDescriptor.periodType === "OT")
-    .pop();
-
-  if (OTPeriods) {
-    periodData.push(OTPeriods);
-  }
+  const periodData = [...handlePeriodGoals(byPeriod)];
 
   return (
     <thead>

@@ -58,7 +58,15 @@ export default function GameState({
   }
 
   if (gameState === "OFF" || gameState === "FINAL") {
-    if (periodDescriptor.periodType === "OT") {
+    if (periodDescriptor.periodType === "SO") {
+      return (
+        <span className="bg-gray-500 px-2 py-0.5 font-bold text-white">
+          FINAL/SO
+        </span>
+      );
+    }
+
+    if (periodDescriptor.periodType === "OT" && !periodDescriptor.otPeriods) {
       return (
         <span className="bg-gray-500 px-2 py-0.5 font-bold text-white">
           FINAL/OT
