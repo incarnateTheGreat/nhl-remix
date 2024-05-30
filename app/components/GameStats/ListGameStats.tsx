@@ -1,12 +1,13 @@
 import { useCallback } from "react";
 import { useRouteLoaderData } from "@remix-run/react";
 
+import StatsBar from "../StatsBar";
+
 import { getTeamColour } from "./utils";
 
 import { Game } from "~/types";
-import { cn } from "~/utils";
 
-const TEAM_GAME_STATS: { [k: string]: string } = {
+const LIST_GAME_STATS: { [k: string]: string } = {
   sog: "Shots on Goal",
   faceoffWinningPctg: "Faceoff %",
   powerPlayPctg: "Power-Play %",
@@ -50,10 +51,11 @@ export default function ListGaneStats() {
         const { category } = gameStat;
         const { awayValue, homeValue } = gameStat;
 
-        let awayValueToDisplay, homeValueToDisplay;
+        let awayValueToDisplay;
+        let homeValueToDisplay;
 
         const sum = awayValue + homeValue;
-        let awayBar, homeBar;
+        let awayBar, homeBar, subText;
 
         if (sum === 0) {
           awayBar = 50;
@@ -72,57 +74,34 @@ export default function ListGaneStats() {
           );
 
           if (powerPlayPctg) {
-            awayValueToDisplay = `${powerPlayPctg.awayValue * 100}%`;
-            homeValueToDisplay = `${powerPlayPctg.homeValue * 100}%`;
+            awayValueToDisplay = `${(powerPlayPctg.awayValue * 100).toFixed(1)}%`;
+            homeValueToDisplay = `${(powerPlayPctg.homeValue * 100).toFixed(1)}%`;
           }
         } else {
           awayValueToDisplay = awayValue;
           homeValueToDisplay = homeValue;
         }
 
-        return (
-          <div key={category} className=" mb-4 last:mb-0">
-            <div className="flex justify-between">
-              <span className="text-xl font-bold">{awayValueToDisplay}</span>
-              <span>{TEAM_GAME_STATS[category]}</span>
-              <span className="text-xl font-bold">{homeValueToDisplay}</span>
-            </div>
-            <div className="flex gap-2">
-              <div
-                className={cn("flex", {
-                  hidden: awayBar === 0,
-                })}
-                style={{
-                  flexGrow: awayBar,
-                }}
-              >
-                <div
-                  className={cn("h-2 w-full", {
-                    [awayBorderStyle]: awayBar,
-                  })}
-                />
-              </div>
-              <div
-                className="flex"
-                style={{
-                  flexGrow: homeBar,
-                }}
-              >
-                <div
-                  className={cn("h-2 w-full", {
-                    [homeBorderStyle]: homeBar,
-                  })}
-                />
-              </div>
-            </div>
-            {category === "powerPlayPctg" ? (
-              <div className="flex justify-between text-sm text-gray-500">
-                <span>{powerPlayFractionValues?.awayValue}</span>
-                <span>{powerPlayFractionValues?.homeValue}</span>
-              </div>
-            ) : null}
-          </div>
-        );
+        if (category === "powerPlayPctg") {
+          subText = {
+            awayValue: powerPlayFractionValues?.awayValue,
+            homeValue: powerPlayFractionValues?.homeValue,
+          };
+        }
+
+        const dataToPass = {
+          category,
+          label: LIST_GAME_STATS[category],
+          awayValueToDisplay,
+          homeValueToDisplay,
+          awayBar,
+          homeBar,
+          awayBorderStyle,
+          homeBorderStyle,
+          subText,
+        };
+
+        return <StatsBar key={category} {...dataToPass} />;
       })}
     </div>
   );

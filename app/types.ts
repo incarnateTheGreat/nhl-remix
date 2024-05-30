@@ -216,6 +216,25 @@ type Matchup = {
   goalieSeasonStats: GoalieStats[];
   skaterSeasonStats: SkaterStats[];
   seasonSeries: SeasonSeries[];
+  teamSeasonStats: TeamSeasonStats;
+};
+
+type TeamSeasonStatsPerTeam = {
+  ppPctg: number;
+  pkPctg: number;
+  faceoffWinningPctg: number;
+  goalsForPerGamePlayed: number;
+  goalsAgainstPerGamePlayed: number;
+  ppPctgRank: number;
+  pkPctgRank: number;
+  faceoffWinningPctgRank: number;
+  goalsForPerGamePlayedRank: number;
+  goalsAgainstPerGamePlayedRank: number;
+};
+
+type TeamSeasonStats = {
+  awayTeam: TeamSeasonStatsPerTeam;
+  homeTeam: TeamSeasonStatsPerTeam;
 };
 
 type SeasonSeries = {
@@ -402,4 +421,6 @@ export type {
   Team,
   TeamGameStats,
   TeamLeadersL5,
+  TeamSeasonStats,
+  TeamSeasonStatsPerTeam,
 };

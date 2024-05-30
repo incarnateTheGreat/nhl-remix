@@ -64,8 +64,6 @@ export default function Game() {
 
   const { gameState } = gameDataToRender;
 
-  console.log(gameDataToRender);
-
   const visibilityChange = useCallback(() => {
     if (
       document.visibilityState === "visible" &&

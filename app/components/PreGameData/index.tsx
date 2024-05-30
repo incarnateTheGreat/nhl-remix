@@ -1,6 +1,7 @@
 import Boxscore from "../Boxscore";
 import PlayersToWatch from "../PlayersToWatch";
 import SeasonSeries from "../SeasonSeries";
+import TeamStats from "../TeamStats";
 
 import GameInfo from "./GameInfo";
 
@@ -15,6 +16,9 @@ export default function PreGameData() {
       </div>
       <div className="mt-2 flex w-full flex-col overflow-x-auto border border-slate-500 px-4 py-2 lg:mt-0 lg:w-96">
         <SeasonSeries />
+        <div className="my-4">
+          <TeamStats />
+        </div>
         <div className="mt-4">
           <GameInfo />
         </div>

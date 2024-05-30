@@ -8,7 +8,7 @@ type GetTeamColourProps = {
 const getTeamColour = ({
   awayTeamAbbrev,
   homeTeamAbbrev,
-}: GetTeamColourProps): Record<string, unknown> => {
+}: GetTeamColourProps): Record<string, string> => {
   const awayColour = Object.values(TEAM_COLOURS_UTILS[awayTeamAbbrev])[0];
   const homeColour = Object.values(TEAM_COLOURS_UTILS[homeTeamAbbrev])[0];
 

@@ -1,8 +1,6 @@
 import type { Config } from "tailwindcss";
 import { RecursiveKeyValuePair, ResolvableTo } from "tailwindcss/types/config";
 
-// import { TEAM_COLOURS_UTILS } from "~/utils";
-
 export const TEAM_COLOURS_UTILS: { [k: string]: Record<string, unknown> } = {
   ANA: { 0: "#010101", 1: "#a2aaad", 2: "#fc4c02", 3: "#85714d" },
   ARI: { 0: "#010101", 1: "#862633", 2: "#ddcba4" },
@@ -21,7 +19,7 @@ export const TEAM_COLOURS_UTILS: { [k: string]: Record<string, unknown> } = {
   },
   COL: { 0: "#010101", 1: "#236192", 2: "#a4a9ad", 3: "#6f263d" },
   CBJ: { 0: "#041e42", 1: "#a4a9ad", 2: "#c8102e" },
-  DAL: { 0: "#010101", 1: "#006341", 2: "#8a8d8f" },
+  DAL: { 0: "#006341", 1: "#010101", 2: "#8a8d8f" },
   DET: { 0: "#c8102e" },
   EDM: { 0: "#00205b", 1: "#cf4520" },
   FLA: { 0: "#041e42", 1: "#b9975b", 2: "#c8102e" },
