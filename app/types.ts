@@ -277,6 +277,7 @@ type SeasonSeries = {
 type Summary = {
   shotsByPeriod: LinescoreByPeriodObject[];
   teamGameStats: TeamGameStats[];
+  seasonSeries: SeasonSeries[];
   scoring: {
     periodDescriptor: PeriodDescriptior;
     goals: GoalsType[];

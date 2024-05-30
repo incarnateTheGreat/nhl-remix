@@ -3,6 +3,7 @@ import GameStats from "../GameStats";
 import Linescore from "../Linescore";
 import Penalties from "../Penalties";
 import Scoring from "../Scoring";
+import SeasonSeries from "../SeasonSeries";
 import ShotsOnGoal from "../ShotsOnGoal";
 import Tabs from "../Tabs";
 
@@ -51,9 +52,11 @@ export default function ActiveGameData() {
         <div className="mt-1">
           <ShotsOnGoal />
         </div>
-
         <div className="mt-1">
           <GameStats />
+        </div>
+        <div className="mt-4">
+          <SeasonSeries />
         </div>
       </div>
     </div>
