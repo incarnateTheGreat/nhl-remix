@@ -2,7 +2,7 @@ import { Link } from "@remix-run/react";
 
 import NHL_Logo from "~/assets/nhl_logo.svg";
 
-export default function Header() {
+export default function SiteHeader() {
   return (
     <header>
       <nav className="w-full md:mx-0">

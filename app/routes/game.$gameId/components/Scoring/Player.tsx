@@ -11,7 +11,7 @@ export default function Player({ goal }: PlayerProps) {
   return (
     <div className="flex items-center">
       <img
-        className="rounded-full border border-slate-500"
+        className="default_border rounded-full"
         src={goal.headshot}
         width={50}
         alt={`${goal.firstName.default} ${goal.lastName.default}`}

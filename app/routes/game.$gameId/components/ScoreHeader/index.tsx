@@ -26,7 +26,7 @@ export default function ScoreHeader() {
   return (
     <div>
       <span className="font-bold">{time}</span>
-      <div className="mt-2 flex flex-col items-start border border-slate-500 p-2 lg:flex-row lg:items-center">
+      <div className="default_border mt-2 flex flex-col items-start p-2 lg:flex-row lg:items-center">
         <TeamHeader team={awayTeam} homeAway="away" gameState={gameState} />
         <div className="order-1 ml-auto flex w-full justify-end lg:order-2 lg:w-2/12 lg:justify-center">
           <GameState

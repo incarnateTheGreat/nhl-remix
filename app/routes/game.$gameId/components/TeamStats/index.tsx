@@ -1,8 +1,7 @@
 import { useRouteLoaderData } from "@remix-run/react";
 
-import { getTeamColour } from "../GameStats/utils";
-import StatsBar from "../StatsBar";
-
+import { getTeamColour } from "~/components/GameStats/utils";
+import StatsBar from "~/routes/game.$gameId/components/StatsBar";
 import { Game, TeamSeasonStatsPerTeam } from "~/types";
 import { getLogo, getNumberWithOrdinal } from "~/utils";
 

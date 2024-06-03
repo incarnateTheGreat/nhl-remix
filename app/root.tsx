@@ -9,8 +9,8 @@ import {
 
 import "@fontsource/inter";
 
-import Footer from "./components/Footer";
-import Header from "./components/Header";
+import SiteFooter from "./components/SiteFooter";
+import SiteHeader from "./components/SiteHeader";
 import appStylesHref from "./app.css?url";
 
 import "@fontsource/inter/400.css";
@@ -48,7 +48,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Header />
+        <SiteHeader />
         <main>
           <section
             id="detail"
@@ -57,7 +57,7 @@ export default function App() {
             <Outlet />
           </section>
         </main>
-        <Footer />
+        <SiteFooter />
 
         <ScrollRestoration />
         <Scripts />

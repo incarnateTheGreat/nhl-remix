@@ -3,9 +3,10 @@ import { MetaFunction } from "@remix-run/node";
 import { useLoaderData, useRevalidator } from "@remix-run/react";
 import { format } from "date-fns";
 
+import PreGameData from "./components/PreGameData";
+import ScoreHeader from "./components/ScoreHeader";
+
 import ActiveGameData from "~/components/ActiveGameData";
-import PreGameData from "~/components/PreGameData";
-import ScoreHeader from "~/components/ScoreHeader";
 import type { Game } from "~/types";
 import { deepMerge, isGameActive, isGameComplete, isPreGame } from "~/utils";
 

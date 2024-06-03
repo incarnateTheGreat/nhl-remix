@@ -1,10 +1,9 @@
 import { useCallback } from "react";
 import { useRouteLoaderData } from "@remix-run/react";
 
-import StatsBar from "../StatsBar";
-
 import { getTeamColour } from "./utils";
 
+import StatsBar from "~/routes/game.$gameId/components/StatsBar";
 import { Game } from "~/types";
 
 const LIST_GAME_STATS: { [k: string]: string } = {

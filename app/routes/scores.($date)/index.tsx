@@ -8,8 +8,9 @@ import {
 } from "@remix-run/react";
 import { format, parseISO } from "date-fns";
 
+import Games from "./components/Games";
+
 import DatePickerInternal from "~/components/DatePickerInternal";
-import Games from "~/components/Games";
 import Loading from "~/components/Loading";
 import { GamesType, GameWeek } from "~/types";
 

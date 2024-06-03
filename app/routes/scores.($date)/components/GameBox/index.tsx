@@ -1,10 +1,10 @@
 import { Link } from "@remix-run/react";
 
-import GameState from "../ScoreHeader/GameState";
 import TeamRow from "../TeamRow";
 
 import RoundStatus from "./RoundStatus";
 
+import GameState from "~/routes/game.$gameId/components/ScoreHeader/GameState";
 import { GameBoxType } from "~/types";
 
 type GameBoxProps = {

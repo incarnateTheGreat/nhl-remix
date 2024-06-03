@@ -1,12 +1,11 @@
 import { useRouteLoaderData } from "@remix-run/react";
 
-import Tabs from "../Tabs";
-
 import Defensemen from "./Defensemen";
 import Forwards from "./Forwards";
 import Goaltenders from "./Goaltenders";
 import { preGameData, reorderGoalies } from "./utils";
 
+import Tabs from "~/components/Tabs";
 import { Game, PlayerByGameStats } from "~/types";
 import { isPreGame } from "~/utils";
 

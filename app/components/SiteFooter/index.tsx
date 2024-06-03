@@ -1,4 +1,4 @@
-export default function Footer() {
+export default function SiteFooter() {
   return (
     <footer>
       <span className="flex w-full items-center font-semibold lg:mx-auto lg:w-[1280px]">

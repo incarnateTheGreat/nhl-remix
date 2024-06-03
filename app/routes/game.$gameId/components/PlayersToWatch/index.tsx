@@ -57,7 +57,7 @@ export default function PlayersToWatch() {
                       </span>
                     </div>
                     <img
-                      className="order-1 mr-4 rounded-full border border-slate-500 lg:order-none lg:mr-0"
+                      className="default_border order-1 mr-4 rounded-full lg:order-none lg:mr-0"
                       src={awayLeader.headshot}
                       alt={awayLeader.name.default}
                       width={75}
@@ -67,7 +67,7 @@ export default function PlayersToWatch() {
                 <div className="my-4 flex items-center justify-between lg:w-1/2 lg:pr-4">
                   <div className="flex w-full lg:pl-8">
                     <img
-                      className="rounded-full border border-slate-500"
+                      className="default_border rounded-full"
                       src={homeLeader.headshot}
                       alt={homeLeader.name.default}
                       width={75}
