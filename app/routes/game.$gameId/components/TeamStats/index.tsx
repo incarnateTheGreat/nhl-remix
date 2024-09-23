@@ -45,14 +45,14 @@ export default function TeamStats() {
         );
 
         const awayTeamPercentage =
-          teamSeasonStats.awayTeam[percentage as keyof TeamSeasonStatsPerTeam];
+          teamSeasonStats?.awayTeam?.[percentage as keyof TeamSeasonStatsPerTeam] ?? null
         const homeTeamPercentage =
-          teamSeasonStats.homeTeam[percentage as keyof TeamSeasonStatsPerTeam];
+          teamSeasonStats?.homeTeam?.[percentage as keyof TeamSeasonStatsPerTeam] ?? null
 
         const awayTeamRank =
-          teamSeasonStats.awayTeam[rank as keyof TeamSeasonStatsPerTeam];
+          teamSeasonStats?.awayTeam?.[rank as keyof TeamSeasonStatsPerTeam] ?? null
         const homeTeamRank =
-          teamSeasonStats.homeTeam[rank as keyof TeamSeasonStatsPerTeam];
+          teamSeasonStats?.homeTeam?.[rank as keyof TeamSeasonStatsPerTeam] ?? null
 
         const awayValueToDisplay = `${(awayTeamPercentage * 100).toFixed(1)}%`;
         const homeValueToDisplay = `${(homeTeamPercentage * 100).toFixed(1)}%`;
@@ -65,7 +65,7 @@ export default function TeamStats() {
           awayValue: getNumberWithOrdinal(awayTeamRank),
           homeValue: getNumberWithOrdinal(homeTeamRank),
         };
-
+        
         const dataToPass = {
           label,
           awayValueToDisplay,

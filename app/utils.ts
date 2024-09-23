@@ -76,6 +76,8 @@ const getLogo = (teamAbbrev: string) => {
 };
 
 const getNumberWithOrdinal = (n: number) => {
+  if (!n) return "--"
+
   const s = ["th", "st", "nd", "rd"];
   const v = n % 100;
 

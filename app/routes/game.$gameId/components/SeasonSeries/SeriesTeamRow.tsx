@@ -20,7 +20,7 @@ export default function SeriesTeamRow({
       className={cn("flex items-center justify-between last:mt-1", classNames)}
     >
       <div className="flex">
-        <img src={logo} alt={abbrev} width={35} />
+        <img src={logo} alt={abbrev} width={35} className="mr-2" />
         <span className="font-semibold">{abbrev}</span>
       </div>
       <span>{score}</span>

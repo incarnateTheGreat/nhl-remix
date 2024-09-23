@@ -40,13 +40,14 @@ export const TEAM_COLOURS_UTILS: { [k: string]: Record<string, unknown> } = {
   TOR: { 0: "#00205b" },
   VAN: { 0: "#00205b", 1: "#97999b", 2: "#041c2c" },
   VGK: { 0: "#010101", 1: "#b4975a", 2: "#333f42" },
-  WAS: {
+  WSH: {
     0: "#041e42",
     1: "#a2aaad",
     2: "#782f40",
     3: "#a6192e",
     4: "#53565a",
   },
+  UTA: { 0: "#041e42", 1: "#c8102e" },
   WPG: { 0: "#041e42", 1: "#c8102e" },
 };
 

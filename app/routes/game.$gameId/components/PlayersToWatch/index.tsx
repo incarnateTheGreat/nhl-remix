@@ -26,7 +26,7 @@ export default function PlayersToWatch() {
         <img src={getLogo(awayTeam.abbrev)} alt={awayTeam.abbrev} width={75} />
         <img src={getLogo(homeTeam.abbrev)} alt={homeTeam.abbrev} width={75} />
       </div>
-      <div>
+      {/* <div>
         {teamLeadersL5.map((stat) => {
           const { category, awayLeader, homeLeader } = stat;
 
@@ -94,7 +94,7 @@ export default function PlayersToWatch() {
             </div>
           );
         })}
-      </div>
+      </div> */}
     </div>
   );
 }
