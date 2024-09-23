@@ -21,7 +21,11 @@ export default function Penalties() {
             <h2 className="mb-2 border-b border-gray-700 font-bold">
               {PERIODS[periodPenalty.periodDescriptor.number]} Period
             </h2>
-            <PenaltyByPeriod periodPenalty={periodPenalty} />
+            {periodPenalty.penalties.length > 0 ? (
+              <PenaltyByPeriod periodPenalty={periodPenalty} />
+            ) : (
+              "No Penalties."
+            )}
           </div>
         );
       })}

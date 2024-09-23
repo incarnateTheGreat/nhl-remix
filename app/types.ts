@@ -65,7 +65,9 @@ type PenaltiesType = {
   type: string;
   duration: number;
   committedByPlayer: string;
-  teamAbbrev: string;
+  teamAbbrev: {
+    default: string;
+  };
   drawnBy: string;
   descKey: string;
 };

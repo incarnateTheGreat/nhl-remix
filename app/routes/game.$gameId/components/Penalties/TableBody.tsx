@@ -20,7 +20,7 @@ export default function TableBody({ penalties }: PenaltiesTableBodyProps) {
             <td className="w-12 p-2">
               <img
                 width={40}
-                src={getLogo(teamAbbrev)}
+                src={getLogo(teamAbbrev.default)}
                 alt={`${committedByPlayer} - ${descKey}`}
               />
             </td>
