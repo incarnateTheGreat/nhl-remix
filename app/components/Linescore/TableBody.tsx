@@ -11,9 +11,7 @@ export default function TableBody() {
   const {
     awayTeam,
     homeTeam,
-    summary: {
-      linescore: { byPeriod, totals },
-    },
+    linescore: { byPeriod, totals },
   } = gameDataToRender;
 
   const periodData = [...handlePeriodGoals(byPeriod)];

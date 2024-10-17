@@ -380,7 +380,22 @@ type Game = {
   otInUse: boolean;
   tiesInUse: boolean;
   clock: Clock;
-  summary: Summary;
+  // summary: Summary;
+  shotsByPeriod: LinescoreByPeriodObject[];
+  teamGameStats: TeamGameStats[];
+  seasonSeries: SeasonSeries[];
+  scoring: {
+    periodDescriptor: PeriodDescriptior;
+    goals: GoalsType[];
+  }[];
+  penalties: {
+    periodDescriptor: PeriodDescriptior;
+    penalties: PenaltiesType[];
+  }[];
+  linescore: {
+    byPeriod: LinescoreByPeriod;
+    totals: LinescoreTotals;
+  };
   playerByGameStats: PlayerByGameStats;
   matchup: Matchup;
 };

@@ -19,9 +19,7 @@ export default function SeasonSeries() {
 
     seasonSeriesData = seasonSeries;
   } else {
-    const {
-      summary: { seasonSeries },
-    } = gameDataToRender;
+    const { seasonSeries } = gameDataToRender;
 
     seasonSeriesData = seasonSeries;
   }

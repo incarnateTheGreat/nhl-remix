@@ -18,9 +18,7 @@ export default function Linescore() {
   const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
 
   const {
-    summary: {
-      linescore: { byPeriod },
-    },
+    linescore: { byPeriod },
   } = gameDataToRender;
 
   return (

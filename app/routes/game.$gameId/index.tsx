@@ -41,16 +41,21 @@ export const loader = async ({ params }: LoaderProps) => {
   const fetchGameDataUrls = [
     fetch(`https://api-web.nhle.com/v1/gamecenter/${params.gameId}/landing`),
     fetch(`https://api-web.nhle.com/v1/gamecenter/${params.gameId}/boxscore`),
+    fetch(`https://api-web.nhle.com/v1/gamecenter/${params.gameId}/right-rail`),
   ];
 
   try {
-    const [gameDataResponse, boxscoreDataResponse]: Response[] =
-      await Promise.all(fetchGameDataUrls);
+    const [
+      gameDataResponse,
+      boxscoreDataResponse,
+      rightRailResponse,
+    ]: Response[] = await Promise.all(fetchGameDataUrls);
 
     const gameData = await gameDataResponse.json();
     const boxscoreData = await boxscoreDataResponse.json();
+    const rightRail = await rightRailResponse.json();
 
-    return deepMerge(gameData, boxscoreData);
+    return deepMerge(gameData, boxscoreData, rightRail);
   } catch (e) {
     return {
       gameData: [],

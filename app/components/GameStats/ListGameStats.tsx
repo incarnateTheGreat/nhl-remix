@@ -20,11 +20,7 @@ const LIST_GAME_STATS: { [k: string]: string } = {
 export default function ListGaneStats() {
   const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
 
-  const {
-    awayTeam,
-    homeTeam,
-    summary: { teamGameStats },
-  } = gameDataToRender;
+  const { awayTeam, homeTeam, teamGameStats } = gameDataToRender;
 
   const filteredTeamGameStats = useCallback(() => {
     return teamGameStats.filter((gameStat) => {

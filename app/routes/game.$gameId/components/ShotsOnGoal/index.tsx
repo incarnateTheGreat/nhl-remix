@@ -8,11 +8,7 @@ import { Game, TeamGameStats } from "~/types";
 export default function ShotsOnGoal() {
   const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
 
-  const {
-    awayTeam,
-    homeTeam,
-    summary: { shotsByPeriod, teamGameStats },
-  } = gameDataToRender;
+  const { awayTeam, homeTeam, shotsByPeriod, teamGameStats } = gameDataToRender;
 
   const totalSOG = teamGameStats.find(
     (stat) => stat.category === "sog",
