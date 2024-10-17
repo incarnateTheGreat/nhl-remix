@@ -3,26 +3,15 @@ import { useRouteLoaderData } from "@remix-run/react";
 import SeriesGameBox from "./SeriesGameBox";
 
 import type { Game, SeasonSeries } from "~/types";
-import { isPreGame } from "~/utils";
 
 export default function SeasonSeries() {
   const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
 
-  const { gameState } = gameDataToRender;
-
   let seasonSeriesData: SeasonSeries[] = [];
 
-  if (isPreGame(gameState)) {
-    const {
-      matchup: { seasonSeries },
-    } = gameDataToRender;
+  const { seasonSeries } = gameDataToRender;
 
-    seasonSeriesData = seasonSeries;
-  } else {
-    const { seasonSeries } = gameDataToRender;
-
-    seasonSeriesData = seasonSeries;
-  }
+  seasonSeriesData = seasonSeries;
 
   return (
     <div className="flex flex-col">

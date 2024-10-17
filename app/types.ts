@@ -50,6 +50,8 @@ type GoalsType = {
   headshot: string;
   highlightClip: number;
   highlightClipFr: number;
+  discreteClip: number;
+  discreteClipFr: number;
   goalsToDate: number;
   awayScore: number;
   homeScore: number;
@@ -197,28 +199,6 @@ type SeriesStatus = {
   bottomSeedTeamAbbrev: string;
   bottomSeedWins: number;
   gameNumberOfSeries: number;
-};
-
-type Matchup = {
-  season: number;
-  gameType: number;
-  teamLeadersL5: TeamLeadersL5[];
-  gameInfo: {
-    awayTeam: {
-      headCoach: {
-        default: string;
-      };
-    };
-    homeTeam: {
-      headCoach: {
-        default: string;
-      };
-    };
-  };
-  goalieSeasonStats: GoalieStats[];
-  skaterSeasonStats: SkaterStats[];
-  seasonSeries: SeasonSeries[];
-  teamSeasonStats: TeamSeasonStats;
 };
 
 type TeamSeasonStatsPerTeam = {
@@ -380,7 +360,6 @@ type Game = {
   otInUse: boolean;
   tiesInUse: boolean;
   clock: Clock;
-  // summary: Summary;
   shotsByPeriod: LinescoreByPeriodObject[];
   teamGameStats: TeamGameStats[];
   seasonSeries: SeasonSeries[];
@@ -397,7 +376,22 @@ type Game = {
     totals: LinescoreTotals;
   };
   playerByGameStats: PlayerByGameStats;
-  matchup: Matchup;
+  teamLeadersL5: TeamLeadersL5[];
+  gameInfo: {
+    awayTeam: {
+      headCoach: {
+        default: string;
+      };
+    };
+    homeTeam: {
+      headCoach: {
+        default: string;
+      };
+    };
+  };
+  goalieSeasonStats: GoalieStats[];
+  skaterSeasonStats: SkaterStats[];
+  teamSeasonStats: TeamSeasonStats;
 };
 
 type GameWeek = {
@@ -428,7 +422,6 @@ export type {
   LinescoreByPeriod,
   LinescoreByPeriodObject,
   LinescoreTotals,
-  Matchup,
   PenaltiesType,
   PeriodDescriptior,
   PlayerByGameStats,

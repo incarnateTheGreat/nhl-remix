@@ -5,13 +5,8 @@ import { Game } from "~/types";
 export default function GameInfo() {
   const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
 
-  const {
-    awayTeam,
-    homeTeam,
-    tvBroadcasts,
-    venue,
-    matchup: { gameInfo },
-  } = gameDataToRender;
+  const { awayTeam, homeTeam, tvBroadcasts, venue, gameInfo } =
+    gameDataToRender;
 
   const tvBroadcastsStr = tvBroadcasts.map((tv) => tv.network).join(", ");
 
