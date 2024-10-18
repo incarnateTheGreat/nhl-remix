@@ -47,7 +47,11 @@ export default function Goals({ period }: GoalsProps) {
             timeInPeriod={goal.timeInPeriod}
             shotType={goal.shotType}
           />
-          <VideoThumbnail videoId={highlightClip} />
+          {highlightClip ? (
+            <VideoThumbnail videoId={highlightClip} />
+          ) : (
+            <span className="ml-2 flex h-12 w-12">&nbsp;</span>
+          )}
         </div>
       </div>
     );
