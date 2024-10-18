@@ -7,7 +7,7 @@ type ScenarioProps = {
 };
 
 const scoreSituationClasses =
-  "flex w-full lg:w-24 flex-col items-center bg-black p-2 text-white h-16";
+  "flex w-full lg:w-24 flex-col items-center bg-gray-100 p-1 text-black h-14 text-xs justify-center";
 
 export default function Scenario({
   scoreSituation,

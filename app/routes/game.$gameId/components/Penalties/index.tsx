@@ -17,14 +17,14 @@ export default function Penalties() {
       <h2 className="heading">Penalties</h2>
       {penalties.map((periodPenalty, idx) => {
         return (
-          <div key={idx} className="mb-4">
+          <div key={idx} className="mb-4 flex flex-col">
             <h2 className="border-b border-gray-700 font-bold">
               {PERIODS[periodPenalty.periodDescriptor.number]} Period
             </h2>
             {periodPenalty.penalties.length > 0 ? (
               <PenaltyByPeriod periodPenalty={periodPenalty} />
             ) : (
-              "No Penalties."
+              <span className="py-1">No Penalties</span>
             )}
           </div>
         );
