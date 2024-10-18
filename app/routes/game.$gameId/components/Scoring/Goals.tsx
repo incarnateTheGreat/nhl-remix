@@ -4,6 +4,7 @@ import Player from "./Player";
 import Scenario from "./Scenario";
 
 import type { Game, GoalsType, PeriodDescriptior } from "~/types";
+import VideoThumbnail from "../VideoThumbnail";
 
 type GoalsProps = {
   period: {
@@ -22,7 +23,7 @@ export default function Goals({ period }: GoalsProps) {
   }
 
   return period.goals.map((goal) => {
-    const { awayScore, homeScore } = goal;
+    const { awayScore, homeScore, highlightClip } = goal;
 
     let scoreSituation = "";
 
@@ -35,14 +36,23 @@ export default function Goals({ period }: GoalsProps) {
     }
 
     return (
-      <div key={goal.timeInPeriod} className="mb-3 flex flex-col lg:flex-row">
+      <div
+        key={goal.timeInPeriod}
+        className="mb-3 flex flex-col justify-between lg:flex-row"
+      >
         <Player goal={goal} />
-
-        <Scenario
-          scoreSituation={scoreSituation}
-          timeInPeriod={goal.timeInPeriod}
-          shotType={goal.shotType}
-        />
+        <div className="flex items-center">
+          <Scenario
+            scoreSituation={scoreSituation}
+            timeInPeriod={goal.timeInPeriod}
+            shotType={goal.shotType}
+          />
+          {highlightClip ? (
+            <VideoThumbnail videoId={highlightClip} />
+          ) : (
+            <span className="ml-2 flex h-12 w-12">&nbsp;</span>
+          )}
+        </div>
       </div>
     );
   });
