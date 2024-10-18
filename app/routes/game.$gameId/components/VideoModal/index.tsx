@@ -47,7 +47,7 @@ export default function VideoModal({ videoData, setVisible }: VideoModalProps) {
           <source src={videoData.videoUrl} type="video/mp4" />
         </video>
         <button
-          className="absolute right-1 top-1 z-20 cursor-pointer bg-slate-200/60 text-lg font-semibold text-black opacity-90 transition-opacity duration-75 hover:bg-slate-200"
+          className="absolute right-2 top-2 z-20 cursor-pointer bg-slate-200/40 text-lg font-bold text-black opacity-90 transition-opacity duration-75 hover:bg-slate-200"
           onClick={() => setVisible(false)}
         >
           X
