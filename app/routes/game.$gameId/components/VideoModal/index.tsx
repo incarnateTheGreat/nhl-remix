@@ -1,14 +1,12 @@
 import { Dispatch, SetStateAction, useEffect } from "react";
+import { VideoData } from "../VideoThumbnail";
 
 type VideoModalProps = {
-  videoToLoad: string;
+  videoData: VideoData;
   setVisible: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function VideoModal({
-  videoToLoad,
-  setVisible,
-}: VideoModalProps) {
+export default function VideoModal({ videoData, setVisible }: VideoModalProps) {
   const closeModalOnKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
       setVisible(false);
@@ -43,12 +41,13 @@ export default function VideoModal({
           controls
           autoPlay
           className="h-full w-full rounded bg-transparent"
+          poster={videoData.poster}
         >
           <track kind="captions" />
-          <source src={videoToLoad} type="video/mp4" />
+          <source src={videoData.videoUrl} type="video/mp4" />
         </video>
         <button
-          className="bg-game-background/40 absolute right-1 top-1 z-20 cursor-pointer px-3 text-lg font-semibold text-black opacity-90"
+          className="absolute right-1 top-1 z-20 cursor-pointer bg-slate-200/60 text-lg font-semibold text-black opacity-90 transition-opacity duration-75 hover:bg-slate-200"
           onClick={() => setVisible(false)}
         >
           X

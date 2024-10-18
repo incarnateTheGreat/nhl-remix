@@ -6,6 +6,11 @@ type VideoThumbnailProps = {
   videoId: number;
 };
 
+export type VideoData = {
+  poster: string;
+  videoUrl: string;
+};
+
 const brightcoveApi = axios.create({
   baseURL: "https://edge.api.brightcove.com",
   headers: {
@@ -16,7 +21,10 @@ const brightcoveApi = axios.create({
 
 export default function VideoThumbnail({ videoId }: VideoThumbnailProps) {
   const [visible, setVisible] = useState(false);
-  const [videoToLoad, setVideoToLoad] = useState("");
+  const [videoData, setVideoData] = useState<VideoData>({
+    poster: "",
+    videoUrl: "",
+  });
 
   async function getData() {
     const { data } = await brightcoveApi.get(
@@ -24,7 +32,10 @@ export default function VideoThumbnail({ videoId }: VideoThumbnailProps) {
     );
 
     if (data && data.sources.length > 0) {
-      setVideoToLoad(data.sources[data.sources.length - 1].src);
+      setVideoData({
+        poster: data.poster,
+        videoUrl: data.sources[data.sources.length - 1].src,
+      });
       setVisible(true);
     }
   }
@@ -47,7 +58,7 @@ export default function VideoThumbnail({ videoId }: VideoThumbnailProps) {
       </button>
 
       {visible ? (
-        <VideoModal videoToLoad={videoToLoad} setVisible={setVisible} />
+        <VideoModal videoData={videoData} setVisible={setVisible} />
       ) : null}
     </>
   );
