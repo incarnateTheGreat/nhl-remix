@@ -63,6 +63,7 @@ type GoalsType = {
 };
 
 type PenaltiesType = {
+  servedBy: string;
   timeInPeriod: string;
   type: string;
   duration: number;
@@ -360,6 +361,7 @@ type Game = {
   otInUse: boolean;
   tiesInUse: boolean;
   clock: Clock;
+  summary: Summary;
   shotsByPeriod: LinescoreByPeriodObject[];
   teamGameStats: TeamGameStats[];
   seasonSeries: SeasonSeries[];

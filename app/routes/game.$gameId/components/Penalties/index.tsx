@@ -18,7 +18,7 @@ export default function Penalties() {
       {penalties.map((periodPenalty, idx) => {
         return (
           <div key={idx} className="mb-4">
-            <h2 className="mb-2 border-b border-gray-700 font-bold">
+            <h2 className="border-b border-gray-700 font-bold">
               {PERIODS[periodPenalty.periodDescriptor.number]} Period
             </h2>
             {periodPenalty.penalties.length > 0 ? (

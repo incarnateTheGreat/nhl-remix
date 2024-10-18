@@ -23,7 +23,7 @@ const tabData = [
 
 export default function ActiveGameData() {
   tabData[0].component = () => (
-    <div className="mt-2">
+    <div className="mt-4">
       <Scoring />
       <div className="mt-1">
         <Penalties />
