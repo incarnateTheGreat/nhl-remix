@@ -37,7 +37,7 @@ export default function DatePickerInternal({
           return (
             <Link
               key={date}
-              to={`/scores/${date}`}
+              to={`/${date}`}
               className={cn("navLink mr-1.5", {
                 selected: date === dateToFilter,
               })}

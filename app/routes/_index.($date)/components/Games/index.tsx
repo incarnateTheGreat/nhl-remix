@@ -6,7 +6,7 @@ import type { GamesType } from "~/types";
 
 export default function Games() {
   const gameDataToRender = useRouteLoaderData(
-    "routes/scores.($date)",
+    "routes/_index.($date)",
   ) as GamesType;
 
   const { games } = gameDataToRender;

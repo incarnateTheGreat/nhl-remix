@@ -13,11 +13,15 @@ export default function VideoModal({ videoData, setVisible }: VideoModalProps) {
     }
   };
 
-  const closeModalOnClickAway = () => {
-    const id = document?.getElementById?.("modalParent")?.id;
+  const closeModalOnClickAway = (e: MouseEvent) => {
+    const target = document.getElementById("video");
 
-    if (id === "modalParent") {
-      setVisible(false);
+    if (target) {
+      const withinBoundaries = e.composedPath().includes(target);
+
+      if (!withinBoundaries) {
+        setVisible(false);
+      }
     }
   };
 
@@ -32,11 +36,8 @@ export default function VideoModal({ videoData, setVisible }: VideoModalProps) {
   }, []);
 
   return (
-    <div
-      className="fixed left-0 top-0 z-10 flex h-full w-full items-center justify-center bg-black/70"
-      id="modalParent"
-    >
-      <div className="absolute w-5/6 md:w-9/12">
+    <div className="fixed left-0 top-0 z-10 flex h-full w-full items-center justify-center bg-black/70">
+      <div className="absolute w-5/6 md:w-9/12" id="video">
         <video
           controls
           autoPlay

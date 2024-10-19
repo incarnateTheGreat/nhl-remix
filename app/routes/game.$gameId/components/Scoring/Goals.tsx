@@ -50,7 +50,7 @@ export default function Goals({ period }: GoalsProps) {
           {highlightClip ? (
             <VideoThumbnail videoId={highlightClip} />
           ) : (
-            <span className="ml-2 flex h-12 w-12">&nbsp;</span>
+            <span className="mx-3 flex h-8 w-8">&nbsp;</span>
           )}
         </div>
       </div>
