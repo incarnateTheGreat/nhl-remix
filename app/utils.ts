@@ -20,10 +20,6 @@ const handlePeriodLabel = (periodDescriptor: PeriodDescriptior) => {
     return `${periodDescriptor.otPeriods ?? ""}OT`;
   }
 
-  if (periodDescriptor.periodType === "SO") {
-    return "SO";
-  }
-
   return PERIODS[periodDescriptor.number];
 };
 
@@ -76,7 +72,7 @@ const getLogo = (teamAbbrev: string) => {
 };
 
 const getNumberWithOrdinal = (n: number) => {
-  if (!n) return "--"
+  if (!n) return "--";
 
   const s = ["th", "st", "nd", "rd"];
   const v = n % 100;
@@ -104,6 +100,12 @@ const deepMerge = (target, ...sources) => {
   return deepMerge(target, ...sources);
 };
 
+const getRandomKey = () => {
+  const randomBuffer = new Uint32Array(1);
+
+  return crypto.getRandomValues(randomBuffer)[0];
+};
+
 export {
   cn,
   deepMerge,
@@ -112,6 +114,7 @@ export {
   GOAL_MODIFIER,
   handlePeriodGoals,
   handlePeriodLabel,
+  getRandomKey,
   isGameActive,
   isGameComplete,
   isPreGame,

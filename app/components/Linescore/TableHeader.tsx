@@ -6,7 +6,9 @@ type TableHeaderProps = {
 };
 
 export default function TableHeader({ byPeriod }: TableHeaderProps) {
-  const periodData = [...handlePeriodGoals(byPeriod)];
+  const periodData = [...handlePeriodGoals(byPeriod)].filter(
+    (period) => period.periodDescriptor.periodType !== "SO",
+  );
 
   return (
     <thead>

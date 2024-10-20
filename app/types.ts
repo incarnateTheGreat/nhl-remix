@@ -257,6 +257,18 @@ type SeasonSeries = {
   gameOutcome: { lastPeriodType: string };
 };
 
+type Shootout = {
+  sequence: number;
+  playerId: number;
+  teamAbbrev: string;
+  firstName: string;
+  lastName: string;
+  shotType: string;
+  result: string;
+  headshot: string;
+  gameWinner: boolean;
+};
+
 type Summary = {
   shotsByPeriod: LinescoreByPeriodObject[];
   teamGameStats: TeamGameStats[];
@@ -269,6 +281,7 @@ type Summary = {
     periodDescriptor: PeriodDescriptior;
     penalties: PenaltiesType[];
   }[];
+  shootout: Shootout[];
   linescore: {
     byPeriod: LinescoreByPeriod;
     totals: LinescoreTotals;
@@ -431,6 +444,7 @@ export type {
   SeriesStatus,
   SkaterStats,
   Summary,
+  Shootout,
   Team,
   TeamGameStats,
   TeamLeadersL5,

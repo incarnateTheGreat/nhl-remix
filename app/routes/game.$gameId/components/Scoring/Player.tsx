@@ -8,17 +8,19 @@ type PlayerProps = {
 };
 
 export default function Player({ goal }: PlayerProps) {
+  const { headshot, firstName, lastName, teamAbbrev, assists } = goal;
+
   return (
     <div className="flex items-center">
       <img
         className="default_border rounded-full"
-        src={goal.headshot}
+        src={headshot}
         width={50}
-        alt={`${goal.firstName.default} ${goal.lastName.default}`}
+        alt={`${firstName.default} ${lastName.default}`}
       />
       <div className="mx-2 flex w-full flex-col">
         <Goal goal={goal} />
-        <Assists teamAbbrev={goal.teamAbbrev.default} assists={goal.assists} />
+        <Assists teamAbbrev={teamAbbrev.default} assists={assists} />
       </div>
     </div>
   );

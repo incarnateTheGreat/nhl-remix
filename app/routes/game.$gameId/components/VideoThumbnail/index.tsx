@@ -49,7 +49,7 @@ export default function VideoThumbnail({ videoId }: VideoThumbnailProps) {
   return (
     <>
       <button
-        className="mx-3 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-blue-700 text-lg text-white transition-colors hover:bg-blue-900"
+        className="mx-3 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-blue-700 text-lg text-sm text-white transition-colors hover:bg-blue-900"
         onClick={() => {
           getData();
         }}

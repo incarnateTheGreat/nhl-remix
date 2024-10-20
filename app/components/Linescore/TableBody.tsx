@@ -14,7 +14,9 @@ export default function TableBody() {
     linescore: { byPeriod, totals },
   } = gameDataToRender;
 
-  const periodData = [...handlePeriodGoals(byPeriod)];
+  const periodData = [...handlePeriodGoals(byPeriod)].filter(
+    (period) => period.periodDescriptor.periodType !== "SO",
+  );
 
   return (
     <tbody>
