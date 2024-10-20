@@ -58,8 +58,10 @@ export default function TableBody({ penalties }: PenaltiesTableBodyProps) {
             <td className="w-16 border-r border-gray-400 p-2">
               {timeInPeriod}
             </td>
+            <td className="w-48 border-r border-gray-400 p-2">
+              {committedByPlayer ? `${committedByPlayer}` : null}{" "}
+            </td>
             <td className="p-2">
-              {committedByPlayer ? `${committedByPlayer} -` : null}{" "}
               {amendedPenaltyStr} {servedBy ? `(Served by ${servedBy})` : null}
             </td>
           </tr>
