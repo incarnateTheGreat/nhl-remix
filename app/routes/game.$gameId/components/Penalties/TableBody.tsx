@@ -4,7 +4,7 @@ import { getLogo } from "~/utils";
 function penaltyStr(str: string) {
   let amendedStr;
 
-  if (str.includes("delaying-game")) {
+  if (str.includes("delaying-game") || str.includes("too-many-men")) {
     let delayOfGameName = "Delay of Game";
     const delayOfGameAction = str.split("-").slice(2, str.length);
 
@@ -55,11 +55,11 @@ export default function TableBody({ penalties }: PenaltiesTableBodyProps) {
                 alt={`${teamAbbrev.default} Logo`}
               />
             </td>
-            <td className="w-16 border-r border-gray-400 p-2">
+            <td className="border-r border-gray-400 p-2 md:w-16">
               {timeInPeriod}
             </td>
-            <td className="w-48 border-r border-gray-400 p-2">
-              {committedByPlayer ? `${committedByPlayer}` : null}{" "}
+            <td className="border-r border-gray-400 p-2 md:w-48">
+              {committedByPlayer ? `${committedByPlayer}` : "Team"}{" "}
             </td>
             <td className="p-2">
               {amendedPenaltyStr} {servedBy ? `(Served by ${servedBy})` : null}
