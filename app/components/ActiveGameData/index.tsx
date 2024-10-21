@@ -47,16 +47,11 @@ export default function ActiveGameData() {
         </div>
       </div>
 
-      <div className="mt-1 lg:ml-2 lg:mt-0">
-        <Linescore />
-
-        <div className="mt-1">
+      <div className="flex flex-col lg:ml-4">
+        <div className="default_border mt-2 grid w-full grid-cols-1 gap-y-8 px-4 py-2">
+          <Linescore />
           <ShotsOnGoal />
-        </div>
-        <div className="mt-1">
           <GameStats />
-        </div>
-        <div className="mt-4">
           <SeasonSeries />
         </div>
       </div>

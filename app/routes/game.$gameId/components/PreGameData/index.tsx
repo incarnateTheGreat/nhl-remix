@@ -14,12 +14,10 @@ export default function PreGameData() {
           <Boxscore />
         </div>
       </div>
-      <div className="default_border mt-2 flex w-full flex-col overflow-x-auto px-4 py-2 lg:mt-0 lg:w-96">
-        <SeasonSeries />
-        <div className="my-4">
+      <div className="flex flex-col">
+        <div className="default_border mt-2 grid w-full grid-cols-1 gap-y-8 overflow-x-auto px-4 py-2 lg:mt-0 lg:w-96">
+          <SeasonSeries />
           <TeamStats />
-        </div>
-        <div className="mt-4">
           <GameInfo />
         </div>
       </div>

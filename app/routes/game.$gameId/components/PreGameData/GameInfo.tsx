@@ -12,7 +12,7 @@ export default function GameInfo() {
 
   return (
     <div>
-      <h2 className="heading">Game Info</h2>
+      <h2 className="mb-4 text-base font-bold">Game Info</h2>
       <div className="mb-1 grid grid-cols-[110px_auto] text-sm last:mb-0">
         <span className="mr-1 font-semibold">Networks:</span>
         <div>{tvBroadcastsStr}</div>

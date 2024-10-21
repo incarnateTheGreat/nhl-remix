@@ -16,11 +16,7 @@ const TEAM_GAME_STATS_TEST = [
 export default function TeamStats() {
   const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
 
-  const {
-    awayTeam,
-    homeTeam,
-    matchup: { teamSeasonStats },
-  } = gameDataToRender;
+  const { awayTeam, homeTeam, teamSeasonStats } = gameDataToRender;
 
   const { homeColourStr, awayColourStr } = getTeamColour({
     awayTeamAbbrev: awayTeam.abbrev,
@@ -45,14 +41,20 @@ export default function TeamStats() {
         );
 
         const awayTeamPercentage =
-          teamSeasonStats?.awayTeam?.[percentage as keyof TeamSeasonStatsPerTeam] ?? null
+          teamSeasonStats?.awayTeam?.[
+            percentage as keyof TeamSeasonStatsPerTeam
+          ] ?? null;
         const homeTeamPercentage =
-          teamSeasonStats?.homeTeam?.[percentage as keyof TeamSeasonStatsPerTeam] ?? null
+          teamSeasonStats?.homeTeam?.[
+            percentage as keyof TeamSeasonStatsPerTeam
+          ] ?? null;
 
         const awayTeamRank =
-          teamSeasonStats?.awayTeam?.[rank as keyof TeamSeasonStatsPerTeam] ?? null
+          teamSeasonStats?.awayTeam?.[rank as keyof TeamSeasonStatsPerTeam] ??
+          null;
         const homeTeamRank =
-          teamSeasonStats?.homeTeam?.[rank as keyof TeamSeasonStatsPerTeam] ?? null
+          teamSeasonStats?.homeTeam?.[rank as keyof TeamSeasonStatsPerTeam] ??
+          null;
 
         const awayValueToDisplay = `${(awayTeamPercentage * 100).toFixed(1)}%`;
         const homeValueToDisplay = `${(homeTeamPercentage * 100).toFixed(1)}%`;
@@ -65,7 +67,7 @@ export default function TeamStats() {
           awayValue: getNumberWithOrdinal(awayTeamRank),
           homeValue: getNumberWithOrdinal(homeTeamRank),
         };
-        
+
         const dataToPass = {
           label,
           awayValueToDisplay,
