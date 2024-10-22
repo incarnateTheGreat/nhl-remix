@@ -2,7 +2,7 @@
 import { Link } from "@remix-run/react";
 
 // import "carbon-components/css/carbon-components.css";
-import { GameWeek } from "~/types";
+import { GameWeek } from "types/types";
 import { cn } from "~/utils";
 
 type DatePickerProps = {

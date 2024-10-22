@@ -1,4 +1,4 @@
-import { GameState, Team } from "~/types";
+import { GameState, Team } from "types/types";
 import { isPreGame } from "~/utils";
 
 const CLASSES = {

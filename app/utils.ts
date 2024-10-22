@@ -1,7 +1,15 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-import { GameState, LinescoreByPeriod, PeriodDescriptior } from "./types";
+import {
+  GameState,
+  LinescoreByPeriod,
+  PeriodDescriptior,
+} from "../types/types";
+
+type TzOptions = {
+  [key: string]: string;
+};
 
 const PERIODS: { [k: string]: string } = {
   1: "1st",
@@ -106,6 +114,37 @@ const getRandomKey = () => {
   return crypto.getRandomValues(randomBuffer)[0];
 };
 
+const getTimeZone = (tz = "EST") => {
+  const tzOptions: TzOptions = {
+    EST: "America/Toronto",
+    CST: "America/Chicago",
+    MST: "America/Denver",
+    PST: "America/Los_Angeles",
+  };
+
+  return tzOptions[tz];
+};
+
+const getTodaysDate = (tz = "EST") => {
+  const date = new Date();
+
+  const tzName = getTimeZone(tz);
+
+  const day = date.toLocaleString("en-US", {
+    day: "2-digit",
+    timeZone: tzName,
+  });
+
+  const month = date.toLocaleString("en-US", {
+    month: "2-digit",
+    timeZone: tzName,
+  });
+
+  const year = date.getUTCFullYear();
+
+  return `${year}-${month}-${day}`;
+};
+
 export {
   cn,
   deepMerge,
@@ -118,5 +157,6 @@ export {
   isGameActive,
   isGameComplete,
   isPreGame,
+  getTodaysDate,
   PERIODS,
 };

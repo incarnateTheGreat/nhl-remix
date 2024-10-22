@@ -2,7 +2,7 @@ import { useRouteLoaderData } from "@remix-run/react";
 
 import ListGaneStats from "./ListGameStats";
 
-import { Game } from "~/types";
+import { Game } from "types/types";
 import { getLogo } from "~/utils";
 
 export default function GameStats() {

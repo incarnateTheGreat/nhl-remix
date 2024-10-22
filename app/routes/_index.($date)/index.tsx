@@ -12,7 +12,7 @@ import Games from "./components/Games";
 
 import DatePickerInternal from "~/components/DatePickerInternal";
 import Loading from "~/components/Loading";
-import { GamesType, GameWeek } from "~/types";
+import { GamesType, GameWeek } from "types/types";
 
 export const meta: MetaFunction = (e) => {
   const { currentDate } = e.data as GamesType;

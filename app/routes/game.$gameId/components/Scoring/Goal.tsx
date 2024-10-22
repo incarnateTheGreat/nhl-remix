@@ -1,4 +1,4 @@
-import { GoalsType } from "~/types";
+import { GoalsType } from "types/types";
 import { GOAL_MODIFIER } from "~/utils";
 
 type GoalProps = {

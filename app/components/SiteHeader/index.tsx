@@ -12,14 +12,14 @@ export default function SiteHeader() {
               <img src={NHL_Logo} alt="NHL Logo" width={50} />
             </Link>
           </li>
-          {/* <li className="ml-2 flex items-center">
+          <li className="ml-2 flex items-center text-sm">
             <Link
-              to="/scores"
-              className="text-md mt-1 hover:font-semibold hover:underline"
+              to="/standings"
+              className="mt-1 hover:font-semibold hover:underline"
             >
-              <span>Scores</span>
+              <span>Standings</span>
             </Link>
-          </li> */}
+          </li>
         </ul>
       </nav>
     </header>

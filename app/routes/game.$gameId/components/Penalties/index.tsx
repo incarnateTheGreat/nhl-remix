@@ -2,7 +2,7 @@ import { useRouteLoaderData } from "@remix-run/react";
 
 import PenaltyByPeriod from "./PenaltyByPeriod";
 
-import { Game } from "~/types";
+import { Game } from "types/types";
 import { PERIODS } from "~/utils";
 
 export default function Penalties() {

@@ -1,6 +1,6 @@
 import { useRouteLoaderData } from "@remix-run/react";
 
-import { Game } from "~/types";
+import { Game } from "types/types";
 
 export default function GameInfo() {
   const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;

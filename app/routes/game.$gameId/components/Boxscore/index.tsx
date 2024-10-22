@@ -6,7 +6,7 @@ import Goaltenders from "./Goaltenders";
 import { preGameData, reorderGoalies } from "./utils";
 
 import Tabs from "~/components/Tabs";
-import { Game, PlayerByGameStats } from "~/types";
+import { Game, PlayerByGameStats } from "types/types";
 import { isPreGame } from "~/utils";
 
 const tabData = [

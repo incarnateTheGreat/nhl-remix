@@ -1,4 +1,4 @@
-import { LinescoreByPeriodObject } from "~/types";
+import { LinescoreByPeriodObject } from "types/types";
 
 const renderPeriodData = (
   periodData: LinescoreByPeriodObject[],

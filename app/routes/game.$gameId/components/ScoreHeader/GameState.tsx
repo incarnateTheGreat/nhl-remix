@@ -1,4 +1,4 @@
-import { Clock, PeriodDescriptior } from "~/types";
+import { Clock, PeriodDescriptior } from "types/types";
 import { PERIODS } from "~/utils";
 
 type GameStateProps = {

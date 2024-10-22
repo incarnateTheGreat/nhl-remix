@@ -1,4 +1,4 @@
-import { SeriesStatus } from "~/types";
+import { SeriesStatus } from "types/types";
 
 type RoundStatusProps = {
   seriesStatus: SeriesStatus;

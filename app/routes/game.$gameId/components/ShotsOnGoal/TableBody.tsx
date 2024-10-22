@@ -1,4 +1,4 @@
-import { LinescoreByPeriodObject, TeamGameStats } from "~/types";
+import { LinescoreByPeriodObject, TeamGameStats } from "types/types";
 import { handlePeriodLabel } from "~/utils";
 
 type TableBodyProps = {
