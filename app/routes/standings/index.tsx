@@ -57,40 +57,40 @@ export const loader = async () => {
     {},
   ) as Conferences;
 
-  return conferences;
+  return { conferences };
 };
 
 type StandingsData = {
-  data: Conferences;
+  conferences: Conferences;
 };
 
 export default function Standings() {
-  const data = useLoaderData<Conferences>();
+  const { conferences } = useLoaderData<StandingsData>();
 
   return (
     <div className="flex h-full flex-col bg-white px-8 py-4">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         <ol className="list-decimal">
           <h2 className="font-bold">Atlantic</h2>
-          {data["Eastern"]["Atlantic"].map((team) => {
+          {conferences["Eastern"]["Atlantic"].map((team) => {
             return <li>{team.teamName.default}</li>;
           })}
         </ol>
         <ol className="list-decimal">
           <h2 className="font-bold">Metropolitan</h2>
-          {data["Eastern"]["Metropolitan"].map((team) => {
+          {conferences["Eastern"]["Metropolitan"].map((team) => {
             return <li>{team.teamName.default}</li>;
           })}
         </ol>
         <ol className="list-decimal">
           <h2 className="font-bold">Central</h2>
-          {data["Western"]["Central"].map((team) => {
+          {conferences["Western"]["Central"].map((team) => {
             return <li>{team.teamName.default}</li>;
           })}
         </ol>
         <ol className="list-decimal">
           <h2 className="font-bold">Pacific</h2>
-          {data["Western"]["Pacific"].map((team) => {
+          {conferences["Western"]["Pacific"].map((team) => {
             return <li>{team.teamName.default}</li>;
           })}
         </ol>
