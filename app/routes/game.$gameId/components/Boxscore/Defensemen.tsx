@@ -20,6 +20,7 @@ export default function Defensemen({ defensemen, gameState }: DefensemenProps) {
     initSortById = "gamesPlayed";
     initSortDirection = "desc";
   } else {
+    initSortById = "points";
     columns = defensemenActiveGame;
   }
 

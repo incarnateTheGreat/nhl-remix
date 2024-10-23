@@ -2,6 +2,7 @@ import {
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
+  SortingState,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -9,15 +10,43 @@ import standingsColumns from "../columns";
 import { cn } from "~/utils";
 
 import { TeamStandings } from "types/standings";
+import { useState } from "react";
 
 type StandingsTableProps = {
   data: TeamStandings[];
 };
 
+const handleSortArrow = (
+  headerId: string,
+  sortId: string,
+  direction: boolean,
+) => {
+  if (headerId === sortId) {
+    if (direction) {
+      return <div>&#9662;</div>;
+    }
+
+    return <div className="rotate-180">&#9662;</div>;
+  }
+
+  return <div>&nbsp;</div>;
+};
+
 export default function StandingsTable({ data }: StandingsTableProps) {
+  const [sorting, setSorting] = useState<SortingState>([
+    {
+      id: "points",
+      desc: true,
+    },
+  ]);
+
   const table = useReactTable({
     data,
     columns: standingsColumns,
+    state: {
+      sorting,
+    },
+    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
   });
@@ -31,14 +60,24 @@ export default function StandingsTable({ data }: StandingsTableProps) {
               return headerGroup.headers.map((header, idx) => (
                 <th
                   key={header.id}
-                  className={cn("border-b border-t border-[#263340] p-2", {
-                    "sticky left-0 bg-white text-left": idx === 0,
+                  className={cn("cursor-pointer text-sm hover:bg-blue-100", {
+                    "bg-blue-100": header.id === sorting[0]?.id,
                   })}
+                  onClick={header.column.getToggleSortingHandler()}
                 >
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext(),
-                  )}
+                  <div className="mt-2">
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                  </div>
+                  <div className="text-xs">
+                    {handleSortArrow(
+                      header.id,
+                      sorting[0]?.id,
+                      sorting[0]?.desc,
+                    )}
+                  </div>
                 </th>
               ));
             })}

@@ -20,6 +20,7 @@ export default function Forwards({ forwards, gameState }: ForwardsProps) {
     initSortById = "gamesPlayed";
     initSortDirection = "desc";
   } else {
+    initSortById = "points";
     columns = forwardActiveGame;
   }
 
