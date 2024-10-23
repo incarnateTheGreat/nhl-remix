@@ -1,9 +1,11 @@
 import { MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
-import { StandingsResponse, TeamName, TeamStandings } from "types/standings";
+import { StandingsResponse, TeamStandings } from "types/standings";
 
 import { getTodaysDate } from "~/utils";
+
+import StandingsTable from "./components/StandingsTable";
 
 export const meta: MetaFunction = () => {
   const title = `NHL Standings`;
@@ -68,33 +70,28 @@ export default function Standings() {
   const { conferences } = useLoaderData<StandingsData>();
 
   return (
-    <div className="flex h-full flex-col bg-white px-8 py-4">
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-        <ol className="list-decimal">
-          <h2 className="font-bold">Atlantic</h2>
-          {conferences["Eastern"]["Atlantic"].map((team) => {
-            return <li>{team.teamName.default}</li>;
-          })}
-        </ol>
-        <ol className="list-decimal">
-          <h2 className="font-bold">Metropolitan</h2>
-          {conferences["Eastern"]["Metropolitan"].map((team) => {
-            return <li>{team.teamName.default}</li>;
-          })}
-        </ol>
-        <ol className="list-decimal">
-          <h2 className="font-bold">Central</h2>
-          {conferences["Western"]["Central"].map((team) => {
-            return <li>{team.teamName.default}</li>;
-          })}
-        </ol>
-        <ol className="list-decimal">
-          <h2 className="font-bold">Pacific</h2>
-          {conferences["Western"]["Pacific"].map((team) => {
-            return <li>{team.teamName.default}</li>;
-          })}
-        </ol>
-      </div>
+    <div className="grid grid-cols-1 gap-y-8">
+      {Object.keys(conferences).map((conference) => {
+        return (
+          <div>
+            <h2 className="mb-4 border-b border-gray-300 text-lg font-extrabold text-white">
+              {conference}
+            </h2>
+            <div className="grid grid-cols-1 gap-y-4">
+              {Object.keys(conferences[conference]).map((division) => {
+                return (
+                  <div>
+                    <h3 className="text-md mb-0.5 font-extrabold text-white">
+                      {division}
+                    </h3>
+                    <StandingsTable data={conferences[conference][division]} />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
