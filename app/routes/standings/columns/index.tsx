@@ -11,7 +11,7 @@ const standingsColumns = [
 
       return (
         <div className="flex items-center">
-          <span className="mr-1 font-semibold">{divisionSequence}.</span>
+          <span className="ml-2 mr-1 font-semibold">{divisionSequence}.</span>
           <img src={teamLogo} alt={teamName.default} width={30} />
           <span className="ml-1">{teamName.default}</span>
         </div>
