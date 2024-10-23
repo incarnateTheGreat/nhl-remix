@@ -1,11 +1,11 @@
 import { MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
 
 import { StandingsResponse, TeamStandings } from "types/standings";
 
 import { getTodaysDate } from "~/utils";
 
-import StandingsTable from "./components/StandingsTable";
+import Tabs from "~/components/Tabs";
+import Division from "./components/Division";
 
 export const meta: MetaFunction = () => {
   const title = `NHL Standings`;
@@ -62,36 +62,27 @@ export const loader = async () => {
   return { conferences };
 };
 
-type StandingsData = {
+export type StandingsData = {
   conferences: Conferences;
 };
 
-export default function Standings() {
-  const { conferences } = useLoaderData<StandingsData>();
+const tabData = [
+  {
+    id: 0,
+    title: "Division",
+    component: () => <Division />,
+  },
+  {
+    id: 1,
+    title: "Conference",
+    component: () => <div>Conference</div>,
+  },
+];
 
+export default function Standings() {
   return (
-    <div className="grid grid-cols-1 gap-y-8">
-      {Object.keys(conferences).map((conference) => {
-        return (
-          <div>
-            <h2 className="mb-4 border-b border-gray-300 text-lg font-extrabold text-white">
-              {conference}
-            </h2>
-            <div className="grid grid-cols-1 gap-y-4">
-              {Object.keys(conferences[conference]).map((division) => {
-                return (
-                  <div>
-                    <h3 className="text-md mb-0.5 font-extrabold text-white">
-                      {division}
-                    </h3>
-                    <StandingsTable data={conferences[conference][division]} />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        );
-      })}
+    <div className="grid grid-cols-1 gap-y-8 bg-white p-4">
+      <Tabs data={tabData} />
     </div>
   );
 }

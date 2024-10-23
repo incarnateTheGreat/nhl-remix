@@ -6,13 +6,13 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import standingsColumns from "../columns";
 import { cn } from "~/utils";
 
 import { TeamStandings } from "types/standings";
 import { useState } from "react";
+import standingsColumns from "../../columns";
 
-type StandingsTableProps = {
+type StandingsDivisionProps = {
   data: TeamStandings[];
 };
 
@@ -32,7 +32,7 @@ const handleSortArrow = (
   return <div>&nbsp;</div>;
 };
 
-export default function StandingsTable({ data }: StandingsTableProps) {
+export default function StandingsDivision({ data }: StandingsDivisionProps) {
   const [sorting, setSorting] = useState<SortingState>([
     {
       id: "points",
@@ -53,15 +53,16 @@ export default function StandingsTable({ data }: StandingsTableProps) {
 
   return (
     <div className="overflow-x-scroll md:overflow-auto">
-      <table className="w-full bg-white text-xs">
+      <table className="w-full border-b border-t border-slate-300 bg-white text-xs">
         <thead>
-          <tr>
+          <tr className="border-b border-slate-300">
             {table.getHeaderGroups().map((headerGroup) => {
               return headerGroup.headers.map((header, idx) => (
                 <th
                   key={header.id}
                   className={cn("cursor-pointer text-sm hover:bg-blue-100", {
                     "bg-blue-100": header.id === sorting[0]?.id,
+                    "sticky left-0 bg-white text-left": idx === 0,
                   })}
                   onClick={header.column.getToggleSortingHandler()}
                 >
@@ -102,6 +103,7 @@ export default function StandingsTable({ data }: StandingsTableProps) {
                           "min-w-16 border-r border-slate-300/50 last:border-none md:w-4":
                             idx > 0,
                         },
+                        { "bg-blue-100": cell.column.id === sorting[0]?.id },
                       )}
                     >
                       {flexRender(
