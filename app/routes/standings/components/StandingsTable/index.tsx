@@ -100,11 +100,6 @@ export default function StandingsTable({
                 })}
               >
                 {row.getVisibleCells().map((cell, idx) => {
-                  console.log(
-                    standingsColumnType === STANDING_TYPES.Conference,
-                    idx,
-                  );
-
                   return (
                     <td
                       key={cell.id}

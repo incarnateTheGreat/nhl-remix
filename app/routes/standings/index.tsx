@@ -39,6 +39,12 @@ type Divisions = {
   };
 };
 
+type WildCard = {
+  [k: string]: {
+    [k: string]: TeamStandings[] | Conferences;
+  };
+};
+
 export const loader = async () => {
   const date = getTodaysDate();
 
@@ -87,6 +93,53 @@ export const loader = async () => {
 
     return acc;
   }, []);
+
+  const wildcard = Object.keys(divisions).reduce(
+    (acc: WildCard, conferenceName) => {
+      if (!(conferenceName in acc)) {
+        acc[conferenceName] = {};
+      }
+
+      const divisionWildCard = Object.keys(divisions[conferenceName]).reduce(
+        (x: Conferences, division) => {
+          x[division] = [...divisions[conferenceName][division].slice(0, 3)];
+
+          return x;
+        },
+        {},
+      );
+
+      const wildCardTeams = conferences[conferenceName].slice(
+        6,
+        conferences[conferenceName].length,
+      );
+
+      acc[conferenceName] = { Division: divisionWildCard };
+      acc[conferenceName] = { ...acc[conferenceName], WildCard: wildCardTeams };
+
+      // acc[conferenceName].push(divisionWildCard);
+      // acc[conferenceName].push(wildCardTeams);
+
+      return acc;
+    },
+    {},
+  );
+
+  console.log(wildcard);
+
+  // const atlantic = divisions["Eastern"]["Atlantic"].slice(0, 3);
+  // const metropolitan = divisions["Eastern"]["Metropolitan"].slice(0, 3);
+  // const eastern_wildCard = conferences["Eastern"].slice(
+  //   6,
+  //   conferences["Eastern"].length,
+  // );
+
+  // const central = divisions["Western"]["Central"].slice(0, 3);
+  // const pacific = divisions["Western"]["Pacific"].slice(0, 3);
+  // const western_wildCard = conferences["Western"].slice(
+  //   6,
+  //   conferences["Western"].length,
+  // );
 
   return { divisions, conferences, league };
 };
