@@ -10,10 +10,11 @@ import { cn } from "~/utils";
 
 import { TeamStandings } from "types/standings";
 import { useState } from "react";
-import standingsColumns from "../../columns";
+import getStandingsColumns, { STANDING_TYPES } from "../../columns";
 
-type StandingsDivisionProps = {
+type StandingsTableProps = {
   data: TeamStandings[];
+  standingsColumnType: string;
 };
 
 const handleSortArrow = (
@@ -32,7 +33,10 @@ const handleSortArrow = (
   return <div>&nbsp;</div>;
 };
 
-export default function StandingsDivision({ data }: StandingsDivisionProps) {
+export default function StandingsTable({
+  data,
+  standingsColumnType,
+}: StandingsTableProps) {
   const [sorting, setSorting] = useState<SortingState>([
     {
       id: "points",
@@ -42,7 +46,7 @@ export default function StandingsDivision({ data }: StandingsDivisionProps) {
 
   const table = useReactTable({
     data,
-    columns: standingsColumns,
+    columns: getStandingsColumns(standingsColumnType),
     state: {
       sorting,
     },
@@ -85,17 +89,29 @@ export default function StandingsDivision({ data }: StandingsDivisionProps) {
           </tr>
         </thead>
         <tbody>
-          {table.getRowModel().rows.map((row) => {
+          {table.getRowModel().rows.map((row, rowIdx) => {
             return (
-              <tr key={row.id} className="border-b border-slate-300">
+              <tr
+                key={row.id}
+                className={cn("border-b border-slate-300", {
+                  "border-b border-dashed border-black":
+                    standingsColumnType === STANDING_TYPES.Conference &&
+                    rowIdx === 8,
+                })}
+              >
                 {row.getVisibleCells().map((cell, idx) => {
+                  console.log(
+                    standingsColumnType === STANDING_TYPES.Conference,
+                    idx,
+                  );
+
                   return (
                     <td
                       key={cell.id}
                       className={cn(
                         "p-2 text-center",
                         {
-                          "sticky left-0 w-52 min-w-52 bg-white text-left":
+                          "sticky left-0 w-56 min-w-56 bg-white text-left":
                             idx === 0,
                         },
                         { "border-l border-slate-400/40": idx === 1 },

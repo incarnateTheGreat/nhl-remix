@@ -6,6 +6,8 @@ import { getTodaysDate } from "~/utils";
 
 import Tabs from "~/components/Tabs";
 import Division from "./components/Division";
+import Conference from "./components/Conference";
+import League from "./components/League";
 
 export const meta: MetaFunction = () => {
   const title = `NHL Standings`;
@@ -25,7 +27,13 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+type League = TeamStandings[];
+
 type Conferences = {
+  [k: string]: TeamStandings[];
+};
+
+type Divisions = {
   [k: string]: {
     [k: string]: TeamStandings[];
   };
@@ -40,8 +48,8 @@ export const loader = async () => {
 
   const standingsResponse: StandingsResponse = await standings.json();
 
-  const conferences = standingsResponse.standings.reduce(
-    (acc: Conferences, team) => {
+  const divisions = standingsResponse.standings.reduce(
+    (acc: Divisions, team) => {
       const { conferenceName, divisionName } = team;
 
       if (!(conferenceName in acc)) {
@@ -57,13 +65,36 @@ export const loader = async () => {
       return acc;
     },
     {},
-  ) as Conferences;
+  );
 
-  return { conferences };
+  const conferences = standingsResponse.standings.reduce(
+    (acc: Conferences, team) => {
+      const { conferenceName } = team;
+
+      if (!(conferenceName in acc)) {
+        acc[conferenceName] = [];
+      }
+
+      acc[conferenceName].push(team);
+
+      return acc;
+    },
+    {},
+  );
+
+  const league = standingsResponse.standings.reduce((acc: League, team) => {
+    acc.push(team);
+
+    return acc;
+  }, []);
+
+  return { divisions, conferences, league };
 };
 
 export type StandingsData = {
+  divisions: Divisions;
   conferences: Conferences;
+  league: League;
 };
 
 const tabData = [
@@ -75,7 +106,12 @@ const tabData = [
   {
     id: 1,
     title: "Conference",
-    component: () => <div>Conference</div>,
+    component: () => <Conference />,
+  },
+  {
+    id: 2,
+    title: "League",
+    component: () => <League />,
   },
 ];
 
