@@ -8,6 +8,7 @@ import Tabs from "~/components/Tabs";
 import Division from "./components/Division";
 import Conference from "./components/Conference";
 import League from "./components/League";
+import WildCard from "./components/Wild Card";
 
 export const meta: MetaFunction = () => {
   const title = `NHL Standings`;
@@ -29,19 +30,19 @@ export const meta: MetaFunction = () => {
 
 type League = TeamStandings[];
 
-type Conferences = {
+type ConferencesType = {
   [k: string]: TeamStandings[];
 };
 
-type Divisions = {
+type DivisionsType = {
   [k: string]: {
     [k: string]: TeamStandings[];
   };
 };
 
-type WildCard = {
+type WildCardType = {
   [k: string]: {
-    [k: string]: TeamStandings[] | Conferences;
+    [k: string]: TeamStandings[];
   };
 };
 
@@ -55,7 +56,7 @@ export const loader = async () => {
   const standingsResponse: StandingsResponse = await standings.json();
 
   const divisions = standingsResponse.standings.reduce(
-    (acc: Divisions, team) => {
+    (acc: DivisionsType, team) => {
       const { conferenceName, divisionName } = team;
 
       if (!(conferenceName in acc)) {
@@ -74,7 +75,7 @@ export const loader = async () => {
   );
 
   const conferences = standingsResponse.standings.reduce(
-    (acc: Conferences, team) => {
+    (acc: ConferencesType, team) => {
       const { conferenceName } = team;
 
       if (!(conferenceName in acc)) {
@@ -95,13 +96,13 @@ export const loader = async () => {
   }, []);
 
   const wildcard = Object.keys(divisions).reduce(
-    (acc: WildCard, conferenceName) => {
+    (acc: WildCardType, conferenceName) => {
       if (!(conferenceName in acc)) {
         acc[conferenceName] = {};
       }
 
       const divisionWildCard = Object.keys(divisions[conferenceName]).reduce(
-        (x: Conferences, division) => {
+        (x: ConferencesType, division) => {
           x[division] = [...divisions[conferenceName][division].slice(0, 3)];
 
           return x;
@@ -114,39 +115,25 @@ export const loader = async () => {
         conferences[conferenceName].length,
       );
 
-      acc[conferenceName] = { Division: divisionWildCard };
-      acc[conferenceName] = { ...acc[conferenceName], WildCard: wildCardTeams };
+      acc[conferenceName] = {
+        ...divisionWildCard,
+        "Wild Card": wildCardTeams,
+      };
 
-      // acc[conferenceName].push(divisionWildCard);
-      // acc[conferenceName].push(wildCardTeams);
+      console.log(wildCardTeams.slice(0, 3));
 
       return acc;
     },
     {},
   );
 
-  console.log(wildcard);
-
-  // const atlantic = divisions["Eastern"]["Atlantic"].slice(0, 3);
-  // const metropolitan = divisions["Eastern"]["Metropolitan"].slice(0, 3);
-  // const eastern_wildCard = conferences["Eastern"].slice(
-  //   6,
-  //   conferences["Eastern"].length,
-  // );
-
-  // const central = divisions["Western"]["Central"].slice(0, 3);
-  // const pacific = divisions["Western"]["Pacific"].slice(0, 3);
-  // const western_wildCard = conferences["Western"].slice(
-  //   6,
-  //   conferences["Western"].length,
-  // );
-
-  return { divisions, conferences, league };
+  return { divisions, wildcard, conferences, league };
 };
 
 export type StandingsData = {
-  divisions: Divisions;
-  conferences: Conferences;
+  divisions: DivisionsType;
+  wildcard: WildCardType;
+  conferences: ConferencesType;
   league: League;
 };
 
@@ -158,11 +145,16 @@ const tabData = [
   },
   {
     id: 1,
+    title: "Wild Card",
+    component: () => <WildCard />,
+  },
+  {
+    id: 2,
     title: "Conference",
     component: () => <Conference />,
   },
   {
-    id: 2,
+    id: 3,
     title: "League",
     component: () => <League />,
   },

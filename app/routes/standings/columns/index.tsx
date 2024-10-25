@@ -29,6 +29,9 @@ export default function getStandingsColumns(type: string) {
           case STANDING_TYPES.Division:
             rankSequence = divisionSequence;
             break;
+          case STANDING_TYPES.Wild_Card:
+            rankSequence = +info.cell.row.id + 1;
+            break;
           case STANDING_TYPES.Conference:
             rankSequence = conferenceSequence;
             break;
