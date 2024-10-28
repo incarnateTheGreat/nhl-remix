@@ -96,7 +96,7 @@ export default function StandingsTable({
                 className={cn("border-b border-slate-300", {
                   "border-b border-dashed border-black":
                     standingsColumnType === STANDING_TYPES.Conference &&
-                    rowIdx === 8,
+                    rowIdx === 7,
                 })}
               >
                 {row.getVisibleCells().map((cell, idx) => {

@@ -1,9 +1,9 @@
 import { useRouteLoaderData } from "@remix-run/react";
+import { Game } from "types/types";
+
+import { PERIODS } from "~/utils";
 
 import PenaltyByPeriod from "./PenaltyByPeriod";
-
-import { Game } from "types/types";
-import { PERIODS } from "~/utils";
 
 export default function Penalties() {
   const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
@@ -24,7 +24,7 @@ export default function Penalties() {
             {periodPenalty.penalties.length > 0 ? (
               <PenaltyByPeriod periodPenalty={periodPenalty} />
             ) : (
-              <span className="py-1">No Penalties</span>
+              <span className="py-1">No penalties</span>
             )}
           </div>
         );

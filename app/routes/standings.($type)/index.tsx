@@ -1,12 +1,12 @@
 import { MetaFunction } from "@remix-run/node";
-
+import { useParams } from "@remix-run/react";
 import { StandingsResponse, TeamStandings } from "types/standings";
 
+import TabWithNavigate from "~/components/TabLinks";
 import { getTodaysDate } from "~/utils";
 
-import Tabs from "~/components/Tabs";
-import Division from "./components/Division";
 import Conference from "./components/Conference";
+import Division from "./components/Division";
 import League from "./components/League";
 import WildCard from "./components/Wild Card";
 
@@ -120,8 +120,6 @@ export const loader = async () => {
         "Wild Card": wildCardTeams,
       };
 
-      console.log(wildCardTeams.slice(0, 3));
-
       return acc;
     },
     {},
@@ -142,28 +140,41 @@ const tabData = [
     id: 0,
     title: "Division",
     component: () => <Division />,
+    url: "/standings",
   },
   {
     id: 1,
     title: "Wild Card",
     component: () => <WildCard />,
+    url: "/standings/wildcard",
   },
   {
     id: 2,
     title: "Conference",
     component: () => <Conference />,
+    url: "/standings/conference",
   },
   {
     id: 3,
     title: "League",
     component: () => <League />,
+    url: "/standings/league",
   },
 ];
 
 export default function Standings() {
+  const params = useParams();
+
+  const findParam = tabData.find((tab) => {
+    return (
+      params?.type?.toLowerCase().trim().replaceAll(" ", "") ===
+      tab.title.toLowerCase().trim().replaceAll(" ", "")
+    );
+  });
+
   return (
     <div className="grid grid-cols-1 gap-y-8 bg-white p-4">
-      <Tabs data={tabData} />
+      <TabWithNavigate data={tabData} defaultTab={findParam?.id} />
     </div>
   );
 }

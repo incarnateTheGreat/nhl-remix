@@ -103,7 +103,8 @@ type SkaterStats = {
   pim: number;
   hits: number;
   powerPlayGoals: number;
-  shots: number;
+  sog: number;
+  shifts: number;
   faceoffWinningPctg: number;
   avgTimeOnIce: string;
   teamId: number;
@@ -442,9 +443,9 @@ export type {
   PlayerByGameStats,
   SeasonSeries,
   SeriesStatus,
+  Shootout,
   SkaterStats,
   Summary,
-  Shootout,
   Team,
   TeamGameStats,
   TeamLeadersL5,

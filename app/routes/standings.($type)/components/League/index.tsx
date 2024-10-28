@@ -1,10 +1,13 @@
 import { useRouteLoaderData } from "@remix-run/react";
+
 import { StandingsData } from "../..";
 import { STANDING_TYPES } from "../../columns";
 import StandingsTable from "../StandingsTable";
 
 export default function League() {
-  const { league } = useRouteLoaderData("routes/standings") as StandingsData;
+  const { league } = useRouteLoaderData(
+    "routes/standings.($type)",
+  ) as StandingsData;
 
   return (
     <div className="my-6">
