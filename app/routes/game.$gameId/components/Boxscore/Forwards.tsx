@@ -1,9 +1,10 @@
+import { GameState, SkaterStats } from "types/types";
+
+import { isPreGame } from "~/utils";
+
+import BoxscoreTable from "./BoxscoreTable";
 import forwardActiveGame from "./utils/Forwards/forwardActiveGame";
 import forwardPreGame from "./utils/Forwards/forwardPreGame";
-import BoxscoreTable from "./BoxscoreTable";
-
-import { GameState, SkaterStats } from "types/types";
-import { isPreGame } from "~/utils";
 
 type ForwardsProps = {
   forwards: SkaterStats[];

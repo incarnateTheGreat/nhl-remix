@@ -1,8 +1,8 @@
 import { useRouteLoaderData } from "@remix-run/react";
+import { Game, TeamSeasonStatsPerTeam } from "types/types";
 
 import { getTeamColour } from "~/components/GameStats/utils";
 import StatsBar from "~/routes/game.$gameId/components/StatsBar";
-import { Game, TeamSeasonStatsPerTeam } from "types/types";
 import { getLogo, getNumberWithOrdinal } from "~/utils";
 
 const TEAM_GAME_STATS_TEST = [
@@ -56,8 +56,16 @@ export default function TeamStats() {
           teamSeasonStats?.homeTeam?.[rank as keyof TeamSeasonStatsPerTeam] ??
           null;
 
-        const awayValueToDisplay = `${(awayTeamPercentage * 100).toFixed(1)}%`;
-        const homeValueToDisplay = `${(homeTeamPercentage * 100).toFixed(1)}%`;
+        const awayValueToDisplay =
+          percentage === "goalsForPerGamePlayed" ||
+          percentage === "goalsAgainstPerGamePlayed"
+            ? awayTeamPercentage
+            : `${(awayTeamPercentage * 100).toFixed(1)}%`;
+        const homeValueToDisplay =
+          percentage === "goalsForPerGamePlayed" ||
+          percentage === "goalsAgainstPerGamePlayed"
+            ? homeTeamPercentage
+            : `${(homeTeamPercentage * 100).toFixed(1)}%`;
 
         const total = awayTeamPercentage + homeTeamPercentage;
         const awayBar = awayTeamPercentage / total;
