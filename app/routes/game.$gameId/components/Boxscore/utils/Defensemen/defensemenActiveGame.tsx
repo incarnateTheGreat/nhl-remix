@@ -1,6 +1,5 @@
 import { createColumnHelper } from "@tanstack/react-table";
-
-import { SkaterStats } from "~/types";
+import { SkaterStats } from "types/types";
 
 const columnHelper = createColumnHelper<SkaterStats>();
 
@@ -30,17 +29,22 @@ const defensemenActiveGame = [
     cell: (info) => info.getValue() ?? "--",
     sortUndefined: "last",
   }),
+  columnHelper.accessor("shifts", {
+    header: () => <span>Shf.</span>,
+    cell: (info) => info.getValue() ?? "--",
+    sortUndefined: "last",
+  }),
   columnHelper.accessor("plusMinus", {
     header: () => <span>+/-</span>,
     cell: (info) => info.getValue() ?? "--",
     sortUndefined: "last",
   }),
   columnHelper.accessor("pim", {
-    header: () => <span>POM</span>,
+    header: () => <span>PIM</span>,
     cell: (info) => info.getValue() ?? "--",
     sortUndefined: "last",
   }),
-  columnHelper.accessor("shots", {
+  columnHelper.accessor("sog", {
     header: () => <span>S</span>,
     cell: (info) => info.getValue() ?? "--",
     sortUndefined: "last",

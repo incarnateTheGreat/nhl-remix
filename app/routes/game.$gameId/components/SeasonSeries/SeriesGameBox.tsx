@@ -3,7 +3,7 @@ import { Link } from "@remix-run/react";
 import SeriesGameStatus from "./SeriesGameStatus";
 import SeriesTeamRow from "./SeriesTeamRow";
 
-import { SeasonSeries } from "~/types";
+import { SeasonSeries } from "types/types";
 import { cn, getNumberWithOrdinal, isGameComplete } from "~/utils";
 
 type SeriesGameBoxProps = {

@@ -4,7 +4,7 @@ import { useRouteLoaderData } from "@remix-run/react";
 import { getTeamColour } from "./utils";
 
 import StatsBar from "~/routes/game.$gameId/components/StatsBar";
-import { Game } from "~/types";
+import { Game } from "types/types";
 
 const LIST_GAME_STATS: { [k: string]: string } = {
   sog: "Shots on Goal",

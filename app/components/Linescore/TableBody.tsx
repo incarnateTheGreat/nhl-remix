@@ -2,7 +2,7 @@ import { useRouteLoaderData } from "@remix-run/react";
 
 import LineScoreRow from "./LinescoreRow";
 
-import { Game } from "~/types";
+import { Game } from "types/types";
 import { handlePeriodGoals } from "~/utils";
 
 export default function TableBody() {

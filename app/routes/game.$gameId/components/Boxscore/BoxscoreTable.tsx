@@ -6,6 +6,7 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
+import { cn } from "~/utils";
 
 const sweaterNumberCol = {
   minWidth: "38px",
@@ -36,6 +37,22 @@ const handleColumnWidth = (id: string): object => {
   }
 
   return defaultCol;
+};
+
+const handleSortArrow = (
+  headerId: string,
+  sortId: string,
+  direction: boolean,
+) => {
+  if (headerId === sortId) {
+    if (direction) {
+      return <div>&#9662;</div>;
+    }
+
+    return <div className="rotate-180">&#9662;</div>;
+  }
+
+  return <div>&nbsp;</div>;
 };
 
 type BoxscoreTableProps = {
@@ -79,16 +96,27 @@ export default function BoxscoreTable({
               return (
                 <th
                   key={header.id}
-                  className="p-2 text-sm"
+                  className={cn("cursor-pointer text-sm hover:bg-blue-100", {
+                    "bg-blue-100": header.id === sorting[0]?.id,
+                  })}
                   style={handleColumnWidth(header.column.id)}
                   onClick={header.column.getToggleSortingHandler()}
                 >
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
+                  <div className="mt-2">
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                  </div>
+                  <div className="text-xs">
+                    {handleSortArrow(
+                      header.id,
+                      sorting[0]?.id,
+                      sorting[0]?.desc,
+                    )}
+                  </div>
                 </th>
               );
             })}

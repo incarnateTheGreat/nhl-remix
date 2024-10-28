@@ -1,6 +1,6 @@
 import { createColumnHelper } from "@tanstack/react-table";
 
-import { GoalieStats } from "~/types";
+import { GoalieStats } from "types/types";
 
 const columnHelper = createColumnHelper<GoalieStats>();
 

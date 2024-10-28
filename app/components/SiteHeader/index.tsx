@@ -1,8 +1,17 @@
-import { Link } from "@remix-run/react";
+import { Link, useLocation } from "@remix-run/react";
 
 import NHL_Logo from "~/assets/nhl_logo.svg";
+import { cn } from "~/utils";
+
+const links = [
+  {
+    path: "/standings",
+  },
+];
 
 export default function SiteHeader() {
+  const { pathname } = useLocation();
+
   return (
     <header>
       <nav className="w-full md:mx-0">
@@ -12,14 +21,22 @@ export default function SiteHeader() {
               <img src={NHL_Logo} alt="NHL Logo" width={50} />
             </Link>
           </li>
-          {/* <li className="ml-2 flex items-center">
-            <Link
-              to="/scores"
-              className="text-md mt-1 hover:font-semibold hover:underline"
-            >
-              <span>Scores</span>
-            </Link>
-          </li> */}
+          <li className="flex items-center text-sm">
+            {links.map((link) => {
+              return (
+                <div
+                  key={link.path}
+                  className={cn("ml-2 p-4 text-xs hover:underline", {
+                    underline: pathname === link.path,
+                  })}
+                >
+                  <Link prefetch="intent" to={link.path}>
+                    Standings
+                  </Link>
+                </div>
+              );
+            })}
+          </li>
         </ul>
       </nav>
     </header>

@@ -2,7 +2,7 @@ import goalieActiveGame from "./utils/Goalies/goalieActiveGame";
 import goaliePreGame from "./utils/Goalies/goaliePreGame";
 import BoxscoreTable from "./BoxscoreTable";
 
-import { GameState, GoalieStats } from "~/types";
+import { GameState, GoalieStats } from "types/types";
 import { isPreGame } from "~/utils";
 
 type GoaltendersProps = {

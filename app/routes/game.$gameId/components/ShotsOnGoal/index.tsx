@@ -3,7 +3,7 @@ import { useRouteLoaderData } from "@remix-run/react";
 import TableBody from "./TableBody";
 import TableHeader from "./TableHeader";
 
-import { Game, TeamGameStats } from "~/types";
+import { Game, TeamGameStats } from "types/types";
 
 export default function ShotsOnGoal() {
   const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;

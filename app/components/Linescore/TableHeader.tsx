@@ -1,4 +1,4 @@
-import { LinescoreByPeriod } from "~/types";
+import { LinescoreByPeriod } from "types/types";
 import { handlePeriodGoals, handlePeriodLabel } from "~/utils";
 
 type TableHeaderProps = {

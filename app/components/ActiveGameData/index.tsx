@@ -1,12 +1,12 @@
-import GameStats from "../GameStats";
-import Linescore from "../Linescore";
-import Tabs from "../Tabs";
-
 import Boxscore from "~/routes/game.$gameId/components/Boxscore";
 import Penalties from "~/routes/game.$gameId/components/Penalties";
 import Scoring from "~/routes/game.$gameId/components/Scoring";
 import SeasonSeries from "~/routes/game.$gameId/components/SeasonSeries";
 import ShotsOnGoal from "~/routes/game.$gameId/components/ShotsOnGoal";
+
+import GameStats from "../GameStats";
+import Linescore from "../Linescore";
+import Tabs from "../Tabs";
 
 const tabData = [
   {

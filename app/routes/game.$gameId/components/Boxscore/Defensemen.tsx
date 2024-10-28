@@ -2,7 +2,7 @@ import defensemenActiveGame from "./utils/Defensemen/defensemenActiveGame";
 import defensemenPreGame from "./utils/Defensemen/defensemenPreGame";
 import BoxscoreTable from "./BoxscoreTable";
 
-import { GameState, SkaterStats } from "~/types";
+import { GameState, SkaterStats } from "types/types";
 import { isPreGame } from "~/utils";
 
 type DefensemenProps = {
@@ -20,6 +20,7 @@ export default function Defensemen({ defensemen, gameState }: DefensemenProps) {
     initSortById = "gamesPlayed";
     initSortDirection = "desc";
   } else {
+    initSortById = "points";
     columns = defensemenActiveGame;
   }
 

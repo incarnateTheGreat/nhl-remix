@@ -1,7 +1,7 @@
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 
-import { GameWeek } from "~/types";
+import { GameWeek } from "types/types";
 
 type RangeSelectorProps = {
   gameWeek: GameWeek[];

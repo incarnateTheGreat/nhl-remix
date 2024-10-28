@@ -1,5 +1,5 @@
 import React from "react";
-import { GoalsType, Team } from "~/types";
+import { GoalsType, Team } from "types/types";
 import Player from "./Player";
 import Scenario from "./Scenario";
 import VideoThumbnail from "../VideoThumbnail";

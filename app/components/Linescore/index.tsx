@@ -3,7 +3,7 @@ import { useRouteLoaderData } from "@remix-run/react";
 import TableBody from "./TableBody";
 import TableHeader from "./TableHeader";
 
-import { Game, LinescoreByPeriod, LinescoreTotals } from "~/types";
+import { Game, LinescoreByPeriod, LinescoreTotals } from "types/types";
 
 export type LinescoreProps = {
   byPeriod: LinescoreByPeriod;

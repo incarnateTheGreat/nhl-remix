@@ -7,7 +7,7 @@ import PreGameData from "./components/PreGameData";
 import ScoreHeader from "./components/ScoreHeader";
 
 import ActiveGameData from "~/components/ActiveGameData";
-import type { Game } from "~/types";
+import type { Game } from "types/types";
 import { deepMerge, isGameActive, isGameComplete, isPreGame } from "~/utils";
 
 type LoaderProps = {

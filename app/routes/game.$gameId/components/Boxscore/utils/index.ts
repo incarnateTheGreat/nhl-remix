@@ -1,4 +1,4 @@
-import { Game, GoalieStats, PlayerByGameStats } from "~/types";
+import { Game, GoalieStats, PlayerByGameStats } from "types/types";
 
 const preGameData = (
   gameDataToRender: Game,

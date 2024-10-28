@@ -5,7 +5,7 @@ import TeamRow from "../TeamRow";
 import RoundStatus from "./RoundStatus";
 
 import GameState from "~/routes/game.$gameId/components/ScoreHeader/GameState";
-import { GameBoxType } from "~/types";
+import { GameBoxType } from "types/types";
 
 type GameBoxProps = {
   game: GameBoxType;

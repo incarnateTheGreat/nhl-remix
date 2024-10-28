@@ -1,4 +1,4 @@
-import { PenaltiesType } from "~/types";
+import { PenaltiesType } from "types/types";
 import { getLogo } from "~/utils";
 
 function penaltyStr(str: string) {
