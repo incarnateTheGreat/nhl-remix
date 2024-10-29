@@ -1,11 +1,12 @@
 import { PenaltiesType } from "types/types";
+
 import { getLogo } from "~/utils";
 
 function penaltyStr(str: string) {
   let amendedStr;
 
   if (str.includes("delaying-game") || str.includes("too-many-men")) {
-    let delayOfGameName = "Delay of Game";
+    const delayOfGameName = "Delay of Game";
     const delayOfGameAction = str.split("-").slice(2, str.length);
 
     const delayOfGameActionStr = delayOfGameAction

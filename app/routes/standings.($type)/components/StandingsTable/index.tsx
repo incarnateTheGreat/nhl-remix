@@ -5,11 +5,11 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
+import { useState } from "react";
+import { TeamStandings } from "types/standings";
 
 import { cn } from "~/utils";
 
-import { TeamStandings } from "types/standings";
-import { useState } from "react";
 import getStandingsColumns, { STANDING_TYPES } from "../../columns";
 
 type StandingsTableProps = {

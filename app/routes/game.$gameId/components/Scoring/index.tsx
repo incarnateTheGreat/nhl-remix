@@ -1,10 +1,10 @@
 import { useRouteLoaderData } from "@remix-run/react";
-
-import Goals from "./Goals";
-
 import type { Game } from "types/types";
+
 import { handlePeriodLabel } from "~/utils";
+
 import Shootout from "../Shootout";
+import Goals from "./Goals";
 
 export default function Scoring() {
   const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;

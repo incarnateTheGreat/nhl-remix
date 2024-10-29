@@ -24,11 +24,13 @@ export default function TabWithNavigate({
 
   const [activeTabId, setActiveTabId] = useState<number>(defaultTab);
 
-  if (data.length === 0) return null;
-
   useEffect(() => {
     setActiveTabId(defaultTab);
   }, [defaultTab]);
+
+  if (data.length === 0) {
+    return null;
+  }
 
   return (
     <div>

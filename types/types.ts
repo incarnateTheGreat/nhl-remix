@@ -104,6 +104,7 @@ type SkaterStats = {
   hits: number;
   powerPlayGoals: number;
   sog: number;
+  shots: number;
   shifts: number;
   faceoffWinningPctg: number;
   avgTimeOnIce: string;

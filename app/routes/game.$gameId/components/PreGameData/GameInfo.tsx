@@ -1,5 +1,4 @@
 import { useRouteLoaderData } from "@remix-run/react";
-
 import { Game } from "types/types";
 
 export default function GameInfo() {

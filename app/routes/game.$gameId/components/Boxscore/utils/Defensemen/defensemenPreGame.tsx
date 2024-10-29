@@ -1,5 +1,4 @@
 import { createColumnHelper } from "@tanstack/react-table";
-
 import { SkaterStats } from "types/types";
 
 const columnHelper = createColumnHelper<SkaterStats>();

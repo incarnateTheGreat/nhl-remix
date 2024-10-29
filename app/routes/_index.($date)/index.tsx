@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import {
   useLoaderData,
@@ -7,12 +6,13 @@ import {
   useRevalidator,
 } from "@remix-run/react";
 import { format, parseISO } from "date-fns";
-
-import Games from "./components/Games";
+import { useEffect } from "react";
+import { GamesType, GameWeek } from "types/types";
 
 import DatePickerInternal from "~/components/DatePickerInternal";
 import Loading from "~/components/Loading";
-import { GamesType, GameWeek } from "types/types";
+
+import Games from "./components/Games";
 
 export const meta: MetaFunction = (e) => {
   const { currentDate } = e.data as GamesType;

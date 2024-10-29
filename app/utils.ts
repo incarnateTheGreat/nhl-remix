@@ -80,7 +80,9 @@ const getLogo = (teamAbbrev: string) => {
 };
 
 const getNumberWithOrdinal = (n: number) => {
-  if (!n) return "--";
+  if (!n) {
+    return "--";
+  }
 
   const s = ["th", "st", "nd", "rd"];
   const v = n % 100;
@@ -91,13 +93,17 @@ const getNumberWithOrdinal = (n: number) => {
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const deepMerge = (target, ...sources) => {
-  if (!sources.length) return target;
+  if (!sources.length) {
+    return target;
+  }
   const source = sources.shift();
 
   if (isObject(target) && isObject(source)) {
     for (const key in source) {
       if (isObject(source[key])) {
-        if (!target[key]) Object.assign(target, { [key]: {} });
+        if (!target[key]) {
+          Object.assign(target, { [key]: {} });
+        }
         deepMerge(target[key], source[key]);
       } else {
         Object.assign(target, { [key]: source[key] });
@@ -145,18 +151,69 @@ const getTodaysDate = (tz = "EST") => {
   return `${year}-${month}-${day}`;
 };
 
+type TimerProps = {
+  running: boolean;
+  iv: number;
+  timeout: number | NodeJS.Timeout;
+  cb: () => void;
+  start: (cb?: (() => void) | undefined, iv?: number) => void;
+  execute: (e: TimerProps) => void;
+  stop: () => void;
+  set_interval: (iv: number) => void;
+};
+
+function Timer(this: TimerProps) {
+  this.running = false;
+  this.iv = 5000;
+  this.timeout = 0;
+  this.cb = () => {};
+  this.start = (cb, iv) => {
+    const elm = this as TimerProps;
+
+    clearInterval(this.timeout);
+
+    this.running = true;
+
+    if (cb) {
+      this.cb = cb;
+    }
+    if (iv) {
+      this.iv = iv;
+    }
+
+    this.timeout = setTimeout(function () {
+      elm.execute(elm);
+    }, this.iv);
+  };
+  this.execute = (e) => {
+    if (!e.running) {
+      return false;
+    }
+    e.cb();
+    e.start();
+  };
+  this.stop = () => {
+    this.running = false;
+  };
+  this.set_interval = (iv) => {
+    clearInterval(this.timeout);
+    this.start(() => {}, iv);
+  };
+}
+
 export {
   cn,
   deepMerge,
   getLogo,
   getNumberWithOrdinal,
+  getRandomKey,
+  getTodaysDate,
   GOAL_MODIFIER,
   handlePeriodGoals,
   handlePeriodLabel,
-  getRandomKey,
   isGameActive,
   isGameComplete,
   isPreGame,
-  getTodaysDate,
   PERIODS,
+  Timer,
 };

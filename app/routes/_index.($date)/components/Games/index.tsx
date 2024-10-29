@@ -1,8 +1,7 @@
 import { useRouteLoaderData } from "@remix-run/react";
+import type { GamesType } from "types/types";
 
 import GameBox from "../GameBox";
-
-import type { GamesType } from "types/types";
 
 export default function Games() {
   const gameDataToRender = useRouteLoaderData(

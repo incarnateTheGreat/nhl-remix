@@ -1,9 +1,10 @@
+import { GameState, SkaterStats } from "types/types";
+
+import { isPreGame } from "~/utils";
+
+import BoxscoreTable from "./BoxscoreTable";
 import defensemenActiveGame from "./utils/Defensemen/defensemenActiveGame";
 import defensemenPreGame from "./utils/Defensemen/defensemenPreGame";
-import BoxscoreTable from "./BoxscoreTable";
-
-import { GameState, SkaterStats } from "types/types";
-import { isPreGame } from "~/utils";
 
 type DefensemenProps = {
   defensemen: SkaterStats[];

@@ -1,5 +1,4 @@
 import { createColumnHelper } from "@tanstack/react-table";
-
 import { GoalieStats } from "types/types";
 
 const columnHelper = createColumnHelper<GoalieStats>();
@@ -44,7 +43,9 @@ const goaliePreGame = [
     header: () => <span>GAA</span>,
     sortUndefined: "last",
     cell: (info) => {
-      if (!info.getValue()) return "--";
+      if (!info.getValue()) {
+        return "--";
+      }
 
       return info.getValue().toFixed(2);
     },
@@ -58,7 +59,9 @@ const goaliePreGame = [
     header: () => <span>SV%</span>,
     sortUndefined: "last",
     cell: (info) => {
-      if (!info.getValue()) return "--";
+      if (!info.getValue()) {
+        return "--";
+      }
 
       return ((info.getValue() * 100) / 100).toFixed(3).substring(1);
     },

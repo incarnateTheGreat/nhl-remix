@@ -1,5 +1,4 @@
 import { useRouteLoaderData } from "@remix-run/react";
-
 import type { Game, GoalsType, PeriodDescriptior } from "types/types";
 
 import GoalContainer from "./GoalContainer";

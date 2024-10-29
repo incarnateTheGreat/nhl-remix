@@ -78,9 +78,13 @@ const preGameData = (
 
 const reorderGoalies = (goalies: GoalieStats[]) => {
   return goalies.sort((a, b) => {
-    if (a.starter === b.starter) return 0;
+    if (a.starter === b.starter) {
+      return 0;
+    }
 
-    if (a.starter) return -1;
+    if (a.starter) {
+      return -1;
+    }
 
     return 1;
   });

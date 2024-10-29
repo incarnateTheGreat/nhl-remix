@@ -1,5 +1,4 @@
 import { createColumnHelper } from "@tanstack/react-table";
-
 import { SkaterStats } from "types/types";
 
 const columnHelper = createColumnHelper<SkaterStats>();
@@ -68,7 +67,9 @@ const forwardPreGame = [
   columnHelper.accessor("faceoffWinningPctg", {
     header: () => <span>FO%</span>,
     cell: (info) => {
-      if (!info.getValue()) return "--";
+      if (!info.getValue()) {
+        return "--";
+      }
 
       return (info.getValue() * 100).toFixed(1);
     },

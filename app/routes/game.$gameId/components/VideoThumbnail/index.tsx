@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import VideoModal from "../VideoModal";
 import axios from "axios";
+import { useEffect, useState } from "react";
+
+import VideoModal from "../VideoModal";
 
 type VideoThumbnailProps = {
   videoId: number;

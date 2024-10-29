@@ -94,4 +94,4 @@ type StandingsResponse = {
   standings: TeamStandings[];
 };
 
-export type { StandingsResponse, TeamStandings, TeamName, PlaceName };
+export type { PlaceName, StandingsResponse, TeamName, TeamStandings };

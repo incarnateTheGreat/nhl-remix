@@ -16,7 +16,9 @@ type TabsProps = {
 export default function Tabs({ data }: TabsProps) {
   const [activeTabId, setActiveTabId] = useState<number>(data?.[0]?.id);
 
-  if (data.length === 0) return null;
+  if (data.length === 0) {
+    return null;
+  }
 
   return (
     <div>

@@ -1,10 +1,10 @@
 import { Link } from "@remix-run/react";
+import { SeasonSeries } from "types/types";
+
+import { cn, getNumberWithOrdinal, isGameComplete } from "~/utils";
 
 import SeriesGameStatus from "./SeriesGameStatus";
 import SeriesTeamRow from "./SeriesTeamRow";
-
-import { SeasonSeries } from "types/types";
-import { cn, getNumberWithOrdinal, isGameComplete } from "~/utils";
 
 type SeriesGameBoxProps = {
   game: SeasonSeries;

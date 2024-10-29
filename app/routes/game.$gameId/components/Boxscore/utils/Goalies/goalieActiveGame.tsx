@@ -1,5 +1,4 @@
 import { createColumnHelper } from "@tanstack/react-table";
-
 import { GoalieStats } from "types/types";
 
 const columnHelper = createColumnHelper<GoalieStats>();
@@ -39,7 +38,9 @@ const goalieActiveGame = [
     header: () => <span>SV%</span>,
     sortUndefined: "last",
     cell: (info) => {
-      if (!info.getValue()) return "--";
+      if (!info.getValue()) {
+        return "--";
+      }
 
       return ((info.getValue() * 100) / 100).toFixed(3).substring(1);
     },

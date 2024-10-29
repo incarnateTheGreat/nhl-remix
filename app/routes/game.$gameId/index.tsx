@@ -1,14 +1,20 @@
-import { useCallback, useEffect } from "react";
 import { MetaFunction } from "@remix-run/node";
 import { useLoaderData, useRevalidator } from "@remix-run/react";
 import { format } from "date-fns";
+import { useEffect } from "react";
+import type { Game } from "types/types";
+
+import ActiveGameData from "~/components/ActiveGameData";
+import {
+  deepMerge,
+  isGameActive,
+  isGameComplete,
+  isPreGame,
+  Timer,
+} from "~/utils";
 
 import PreGameData from "./components/PreGameData";
 import ScoreHeader from "./components/ScoreHeader";
-
-import ActiveGameData from "~/components/ActiveGameData";
-import type { Game } from "types/types";
-import { deepMerge, isGameActive, isGameComplete, isPreGame } from "~/utils";
 
 type LoaderProps = {
   params: {
@@ -68,24 +74,40 @@ export default function Game() {
   const gameDataToRender = useLoaderData<Game>();
   const revalidator = useRevalidator();
 
-  const { gameState } = gameDataToRender;
+  const {
+    gameState,
+    clock: { inIntermission },
+  } = gameDataToRender;
 
-  const visibilityChange = useCallback(() => {
-    if (
-      document.visibilityState === "visible" &&
-      (isPreGame(gameState) || isGameActive(gameState))
-    ) {
-      revalidator.revalidate();
-    }
-  }, [gameState, revalidator]);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const timerToUse = new Timer();
 
   useEffect(() => {
-    document.addEventListener("visibilitychange", visibilityChange);
+    if (isPreGame(gameState) || inIntermission) {
+      timerToUse.start(() => {
+        revalidator.revalidate();
+      }, 60000);
+    } else if (isGameActive(gameState) && !inIntermission) {
+      timerToUse.start(() => {
+        revalidator.revalidate();
+      }, 15000);
+    }
 
-    return () => {
-      document.removeEventListener("visibilitychange", visibilityChange);
-    };
-  }, [visibilityChange]);
+    return () => timerToUse.stop();
+  }, [inIntermission, gameState]);
+
+  useEffect(() => {
+    if (timerToUse.running && isGameComplete(gameState)) {
+      timerToUse.stop();
+    }
+  }, [gameState, timerToUse]);
+
+  useEffect(() => {
+    if (isGameComplete(gameState)) {
+      timerToUse.stop();
+    }
+  }, [gameState, timerToUse]);
 
   return (
     <div className="mx-auto mt-4 flex w-full flex-col bg-white px-4 py-2">

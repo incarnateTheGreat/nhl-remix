@@ -1,9 +1,8 @@
 import { useRouteLoaderData } from "@remix-run/react";
+import { Game } from "types/types";
 
 import GameState from "./GameState";
 import TeamHeader from "./TeamHeader";
-
-import { Game } from "types/types";
 
 export default function ScoreHeader() {
   const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;

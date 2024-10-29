@@ -78,7 +78,9 @@ export default function getStandingsColumns(type: string) {
     columnHelper.accessor("pointPctg", {
       header: () => <span>P%</span>,
       cell: (info) => {
-        if (!info.getValue()) return "--";
+        if (!info.getValue()) {
+          return "--";
+        }
 
         return info.getValue().toFixed(3);
       },

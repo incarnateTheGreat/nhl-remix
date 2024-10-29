@@ -1,4 +1,5 @@
 import { Clock, PeriodDescriptior } from "types/types";
+
 import { PERIODS } from "~/utils";
 
 type GameStateProps = {
@@ -28,10 +29,10 @@ export default function GameState({
     if (periodDescriptor.periodType === "OT") {
       return (
         <div className={classnames}>
-          <span className="bg-red-700 px-2 py-0.5 font-bold text-white">
+          <span className="rounded bg-red-700 px-2 py-0.5 text-sm font-semibold text-white">
             OT
           </span>
-          <span>{clock.timeRemaining}</span>
+          <span className="text-sm">{clock.timeRemaining}</span>
         </div>
       );
     }
@@ -39,20 +40,20 @@ export default function GameState({
     if ("otPeriods" in periodDescriptor) {
       return (
         <div className={classnames}>
-          <span className="bg-red-700 px-2 py-0.5 font-bold text-white">
+          <span className="rounded bg-red-700 px-2 py-0.5 text-sm font-semibold text-white">
             {`${periodDescriptor.otPeriods}OT`}
           </span>
-          <span>{clock.timeRemaining}</span>
+          <span className="text-sm">{clock.timeRemaining}</span>
         </div>
       );
     }
 
     return (
       <div className={classnames}>
-        <span className="bg-green-700 px-2 py-0.5 font-bold text-white">
+        <span className="rounded bg-green-700 px-2 py-0.5 text-sm font-semibold text-white">
           {PERIODS[period]} {clock.inIntermission ? "INT" : ""}
         </span>
-        <span>{clock.timeRemaining}</span>
+        <span className="text-sm">{clock.timeRemaining}</span>
       </div>
     );
   }
@@ -60,7 +61,7 @@ export default function GameState({
   if (gameState === "OFF" || gameState === "FINAL") {
     if (periodDescriptor.periodType === "SO") {
       return (
-        <span className="bg-gray-500 px-2 py-0.5 font-bold text-white">
+        <span className="rounded bg-gray-200 px-2 py-0.5 text-sm font-semibold text-black">
           FINAL/SO
         </span>
       );
@@ -68,7 +69,7 @@ export default function GameState({
 
     if (periodDescriptor.periodType === "OT" && !periodDescriptor.otPeriods) {
       return (
-        <span className="bg-gray-500 px-2 py-0.5 font-bold text-white">
+        <span className="rounded bg-gray-200 px-2 py-0.5 text-sm font-semibold text-black">
           FINAL/OT
         </span>
       );
@@ -76,18 +77,18 @@ export default function GameState({
 
     if ("otPeriods" in periodDescriptor) {
       return (
-        <span className="bg-gray-500 px-2 py-0.5 font-bold text-white">
+        <span className="rounded bg-gray-200 px-2 py-0.5 text-sm font-semibold text-black">
           {`FINAL/${periodDescriptor.otPeriods}OT`}
         </span>
       );
     }
 
     return (
-      <span className="bg-gray-500 px-2 py-0.5 font-bold text-white">
+      <span className="rounded bg-gray-200 px-2 py-0.5 text-sm font-semibold text-black">
         FINAL
       </span>
     );
   }
 
-  return <span className="font-bold">{time}</span>;
+  return <span className="text-sm font-bold">{time}</span>;
 }

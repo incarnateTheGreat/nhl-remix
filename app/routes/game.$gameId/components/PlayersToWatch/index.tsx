@@ -1,6 +1,6 @@
 import { useRouteLoaderData } from "@remix-run/react";
-
 import { Game } from "types/types";
+
 import { getLogo } from "~/utils";
 
 const STATCODES: { [k: string]: string } = {

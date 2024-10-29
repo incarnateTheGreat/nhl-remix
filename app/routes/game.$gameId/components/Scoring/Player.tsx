@@ -1,7 +1,7 @@
+import type { GoalsType } from "types/types";
+
 import Assists from "./Assists";
 import Goal from "./Goal";
-
-import type { GoalsType } from "types/types";
 
 type PlayerProps = {
   goal: GoalsType;

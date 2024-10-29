@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, useEffect } from "react";
+
 import { VideoData } from "../VideoThumbnail";
 
 type VideoModalProps = {

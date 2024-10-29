@@ -1,8 +1,9 @@
 import React from "react";
 import { GoalsType, Team } from "types/types";
+
+import VideoThumbnail from "../VideoThumbnail";
 import Player from "./Player";
 import Scenario from "./Scenario";
-import VideoThumbnail from "../VideoThumbnail";
 
 type GoalContainerProps = {
   goal: GoalsType;

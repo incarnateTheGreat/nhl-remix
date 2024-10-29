@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   flexRender,
   getCoreRowModel,
@@ -6,6 +5,8 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
+import { useState } from "react";
+
 import { cn } from "~/utils";
 
 const sweaterNumberCol = {

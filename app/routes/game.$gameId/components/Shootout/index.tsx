@@ -1,5 +1,5 @@
-import { useRef } from "react";
 import type { Shootout, Team } from "types/types";
+
 import { cn, getLogo, getRandomKey } from "~/utils";
 
 type ShootoutProps = {

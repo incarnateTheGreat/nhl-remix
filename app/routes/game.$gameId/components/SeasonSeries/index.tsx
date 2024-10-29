@@ -1,8 +1,7 @@
 import { useRouteLoaderData } from "@remix-run/react";
+import type { Game, SeasonSeries } from "types/types";
 
 import SeriesGameBox from "./SeriesGameBox";
-
-import type { Game, SeasonSeries } from "types/types";
 
 export default function SeasonSeries() {
   const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;

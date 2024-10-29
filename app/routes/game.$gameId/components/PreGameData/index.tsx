@@ -2,7 +2,6 @@ import Boxscore from "../Boxscore";
 import PlayersToWatch from "../PlayersToWatch";
 import SeasonSeries from "../SeasonSeries";
 import TeamStats from "../TeamStats";
-
 import GameInfo from "./GameInfo";
 
 export default function PreGameData() {

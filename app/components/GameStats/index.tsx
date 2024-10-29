@@ -1,9 +1,9 @@
 import { useRouteLoaderData } from "@remix-run/react";
+import { Game } from "types/types";
+
+import { getLogo } from "~/utils";
 
 import ListGaneStats from "./ListGameStats";
-
-import { Game } from "types/types";
-import { getLogo } from "~/utils";
 
 export default function GameStats() {
   const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;

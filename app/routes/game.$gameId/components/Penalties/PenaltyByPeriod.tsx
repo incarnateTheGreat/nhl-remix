@@ -1,7 +1,7 @@
+import { PenaltiesType, PeriodDescriptior } from "types/types";
+
 import TableBody from "./TableBody";
 import TableHeader from "./TableHeader";
-
-import { PenaltiesType, PeriodDescriptior } from "types/types";
 
 type PenaltyByPeriodProps = {
   periodPenalty: {
