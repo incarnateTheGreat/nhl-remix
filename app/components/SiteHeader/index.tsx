@@ -26,7 +26,7 @@ export default function SiteHeader() {
               return (
                 <div
                   key={link.path}
-                  className={cn("ml-2 p-4 text-xs hover:underline", {
+                  className={cn("p-4 text-xs hover:underline", {
                     underline: pathname === link.path,
                   })}
                 >

@@ -4,14 +4,14 @@ import { SkaterStats } from "types/types";
 const columnHelper = createColumnHelper<SkaterStats>();
 
 const defensemenActiveGame = [
-  columnHelper.accessor("sweaterNumber", {
-    header: () => <span>#</span>,
-    cell: (info) => info.getValue() ?? "--",
-    sortUndefined: "last",
-  }),
   columnHelper.accessor("name", {
     header: () => <span>Defensemen</span>,
     cell: (info) => info.cell.getValue().default,
+    sortUndefined: "last",
+  }),
+  columnHelper.accessor("sweaterNumber", {
+    header: () => <span>#</span>,
+    cell: (info) => info.getValue() ?? "--",
     sortUndefined: "last",
   }),
   columnHelper.accessor("goals", {

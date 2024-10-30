@@ -40,7 +40,7 @@ export default function ActiveGameData() {
   };
 
   return (
-    <div className="mt-2 flex flex-col lg:flex-row">
+    <div className="mt-2 flex flex-col xl:flex-row">
       <div className="flex-1">
         <div>
           <Tabs data={tabData} />

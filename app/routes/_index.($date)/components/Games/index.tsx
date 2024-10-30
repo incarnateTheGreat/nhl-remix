@@ -12,7 +12,7 @@ export default function Games() {
 
   return (
     <section className="mb-4">
-      <div className="grid py-2 md:grid-cols-3">
+      <div className="grid grid-cols-1 py-2 md:grid-cols-2 lg:grid-cols-4">
         {games?.map((game) => {
           return <GameBox key={game.id} game={game} />;
         })}

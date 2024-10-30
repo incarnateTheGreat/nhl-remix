@@ -11,6 +11,13 @@ import { GamesType, GameWeek } from "types/types";
 
 import DatePickerInternal from "~/components/DatePickerInternal";
 import Loading from "~/components/Loading";
+import {
+  deepMerge,
+  getTodaysDate,
+  isGameActive,
+  isPreGame,
+  Timer,
+} from "~/utils";
 
 import Games from "./components/Games";
 
@@ -38,39 +45,92 @@ export const meta: MetaFunction = (e) => {
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const date = params.date ?? "now";
 
-  const games = await fetch(`https://api-web.nhle.com/v1/score/${date}`);
+  const gamesResponse = await fetch(
+    `https://api-web.nhle.com/v1/score/${date}`,
+  );
 
-  return games.json();
+  const games: GamesType = await gamesResponse.json();
+
+  const incompleteGames = games.games.reduce(
+    (acc, elem) => {
+      if (isPreGame(elem.gameState)) {
+        acc.preGames += 1;
+      } else if (isGameActive(elem.gameState)) {
+        acc.activeGames += 1;
+      }
+
+      return acc;
+    },
+    {
+      preGames: 0,
+      activeGames: 0,
+    },
+  );
+
+  return deepMerge(games, {
+    incompleteGames,
+  });
 };
 
 export default function Scores() {
   const revalidator = useRevalidator();
   const navigation = useNavigation();
   const { date } = useParams();
-  const gamesToRender = useLoaderData<GamesType>();
+  const {
+    gameWeek,
+    games,
+    incompleteGames: { preGames, activeGames },
+  } = useLoaderData<GamesType>();
 
   const dateToFilter = date ?? format(new Date(), "yyyy-MM-dd");
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const timerToUse = new Timer();
+
+  useEffect(() => {
+    let dateVal = date;
+
+    if (!dateVal) {
+      dateVal = getTodaysDate();
+    }
+
+    if (getTodaysDate() === dateVal) {
+      if (activeGames > 0) {
+        timerToUse.start(() => {
+          revalidator.revalidate();
+        }, 15000);
+      } else if (preGames > 0 && activeGames === 0) {
+        timerToUse.start(() => {
+          revalidator.revalidate();
+        }, 60000);
+      }
+
+      if (timerToUse.running && preGames === 0 && activeGames === 0) {
+        timerToUse.stop();
+      }
+    }
+
+    return () => timerToUse.stop();
+  }, [preGames, activeGames]);
 
   useEffect(() => {
     revalidator.revalidate();
   }, [date]);
 
-  const gameWeekProcessed = gamesToRender?.gameWeek.reduce(
-    (acc: GameWeek[], gameWeek) => {
-      const isoDate = parseISO(gameWeek.date);
-      const formattedDate = format(isoDate, "MMM d");
+  const gameWeekProcessed = gameWeek?.reduce((acc: GameWeek[], gameWeek) => {
+    const isoDate = parseISO(gameWeek.date);
+    const formattedDate = format(isoDate, "MMM d");
 
-      const gameWeekObj = {
-        ...gameWeek,
-        label: formattedDate,
-      };
+    const gameWeekObj = {
+      ...gameWeek,
+      label: formattedDate,
+    };
 
-      acc.push(gameWeekObj);
+    acc.push(gameWeekObj);
 
-      return acc;
-    },
-    [],
-  );
+    return acc;
+  }, []);
 
   return (
     <div className="flex h-full flex-col bg-white px-4 py-2">
@@ -81,11 +141,9 @@ export default function Scores() {
 
       {navigation.state === "loading" ? <Loading /> : null}
 
-      {navigation.state === "idle" && gamesToRender?.games.length > 0 ? (
-        <Games />
-      ) : null}
+      {navigation.state === "idle" && games?.length > 0 ? <Games /> : null}
 
-      {navigation.state === "idle" && gamesToRender?.games.length === 0 ? (
+      {navigation.state === "idle" && games?.length === 0 ? (
         <>No Games.</>
       ) : null}
     </div>

@@ -24,16 +24,16 @@ export default function ScoreHeader() {
 
   return (
     <div>
-      <span className="font-bold">{time}</span>
+      <span className="text-sm font-bold">{time}</span>
       <div className="default_border mt-2 flex flex-col items-start p-2 lg:flex-row lg:items-center">
         <TeamHeader team={awayTeam} homeAway="away" gameState={gameState} />
-        <div className="order-1 ml-auto flex w-full justify-end lg:order-2 lg:w-2/12 lg:justify-center">
+        <div className="order-1 mb-2 flex w-full pl-1 lg:order-2 lg:mb-0 lg:ml-auto lg:w-2/12 lg:justify-center">
           <GameState
             clock={clock}
             periodDescriptor={periodDescriptor}
             gameState={gameState}
             startTimeUTC={startTimeUTC}
-            classnames="flex flex-col text-center"
+            classnames="flex text-center justify-between w-full lg:justify-normal lg:flex-col lg:w-auto"
           />
         </div>
         <TeamHeader team={homeTeam} homeAway="home" gameState={gameState} />

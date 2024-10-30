@@ -13,7 +13,7 @@ export default function Penalties() {
   } = gameDataToRender;
 
   return (
-    <div className="flex flex-1 flex-col border p-2">
+    <div className="flex flex-1 flex-col border p-2 text-sm">
       <h2 className="heading">Penalties</h2>
       {penalties.map((periodPenalty, idx) => {
         return (

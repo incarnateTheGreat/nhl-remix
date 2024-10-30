@@ -93,12 +93,13 @@ export default function BoxscoreTable({
       <thead>
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id} className="flex">
-            {headerGroup.headers.map((header) => {
+            {headerGroup.headers.map((header, idx) => {
               return (
                 <th
                   key={header.id}
-                  className={cn("cursor-pointer text-sm hover:bg-blue-100", {
+                  className={cn("cursor-pointer text-xs hover:bg-blue-100", {
                     "bg-blue-100": header.id === sorting[0]?.id,
+                    "sticky left-0 bg-white pl-2 text-left": idx === 0,
                   })}
                   style={handleColumnWidth(header.column.id)}
                   onClick={header.column.getToggleSortingHandler()}
@@ -125,17 +126,22 @@ export default function BoxscoreTable({
         ))}
       </thead>
       <tbody className="border-500-slate border-b">
-        {table.getRowModel().rows.map((row) => {
+        {table.getRowModel().rows.map((row, rowIdx) => {
           return (
             <tr
               key={row.id}
-              className="flex border-b border-b-slate-200/90 last:border-none odd:bg-slate-200/45"
+              className="flex border-b border-b-slate-200/90 last:border-none odd:bg-slate-100"
             >
-              {row.getVisibleCells().map((cell) => {
+              {row.getVisibleCells().map((cell, idx) => {
                 return (
                   <td
                     key={cell.id}
-                    className="p-2 text-sm odd:bg-slate-200/45"
+                    className={cn("p-2 text-xs", {
+                      "sticky left-0 w-56 min-w-56 text-left": idx === 0,
+                      "bg-slate-100": rowIdx % 2 === 0,
+                      "bg-white": rowIdx % 2 !== 0,
+                      "bg-blue-100": cell.column.id === sorting[0]?.id,
+                    })}
                     style={handleColumnWidth(cell.column.id)}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

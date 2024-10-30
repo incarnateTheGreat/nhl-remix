@@ -7,15 +7,15 @@ const CLASSES = {
     parentClasses: "order-2 flex w-full items-center lg:order-1 lg:flex-1",
     scoreClasses: "ml-auto text-4xl font-bold",
     teamClasses: "flex flex-col",
-    imageClasses: "mr-4",
+    imageClasses: "mr-4 w-20",
   },
   home: {
     parentClasses:
-      "order-3 flex w-full items-center lg:flex-1 lg:flex-row lg:items-center",
+      "order-3 flex w-full items-center lg:flex-1 lg:flex-row lg:items-center mt-2 md:mt-0",
     scoreClasses:
       "order-3 ml-auto text-4xl font-bold lg:order-1 lg:ml-0 lg:mr-auto",
     teamClasses: "order-2 flex flex-col",
-    imageClasses: "order-1 lg:order-3 mr-4 lg:mr-0",
+    imageClasses: "order-1 lg:order-3 mr-4 lg:mr-0 w-20",
   },
 };
 
@@ -38,7 +38,6 @@ export default function TeamHeader({
     <div className={parentClasses}>
       <img
         src={logo}
-        width={125}
         alt={`${placeName.default} ${name.default}`}
         className={imageClasses}
       />
@@ -49,7 +48,7 @@ export default function TeamHeader({
           {isPreGame(gameState) ? (
             <>{team.record}</>
           ) : (
-            <span className="text-sm">SOG: {sog}</span>
+            <span className="text-xs">SOG: {sog}</span>
           )}
         </div>
       </div>

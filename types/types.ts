@@ -345,11 +345,157 @@ type GameBoxType = {
   // teamLeaders: [ [Object], [Object], [Object], [Object], [Object], [Object] ]
 };
 
+interface Name {
+  default: string;
+}
+interface AwayLeader {
+  playerId: number;
+  name: Name;
+  firstName: Name;
+  lastName: Name;
+  sweaterNumber: number;
+  positionCode: string;
+  headshot: string;
+  value: number;
+}
+interface Leader {
+  category: string;
+  awayLeader: AwayLeader;
+  homeLeader: AwayLeader;
+}
+interface TeamLeaders {
+  context: string;
+  contextSeason: number;
+  leaders: Leader[];
+}
+interface TeamTotals {
+  record: string;
+  gaa: number;
+  savePctg: number;
+  shutouts: number;
+}
+interface Leader2 {
+  playerId: number;
+  name: Name;
+  firstName: Name;
+  lastName: Name;
+  sweaterNumber: number;
+  headshot: string;
+  positionCode: string;
+  gamesPlayed: number;
+  seasonPoints: number;
+  record: string;
+  gaa: number;
+  savePctg: number;
+  shutouts: number;
+}
+interface HomeTeam {
+  teamTotals: TeamTotals;
+  leaders: Leader2[];
+}
+interface Name2 {
+  default: string;
+  cs?: string;
+  sk?: string;
+}
+interface Leader3 {
+  playerId: number;
+  name: Name2;
+  firstName: Name;
+  lastName: Name2;
+  sweaterNumber: number;
+  headshot: string;
+  positionCode: string;
+  gamesPlayed: number;
+  seasonPoints: number;
+  record: string;
+  gaa: number;
+  savePctg: number;
+  shutouts: number;
+}
+interface AwayTeam {
+  teamTotals: TeamTotals;
+  leaders: Leader3[];
+}
+interface GoalieComparison {
+  homeTeam: HomeTeam;
+  awayTeam: AwayTeam;
+}
+interface PastGameResult {
+  opponentAbbrev: string;
+  gameResult: string;
+}
+interface Last10RecordTeam {
+  record: string;
+  streakType: string;
+  streak: number;
+  pastGameResults: PastGameResult[];
+}
+interface Last10Record {
+  awayTeam: Last10RecordTeam;
+  homeTeam: Last10RecordTeam;
+}
+interface Name3 {
+  default: string;
+  cs?: string;
+  fi?: string;
+  sk?: string;
+}
+interface SkaterSeasonStat {
+  playerId: number;
+  teamId: number;
+  sweaterNumber: number;
+  name: Name3;
+  position: string;
+  gamesPlayed: number;
+  goals: number;
+  assists: number;
+  points: number;
+  plusMinus: number;
+  pim: number;
+  avgPoints: number;
+  avgTimeOnIce: string;
+  gameWinningGoals: number;
+  shots: number;
+  shootingPctg: number;
+  faceoffWinningPctg: number;
+  powerPlayGoals: number;
+  blockedShots: number;
+  hits: number;
+}
+interface GoalieSeasonStat {
+  playerId: number;
+  teamId: number;
+  sweaterNumber: number;
+  name: Name2;
+  gamesPlayed: number;
+  wins: number;
+  losses: number;
+  otLosses: number;
+  shotsAgainst: number;
+  goalsAgainst: number;
+  goalsAgainstAvg: number;
+  savePctg: number;
+  shutouts: number;
+  saves: number;
+  toi: string;
+}
+interface Matchup {
+  season: number;
+  gameType: number;
+  teamLeaders: TeamLeaders;
+  goalieComparison: GoalieComparison;
+  last10Record: Last10Record;
+  skaterSeasonStats: SkaterSeasonStat[];
+  goalieSeasonStats: GoalieSeasonStat[];
+}
+
 type Game = {
   id: number;
   season: number;
   gameType: number;
   limitedScoring: boolean;
+  matchup: Matchup;
   gameDate: string;
   venue: { default: string };
   venueLocation: { default: string };
@@ -419,6 +565,10 @@ type GameWeek = {
 };
 
 type GamesType = {
+  incompleteGames: {
+    preGames: number;
+    activeGames: number;
+  };
   currentDate: string;
   prevDate: string;
   nextDate: string;
@@ -436,9 +586,11 @@ export type {
   GameWeek,
   GoalieStats,
   GoalsType,
+  Last10RecordTeam,
   LinescoreByPeriod,
   LinescoreByPeriodObject,
   LinescoreTotals,
+  PastGameResult,
   PenaltiesType,
   PeriodDescriptior,
   PlayerByGameStats,

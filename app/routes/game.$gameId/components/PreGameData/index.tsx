@@ -1,4 +1,5 @@
 import Boxscore from "../Boxscore";
+import Last10Games from "../Last10Games";
 import PlayersToWatch from "../PlayersToWatch";
 import SeasonSeries from "../SeasonSeries";
 import TeamStats from "../TeamStats";
@@ -18,6 +19,7 @@ export default function PreGameData() {
           <SeasonSeries />
           <TeamStats />
           <GameInfo />
+          <Last10Games />
         </div>
       </div>
     </div>

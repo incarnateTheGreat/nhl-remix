@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { cn } from "~/utils";
 
 const tabClasses =
-  "min-w-20 px-2 cursor-pointer border-b text-center hover:font-semibold";
+  "min-w-20 px-2 cursor-pointer border-b text-center hover:font-semibold  text-sm ";
 
 type TabWithNavigateProps = {
   data: {

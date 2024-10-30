@@ -20,7 +20,7 @@ export default function TableBody({ shotsByPeriod, totalSOG }: TableBodyProps) {
         return (
           <tr
             key={period.periodDescriptor.number}
-            className="border-b border-b-slate-200/90 odd:bg-slate-200/45"
+            className="border-b border-b-slate-200/90 text-sm odd:bg-slate-200/45"
           >
             <td className="w-16 p-2 text-center font-bold">{periodLabel}</td>
             <td className="p-2 text-center">{period.away}</td>
@@ -28,7 +28,7 @@ export default function TableBody({ shotsByPeriod, totalSOG }: TableBodyProps) {
           </tr>
         );
       })}
-      <tr className="border-b border-b-slate-200/90 odd:bg-slate-200/45">
+      <tr className="border-b border-b-slate-200/90 text-sm odd:bg-slate-200/45">
         <td className="w-16 p-2 text-center font-bold">Total</td>
         <td className="p-2 text-center">{totalSOG?.awayValue}</td>
         <td className="w-10 p-2 text-center">{totalSOG?.homeValue}</td>

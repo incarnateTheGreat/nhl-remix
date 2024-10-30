@@ -13,13 +13,11 @@ type DefensemenProps = {
 
 export default function Defensemen({ defensemen, gameState }: DefensemenProps) {
   let columns,
-    initSortById = "sweaterNumber",
-    initSortDirection = "asc";
+    initSortById = "sweaterNumber";
 
   if (isPreGame(gameState)) {
     columns = defensemenPreGame;
     initSortById = "gamesPlayed";
-    initSortDirection = "desc";
   } else {
     initSortById = "points";
     columns = defensemenActiveGame;
@@ -31,7 +29,6 @@ export default function Defensemen({ defensemen, gameState }: DefensemenProps) {
         data={defensemen}
         columns={columns}
         initSortById={initSortById}
-        initSortDirection={initSortDirection}
       />
     </div>
   );

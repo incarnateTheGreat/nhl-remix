@@ -24,12 +24,13 @@ export default function GameBox({ game }: GameBoxProps) {
 
   return (
     <Link
-      className="mb-4 mr-2.5 cursor-pointer rounded border border-gray-300 p-4 transition-all hover:border-gray-800"
+      prefetch="intent"
+      className="mb-4 mr-2.5 cursor-pointer rounded border border-gray-300 p-3 transition-all hover:border-gray-800"
       to={`/game/${id}`}
     >
       {gameType === 3 ? <RoundStatus seriesStatus={game.seriesStatus} /> : null}
 
-      <div className="my-2 text-sm">
+      <div className="text-sm">
         <GameState
           clock={clock}
           periodDescriptor={periodDescriptor}

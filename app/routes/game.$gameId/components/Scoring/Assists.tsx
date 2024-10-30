@@ -18,7 +18,7 @@ export default function Assists({ assists, teamAbbrev }: AssistsProps) {
   return (
     <div className="flex items-center">
       <img width={30} src={getLogo(teamAbbrev)} alt={teamAbbrev} />
-      <span className="mr-1 text-sm text-gray-600">{assistsStr}</span>
+      <span className="mr-1 text-xs text-gray-600">{assistsStr}</span>
     </div>
   );
 }

@@ -22,13 +22,13 @@ export default function TableHeader({ byPeriod }: TableHeaderProps) {
           return (
             <th
               key={period.periodDescriptor.number}
-              className="w-12 p-2 text-center text-sm"
+              className="w-12 p-2 text-center text-xs"
             >
               {periodLabel}
             </th>
           );
         })}
-        <th className="p-2 pr-4 text-center text-sm">T</th>
+        <th className="p-2 pr-4 text-center text-xs">T</th>
       </tr>
     </thead>
   );
