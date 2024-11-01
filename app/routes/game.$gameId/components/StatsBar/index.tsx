@@ -27,11 +27,11 @@ export default function StatsBar(props: StatsBarProps) {
   } = props;
 
   return (
-    <div className=" mb-4 last:mb-0">
+    <div className="mb-4 last:mb-0">
       <div className="flex justify-between">
-        <span className="text-xl font-bold">{awayValueToDisplay}</span>
-        <span>{label}</span>
-        <span className="text-xl font-bold">{homeValueToDisplay}</span>
+        <span className="text-sm font-bold">{awayValueToDisplay}</span>
+        <span className="text-sm">{label}</span>
+        <span className="text-sm font-bold">{homeValueToDisplay}</span>
       </div>
       <div className="flex gap-2">
         <div
@@ -62,7 +62,7 @@ export default function StatsBar(props: StatsBarProps) {
         </div>
       </div>
       {subText ? (
-        <div className="flex justify-between text-sm text-gray-500">
+        <div className="mt-0.5 flex justify-between text-xs text-gray-800">
           <span>{subText?.awayValue}</span>
           <span>{subText?.homeValue}</span>
         </div>

@@ -28,7 +28,7 @@ export default function TeamStats() {
 
   return (
     <div>
-      <div className="flex justify-between">
+      <div className="mb-2 flex justify-between">
         <img src={getLogo(awayTeam.abbrev)} alt={awayTeam.abbrev} width={50} />
         <h3 className="font-bold">Team Stats</h3>
         <img src={getLogo(homeTeam.abbrev)} alt={homeTeam.abbrev} width={50} />
