@@ -55,7 +55,7 @@ export default function TableBody({ penalties }: PenaltiesTableBodyProps) {
         return (
           <tr
             key={idx}
-            className="border-b border-b-slate-200/90 odd:bg-slate-200/45"
+            className="border-b border-b-slate-200/90 text-xs odd:bg-slate-200/45 md:text-sm"
           >
             <td className="w-12 p-2">
               <img
@@ -64,10 +64,10 @@ export default function TableBody({ penalties }: PenaltiesTableBodyProps) {
                 alt={`${teamAbbrev.default} Logo`}
               />
             </td>
-            <td className="border-r border-gray-400 p-2 md:w-16">
+            <td className="w-16 border-r border-gray-400 p-2 md:w-16">
               {timeInPeriod}
             </td>
-            <td className="border-r border-gray-400 p-2 md:w-48">
+            <td className="w-28 border-r border-gray-400 p-2 md:w-44">
               {committedByPlayer ? `${committedByPlayer}` : "Team"}{" "}
             </td>
             <td className="p-2 capitalize">
