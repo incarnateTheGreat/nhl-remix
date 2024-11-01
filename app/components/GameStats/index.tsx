@@ -11,7 +11,7 @@ export default function GameStats() {
   const { awayTeam, homeTeam } = gameDataToRender;
 
   return (
-    <div className="flex w-full flex-col overflow-x-auto lg:w-96">
+    <div className="flex w-full flex-col overflow-x-auto">
       <div className="flex justify-between">
         <img src={getLogo(awayTeam.abbrev)} alt={awayTeam.abbrev} width={50} />
         <h3 className="font-bold">Game Stats</h3>

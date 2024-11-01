@@ -23,32 +23,24 @@ const tabData = [
 
 export default function ActiveGameData() {
   tabData[0].component = () => (
-    <div className="mt-4">
+    <div className="grid gap-y-2">
       <Scoring />
-      <div className="mt-1">
-        <Penalties />
-      </div>
+      <Penalties />
     </div>
   );
 
   tabData[1].component = () => {
-    return (
-      <div className="mt-4">
-        <Boxscore />
-      </div>
-    );
+    return <Boxscore />;
   };
 
   return (
     <div className="mt-2 flex flex-col xl:flex-row">
       <div className="flex-1">
-        <div>
-          <Tabs data={tabData} />
-        </div>
+        <Tabs data={tabData} />
       </div>
 
-      <div className="flex flex-col lg:ml-4">
-        <div className="default_border mt-2 grid w-full grid-cols-1 gap-y-8 px-4 py-2">
+      <div className="flex flex-col xl:ml-4">
+        <div className="default_border mt-2 grid grid-cols-1 gap-y-8 px-4 py-2 md:w-full xl:mt-[2.35rem] xl:w-96">
           <Linescore />
           <ShotsOnGoal />
           <GameStats />

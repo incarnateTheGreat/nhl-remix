@@ -20,7 +20,7 @@ export default function Scoring() {
   );
 
   return (
-    <div className="flex flex-1 flex-col border p-2">
+    <div className="default_border flex flex-1 flex-col p-2">
       <h2 className="heading">Scoring</h2>
       {scoringNoShootout.map((period) => {
         return (

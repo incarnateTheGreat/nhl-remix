@@ -15,15 +15,23 @@ function penaltyStr(str: string) {
       })
       .join(" ");
 
-    return (amendedStr = `${delayOfGameName} (${delayOfGameActionStr})`);
+    amendedStr = `${delayOfGameName} (${delayOfGameActionStr})`;
   } else {
-    return (amendedStr = str
-      .split("-")
-      .map((e) => {
-        return e.charAt(0).toUpperCase() + e.slice(1);
-      })
-      .join("-"));
+    const strLength = str.split("-").length;
+
+    if (strLength > 2) {
+      amendedStr = str.replaceAll("-", " ");
+    } else {
+      amendedStr = str
+        .split("-")
+        .map((e) => {
+          return e.charAt(0).toUpperCase() + e.slice(1);
+        })
+        .join("-");
+    }
   }
+
+  return amendedStr;
 }
 
 type PenaltiesTableBodyProps = {
@@ -62,7 +70,7 @@ export default function TableBody({ penalties }: PenaltiesTableBodyProps) {
             <td className="border-r border-gray-400 p-2 md:w-48">
               {committedByPlayer ? `${committedByPlayer}` : "Team"}{" "}
             </td>
-            <td className="p-2">
+            <td className="p-2 capitalize">
               {amendedPenaltyStr} {servedBy ? `(Served by ${servedBy})` : null}
             </td>
           </tr>

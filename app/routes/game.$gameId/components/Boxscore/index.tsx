@@ -2,7 +2,7 @@ import { useRouteLoaderData } from "@remix-run/react";
 import { Game, PlayerByGameStats } from "types/types";
 
 import Tabs from "~/components/Tabs";
-import { isPreGame } from "~/utils";
+import { cn, isGameComplete, isPreGame } from "~/utils";
 
 import Defensemen from "./Defensemen";
 import Forwards from "./Forwards";
@@ -84,7 +84,11 @@ export default function Boxscore() {
   };
 
   return (
-    <div className="my-2">
+    <div
+      className={cn("my-2", {
+        "default_border p-2": isGameComplete(gameState),
+      })}
+    >
       <Tabs data={tabData} />
     </div>
   );

@@ -22,13 +22,11 @@ function handleResultStr(result: string) {
 export default function Last10Games() {
   const gameRenderData = useRouteLoaderData("routes/game.$gameId") as Game;
 
-  const {
-    matchup: { last10Record },
-  } = gameRenderData;
+  const { last10Record } = gameRenderData;
 
   return (
     <>
-      {Object.entries(last10Record).map((team) => {
+      {Object.entries(last10Record)?.map((team) => {
         const [teamName, recordData] = team as [string, Last10RecordTeam];
 
         const teamToDisplay = gameRenderData[teamName as keyof Game] as Team;

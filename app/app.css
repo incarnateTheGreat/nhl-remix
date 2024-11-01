@@ -145,5 +145,5 @@ nav {
 }
 
 .default_border {
-  @apply border border-slate-500/40;
+  @apply border border-slate-500/20;
 }

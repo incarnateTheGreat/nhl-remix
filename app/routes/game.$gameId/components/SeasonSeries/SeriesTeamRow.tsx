@@ -17,10 +17,13 @@ export default function SeriesTeamRow({
   const { logo, abbrev, score } = team;
   return (
     <div
-      className={cn("flex items-center justify-between last:mt-1", classNames)}
+      className={cn(
+        "flex items-center justify-between text-sm last:mt-1",
+        classNames,
+      )}
     >
       <div className="flex">
-        <img src={logo} alt={abbrev} width={35} className="mr-2" />
+        <img src={logo} alt={abbrev} width={35} className="mr-1" />
         <span className="font-semibold">{abbrev}</span>
       </div>
       <span>{score}</span>

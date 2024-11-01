@@ -103,7 +103,7 @@ export default function Scores() {
       } else if (preGames > 0 && activeGames === 0) {
         timerToUse.start(() => {
           revalidator.revalidate();
-        }, 60000);
+        }, 300000);
       }
 
       if (timerToUse.running && preGames === 0 && activeGames === 0) {

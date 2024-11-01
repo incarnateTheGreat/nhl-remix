@@ -102,7 +102,6 @@ export default function Game() {
   }, [inIntermission, gameState]);
 
   useEffect(() => {
-    console.log(timerToUse.running);
     if (timerToUse.running && isGameComplete(gameState)) {
       timerToUse.stop();
     }

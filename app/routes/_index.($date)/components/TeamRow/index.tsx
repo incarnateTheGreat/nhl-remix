@@ -20,14 +20,20 @@ export default function TeamRow({ team, gameState }: TeamRowProps) {
 
   return (
     <div className="mb-3 flex items-center last:mb-0">
-      <img src={logo} alt={name.default} width={50} />
-      <div className="ml-2 text-sm">
-        <div className="font-semibold">{teamName.join(" ")}</div>
-        <div>{isPreGame(gameState) ? <>{team.record}</> : <>SOG: {sog}</>}</div>
+      <div className="flex flex-1">
+        <img src={logo} alt={name.default} width={50} />
+        <div className="ml-2 text-sm">
+          <div className="font-semibold">{teamName.join(" ")}</div>
+          <div>
+            {isPreGame(gameState) ? (
+              <span className="text-xs">{team.record}</span>
+            ) : (
+              <span className="text-xs">SOG: {sog}</span>
+            )}
+          </div>
+        </div>
       </div>
-      <div className="flex-1 text-right text-lg font-bold">
-        {scoreIndicator}
-      </div>
+      <div className="text-md min-w-3 font-bold">{scoreIndicator}</div>
     </div>
   );
 }

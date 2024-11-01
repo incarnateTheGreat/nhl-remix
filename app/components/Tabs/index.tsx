@@ -43,7 +43,7 @@ export default function Tabs({ data }: TabsProps) {
           );
         })}
       </ul>
-      <div>{data[activeTabId].component()}</div>
+      <div className="mt-3">{data[activeTabId].component()}</div>
     </div>
   );
 }

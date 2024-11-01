@@ -496,6 +496,7 @@ type Game = {
   gameType: number;
   limitedScoring: boolean;
   matchup: Matchup;
+  last10Record: Last10Record;
   gameDate: string;
   venue: { default: string };
   venueLocation: { default: string };

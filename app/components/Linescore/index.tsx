@@ -21,7 +21,7 @@ export default function Linescore() {
   } = gameDataToRender;
 
   return (
-    <div className="flex w-full flex-col overflow-x-auto lg:w-96">
+    <div className="flex w-full flex-col overflow-x-auto">
       <h3 className="font-bold">Linescore</h3>
       <table>
         <TableHeader byPeriod={byPeriod} />
