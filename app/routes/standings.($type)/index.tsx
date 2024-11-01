@@ -110,9 +110,15 @@ export const loader = async () => {
         {},
       );
 
-      const wildCardTeams = conferences[conferenceName].slice(
-        6,
-        conferences[conferenceName].length,
+      const wildCardTeams = conferences[conferenceName].reduce(
+        (acc: TeamStandings[], team) => {
+          if (team.wildcardSequence > 0) {
+            acc.push(team);
+          }
+
+          return acc;
+        },
+        [],
       );
 
       acc[conferenceName] = {

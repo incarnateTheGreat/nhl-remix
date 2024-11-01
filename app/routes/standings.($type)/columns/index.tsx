@@ -108,7 +108,15 @@ export default function getStandingsColumns(type: string) {
     }),
     columnHelper.accessor("goalDifferential", {
       header: () => <span>DIFF</span>,
-      cell: (info) => info.getValue() ?? "--",
+      cell: (info) => {
+        if (info.getValue() > 0) {
+          return <span className="text-green-600">+{info.getValue()}</span>;
+        } else if (info.getValue() < 0) {
+          return <span className="text-red-600">{info.getValue()}</span>;
+        }
+
+        return info.getValue() ?? "--";
+      },
       sortUndefined: "last",
     }),
     columnHelper.accessor("homeWins", {

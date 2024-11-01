@@ -66,7 +66,8 @@ export default function StandingsTable({
                   key={header.id}
                   className={cn("cursor-pointer text-sm hover:bg-blue-100", {
                     "bg-blue-100": header.id === sorting[0]?.id,
-                    "sticky left-0 bg-white text-left": idx === 0,
+                    "pointer-events-none sticky left-0 bg-white pl-3 text-left":
+                      idx === 0,
                   })}
                   onClick={header.column.getToggleSortingHandler()}
                 >
