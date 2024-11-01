@@ -84,7 +84,7 @@ main {
   background-color: #1A1A1A;
   display: flex;
   flex: 1;
-  padding: 1rem;
+  padding: 0 1rem;
 }
 
 footer {

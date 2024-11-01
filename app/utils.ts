@@ -6,6 +6,7 @@ import {
   LinescoreByPeriod,
   PeriodDescriptior,
 } from "../types/types";
+import { ConferencesType, DivisionsType } from "./routes/standings.($type)";
 
 type TzOptions = {
   [key: string]: string;
@@ -201,6 +202,16 @@ function Timer(this: TimerProps) {
   };
 }
 
+const reverseLeagueData = (data: DivisionsType | ConferencesType) => {
+  return Object.keys(data)
+    .reverse()
+    .reduce((acc: DivisionsType | ConferencesType, name) => {
+      acc[name] = data[name];
+
+      return acc;
+    }, {});
+};
+
 export {
   cn,
   deepMerge,
@@ -215,5 +226,6 @@ export {
   isGameComplete,
   isPreGame,
   PERIODS,
+  reverseLeagueData,
   Timer,
 };

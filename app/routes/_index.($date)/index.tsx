@@ -134,6 +134,7 @@ export default function Scores() {
 
   return (
     <div className="flex h-full flex-col bg-white px-4 py-2">
+      <h1 className="text-4xl font-black tracking-tight">Scores</h1>
       <DatePickerInternal
         gameWeek={gameWeekProcessed}
         dateToFilter={dateToFilter}

@@ -14,7 +14,7 @@ export default function SeasonSeries() {
 
   return (
     <div className="flex flex-col">
-      <h2 className="text-base font-bold">Series History</h2>
+      <h2 className="text-base font-bold">Season Series</h2>
       <div className="mt-4 grid grid-cols-2 gap-1">
         {seasonSeriesData.map((game) => {
           return <SeriesGameBox key={game.id} game={game} />;

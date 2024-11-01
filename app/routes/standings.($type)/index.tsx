@@ -3,7 +3,7 @@ import { useParams } from "@remix-run/react";
 import { StandingsResponse, TeamStandings } from "types/standings";
 
 import TabWithNavigate from "~/components/TabLinks";
-import { getTodaysDate } from "~/utils";
+import { getTodaysDate, reverseLeagueData } from "~/utils";
 
 import Conference from "./components/Conference";
 import Division from "./components/Division";
@@ -30,11 +30,11 @@ export const meta: MetaFunction = () => {
 
 type League = TeamStandings[];
 
-type ConferencesType = {
+export type ConferencesType = {
   [k: string]: TeamStandings[];
 };
 
-type DivisionsType = {
+export type DivisionsType = {
   [k: string]: {
     [k: string]: TeamStandings[];
   };
@@ -55,7 +55,7 @@ export const loader = async () => {
 
   const standingsResponse: StandingsResponse = await standings.json();
 
-  const divisions = standingsResponse.standings.reduce(
+  let divisions = standingsResponse.standings.reduce(
     (acc: DivisionsType, team) => {
       const { conferenceName, divisionName } = team;
 
@@ -74,7 +74,11 @@ export const loader = async () => {
     {},
   );
 
-  const conferences = standingsResponse.standings.reduce(
+  if (Object.keys(divisions)[0] === "Western") {
+    divisions = reverseLeagueData(divisions) as DivisionsType;
+  }
+
+  let conferences = standingsResponse.standings.reduce(
     (acc: ConferencesType, team) => {
       const { conferenceName } = team;
 
@@ -88,6 +92,10 @@ export const loader = async () => {
     },
     {},
   );
+
+  if (Object.keys(conferences)[0] === "Western") {
+    conferences = reverseLeagueData(conferences) as ConferencesType;
+  }
 
   const league = standingsResponse.standings.reduce((acc: League, team) => {
     acc.push(team);
@@ -179,7 +187,8 @@ export default function Standings() {
   });
 
   return (
-    <div className="grid grid-cols-1 gap-y-8 bg-white p-4">
+    <div className="grid grid-cols-1 gap-y-4 bg-white p-4">
+      <h1 className="text-4xl font-black tracking-tight">Standings</h1>
       <TabWithNavigate data={tabData} defaultTab={findParam?.id} />
     </div>
   );

@@ -1,5 +1,6 @@
 import Boxscore from "~/routes/game.$gameId/components/Boxscore";
 import Penalties from "~/routes/game.$gameId/components/Penalties";
+import GameInfo from "~/routes/game.$gameId/components/PreGameData/GameInfo";
 import Scoring from "~/routes/game.$gameId/components/Scoring";
 import SeasonSeries from "~/routes/game.$gameId/components/SeasonSeries";
 import ShotsOnGoal from "~/routes/game.$gameId/components/ShotsOnGoal";
@@ -45,6 +46,7 @@ export default function ActiveGameData() {
           <ShotsOnGoal />
           <GameStats />
           <SeasonSeries />
+          <GameInfo />
         </div>
       </div>
     </div>

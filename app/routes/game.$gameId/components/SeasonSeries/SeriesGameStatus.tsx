@@ -5,15 +5,21 @@ type SeriesGameStatusProps = {
 export default function SeriesGameStatus({
   startTimeUTC,
 }: SeriesGameStatusProps) {
-  const time = new Date(startTimeUTC).toLocaleString("en-US", {
-    month: "long",
+  const gameTime = new Date(startTimeUTC).toLocaleString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    timeZone: "America/Toronto",
+  });
+
+  const gameDate = new Date(startTimeUTC).toLocaleString("en-US", {
+    month: "short",
     day: "numeric",
   });
 
   return (
-    <div className="mt-1 flex justify-between text-xs text-gray-500">
-      <span>&nbsp;</span>
-      <span>{time}</span>
+    <div className="mt-2 flex justify-between text-xs text-gray-500">
+      <span>{gameTime} EDT</span>
+      <span>{gameDate}</span>
     </div>
   );
 }

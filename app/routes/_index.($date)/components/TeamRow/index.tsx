@@ -33,7 +33,9 @@ export default function TeamRow({ team, gameState }: TeamRowProps) {
           </div>
         </div>
       </div>
-      <div className="text-md min-w-3 font-bold">{scoreIndicator}</div>
+      <div className="text-md min-w-3 text-center font-bold">
+        {scoreIndicator}
+      </div>
     </div>
   );
 }
