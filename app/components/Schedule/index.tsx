@@ -30,110 +30,115 @@ export default function Schedule({ date, teamAbbrev, games }: ScheduleProps) {
   }, [selectedMonth, selectedYear]);
 
   return (
-    <div>
-      <table className="h-full w-full bg-white text-black">
-        <thead>
-          <tr>
-            <th
-              colSpan={1}
-              className="cursor-pointer"
-              onClick={() => {
-                let monthToSubtract = selectedMonth - 1;
+    <table className="h-full w-full bg-white text-black">
+      <thead>
+        <tr>
+          <th
+            colSpan={1}
+            className="cursor-pointer"
+            onClick={() => {
+              let monthToSubtract = selectedMonth - 1;
 
-                if (monthToSubtract === 0) {
-                  monthToSubtract = 12;
-                  setSelectedYear(selectedYear - 1);
+              if (monthToSubtract === 0) {
+                monthToSubtract = 12;
+                setSelectedYear(selectedYear - 1);
+              }
+
+              setSelectedMonth(monthToSubtract);
+            }}
+          >
+            &#9664;
+          </th>
+          <th colSpan={5} className="cursor-pointer">
+            {selectedMonthData.dateStr}
+          </th>
+          <th
+            colSpan={1}
+            className="cursor-pointer"
+            onClick={() => {
+              let monthToAdd = selectedMonth + 1;
+
+              if (monthToAdd > 12) {
+                monthToAdd = 1;
+                setSelectedYear(selectedYear + 1);
+              }
+
+              setSelectedMonth(monthToAdd);
+            }}
+          >
+            &#9654;
+          </th>
+        </tr>
+        <tr>
+          <th>S</th>
+          <th>M</th>
+          <th>T</th>
+          <th>W</th>
+          <th>T</th>
+          <th>F</th>
+          <th>S</th>
+        </tr>
+      </thead>
+      <tbody className="relative">
+        {selectedMonthData?.weeks.map((week) => {
+          return (
+            <tr key={getRandomKey()}>
+              {week.map((day) => {
+                const game = games?.[day?.dateShort];
+
+                let opponent;
+
+                if (game) {
+                  opponent =
+                    game.awayTeam.abbrev === teamAbbrev
+                      ? game.homeTeam
+                      : game.awayTeam;
+
+                  // game.awayTeam.abbrev === teamAbbrev
+                  // ? `vs. ${game.homeTeam.abbrev}`
+                  // : `@ ${game.awayTeam.abbrev}`;
                 }
 
-                setSelectedMonth(monthToSubtract);
-              }}
-            >
-              &#9664;
-            </th>
-            <th colSpan={5} className="cursor-pointer">
-              {selectedMonthData.dateStr}
-            </th>
-            <th
-              colSpan={1}
-              className="cursor-pointer"
-              onClick={() => {
-                let monthToAdd = selectedMonth + 1;
+                return (
+                  <td
+                    role="gridcell"
+                    className={cn(
+                      "cursor-pointer border text-center hover:bg-slate-200 md:h-10 md:w-20",
+                      {
+                        "bg-slate-700 text-white": date === day?.dateShort,
+                      },
+                    )}
+                    key={getRandomKey()}
+                    data-date={day?.dateShort}
+                    onClick={(e) => {
+                      navigate(`/${e.currentTarget.dataset.date}`);
+                    }}
+                  >
+                    <div className="flex h-[6.6rem] flex-col">
+                      <div className="-mt-2 pl-2 text-left">
+                        {day?.dayNumber}
+                      </div>
+                      <div className="flex w-full flex-1 items-center justify-center">
+                        {opponent ? (
+                          <img
+                            src={opponent?.logo}
+                            alt={opponent?.abbrev}
+                            className="mx-auto h-10 w-10 rounded-full bg-slate-300 p-2 md:h-20 md:w-20"
+                          />
+                        ) : (
+                          <>&nbsp;</>
+                        )}
+                      </div>
 
-                if (monthToAdd > 12) {
-                  monthToAdd = 1;
-                  setSelectedYear(selectedYear + 1);
-                }
-
-                setSelectedMonth(monthToAdd);
-              }}
-            >
-              &#9654;
-            </th>
-          </tr>
-          <tr>
-            <th>S</th>
-            <th>M</th>
-            <th>T</th>
-            <th>W</th>
-            <th>T</th>
-            <th>F</th>
-            <th>S</th>
-          </tr>
-        </thead>
-        <tbody className="relative">
-          <div className="absolute hidden h-full w-full bg-white">
-            <div className="grid w-full grid-cols-3 font-semibold text-blue-500">
-              <span className="flex cursor-pointer items-center justify-center hover:bg-blue-500 hover:text-white">
-                2022
-              </span>
-              <span className="flex cursor-pointer items-center justify-center hover:bg-blue-500 hover:text-white">
-                2023
-              </span>
-              <span className="flex cursor-pointer items-center justify-center hover:bg-blue-500 hover:text-white">
-                2024
-              </span>
-            </div>
-          </div>
-
-          {selectedMonthData?.weeks.map((week) => {
-            return (
-              <tr key={getRandomKey()}>
-                {week.map((day) => {
-                  const game = games?.[day?.dateShort];
-
-                  let opponent;
-
-                  if (game) {
-                    opponent =
-                      game.awayTeam.abbrev === teamAbbrev
-                        ? `vs. ${game.homeTeam.abbrev}`
-                        : `@ ${game.awayTeam.abbrev}`;
-                  }
-
-                  return (
-                    <td
-                      role="gridcell"
-                      className={cn(
-                        "h-28 w-20 cursor-pointer border p-1 text-center hover:bg-slate-200",
-                        {
-                          "bg-slate-700 text-white": date === day?.dateShort,
-                        },
-                      )}
-                      key={getRandomKey()}
-                      data-date={day?.dateShort}
-                      onClick={(e) => {
-                        navigate(`/${e.currentTarget.dataset.date}`);
-                      }}
-                    >
-                      {opponent}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+                      {/* {opponent} */}
+                    </div>
+                  </td>
+                );
+              })}
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
   );
 }
