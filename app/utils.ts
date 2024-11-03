@@ -152,6 +152,20 @@ const getTodaysDate = (tz = "EST") => {
   return `${year}-${month}-${day}`;
 };
 
+const convertTime = (dateStr: string) => {
+  const timeZone = getTimeZone("EST");
+
+  const time = new Date(dateStr).toLocaleString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+    timeZoneName: "short",
+    timeZone,
+  });
+
+  return `${time}`;
+};
+
 type TimerProps = {
   running: boolean;
   iv: number;
@@ -214,6 +228,7 @@ const reverseLeagueData = (data: DivisionsType | ConferencesType) => {
 
 export {
   cn,
+  convertTime,
   deepMerge,
   getLogo,
   getNumberWithOrdinal,

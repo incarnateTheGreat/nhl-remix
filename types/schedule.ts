@@ -1,3 +1,5 @@
+import { GameState } from "./types";
+
 type Team = {
   id: number;
   placeName: { default: string };
@@ -8,6 +10,9 @@ type Team = {
   radioLink: string;
   hotelLink: string;
   hotelDesc: string;
+  isAway: boolean;
+  isHome: boolean;
+  score: number;
 };
 
 type ScheduledGame = {
@@ -21,7 +26,7 @@ type ScheduledGame = {
   easternUTCOffset: string;
   venueUTCOffset: string;
   venueTimezone: string;
-  gameState: string;
+  gameState: GameState;
   gameScheduleState: string;
   tvBroadcasts: string[];
   awayTeam: Team;
