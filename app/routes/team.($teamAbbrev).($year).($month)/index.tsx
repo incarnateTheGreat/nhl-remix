@@ -3,31 +3,28 @@ import {
   LoaderFunctionArgs,
   redirect,
 } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useNavigation } from "@remix-run/react";
 import type {
   Schedule as ScheduleType,
   ScheduleGamesWithIds,
 } from "types/schedule";
 
-import Schedule from "~/components/Schedule";
+import Loading from "~/components/Loading";
+
+import Schedule from "../components/Schedule";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   const formData = await request.formData();
   const selectedYear = formData.get("selectedYear") as string;
   const selectedMonth = formData.get("selectedMonth") as string;
 
-  let month = +selectedMonth + 1;
-  let year = +selectedYear;
-
-  if (month > 12) {
-    month = 1;
-    year += 1;
-  }
-
-  return redirect(`/team/${params.teamName}/${year}/${month}`);
+  return redirect(
+    `/team/${params.teamAbbrev}/${selectedYear}/${selectedMonth}`,
+  );
 }
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
+  const { teamAbbrev } = params;
   let { year, month } = params;
 
   if (!month && !year) {
@@ -43,14 +40,9 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     });
   }
 
-  // console.log({ year, month });
-  // console.log(
-  //   `https://api-web.nhle.com/v1/club-schedule/${params.teamName}/month/${year}-${month}`,
-  // );
-
   try {
     const teamSchedule = await fetch(
-      `https://api-web.nhle.com/v1/club-schedule/${params.teamName}/month/${year}-${month}`,
+      `https://api-web.nhle.com/v1/club-schedule/${teamAbbrev}/month/${year}-${month}`,
     );
 
     const teamScheduleResponse: ScheduleType = await teamSchedule.json();
@@ -63,22 +55,32 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 
     teamScheduleResponse["gamesWithIds"] = scheduleWithIds;
 
-    return { schedule: teamScheduleResponse };
+    return {
+      teamSchedule: teamScheduleResponse,
+      month: +month,
+      year: +year,
+      teamAbbrev,
+    };
   } catch (err) {
     return {};
   }
 };
 
-type TeamScheduleData = {
-  schedule: ScheduleType;
+export type TeamScheduleData = {
+  teamSchedule: ScheduleType;
+  month: number;
+  year: number;
+  teamAbbrev: string;
 };
 
 export default function Team() {
-  const { schedule } = useLoaderData<TeamScheduleData>();
+  const navigation = useNavigation();
 
   return (
-    <div className="flex h-full w-full flex-col">
-      <Schedule teamAbbrev="TOR" games={schedule.gamesWithIds} />
+    <div className="flex h-full w-full flex-col bg-white">
+      {navigation.state === "loading" ? <Loading /> : null}
+
+      {navigation.state === "idle" ? <Schedule /> : null}
     </div>
   );
 }

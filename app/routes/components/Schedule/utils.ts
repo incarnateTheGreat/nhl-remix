@@ -13,19 +13,19 @@ type GetAllDaysInMonthType = {
 
 const getAllDaysInMonth = (
   month: number,
-  year: number
+  year: number,
 ): GetAllDaysInMonthType => {
   const monthData = Array.from(
-    { length: new Date(year, month + 1, 0).getDate() }, // Get the total number of days in the month selected.
+    { length: new Date(year, month - 1, 0).getDate() }, // Get the total number of days in the month selected.
     (_, index) => {
-      const date = new Date(year, month, index + 1);
+      const date = new Date(year, month - 1, index + 1);
 
       const dayStr = date.toLocaleString("en-US", {
         day: "2-digit",
       });
 
       const monthStr = date.toLocaleString("en-US", {
-        month: "numeric",
+        month: "2-digit",
       });
 
       const yearStr = date.getUTCFullYear();
@@ -37,10 +37,10 @@ const getAllDaysInMonth = (
         dayNumber: index + 1,
         dateShort: `${yearStr}-${monthStr}-${dayStr}`,
       };
-    }
+    },
   ) as MonthDataType[];
 
-  const date = new Date(year, month);
+  const date = new Date(year, month - 1);
 
   const dateStr = date.toLocaleDateString("en-US", {
     month: "long",

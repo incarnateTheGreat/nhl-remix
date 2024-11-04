@@ -1,7 +1,7 @@
-import { useNavigate, useSubmit } from "@remix-run/react";
+import { useNavigate, useRouteLoaderData, useSubmit } from "@remix-run/react";
 import { useEffect, useState } from "react";
-import { ScheduleGamesWithIds } from "types/schedule";
 
+import { TeamScheduleData } from "~/routes/team.($teamAbbrev).($year).($month)";
 import {
   cn,
   convertTime,
@@ -13,21 +13,16 @@ import {
 
 import { getMonthData } from "./utils";
 
-type ScheduleProps = {
-  teamAbbrev: string;
-  games: ScheduleGamesWithIds;
-};
+export default function Schedule() {
+  const { month, year, teamAbbrev, teamSchedule } = useRouteLoaderData(
+    "routes/team.($teamAbbrev).($year).($month)",
+  ) as TeamScheduleData;
 
-export default function Schedule({ teamAbbrev, games }: ScheduleProps) {
   const navigate = useNavigate();
   const submit = useSubmit();
 
-  const defaultDate = new Date();
-  const defaultMonth = defaultDate.getUTCMonth();
-  const defaultYear = defaultDate.getFullYear();
-
-  const [selectedMonth, setSelectedMonth] = useState(defaultMonth);
-  const [selectedYear, setSelectedYear] = useState(defaultYear);
+  const [selectedMonth, setSelectedMonth] = useState(month);
+  const [selectedYear, setSelectedYear] = useState(year);
   const [selectedMonthData, setSelectedMonthData] = useState(
     getMonthData(selectedMonth, selectedYear),
   );
@@ -37,20 +32,21 @@ export default function Schedule({ teamAbbrev, games }: ScheduleProps) {
   }, [selectedMonth, selectedYear]);
 
   return (
-    <div>
-      <table className="w-full bg-white text-black md:h-full">
+    <div className="overflow-x-scroll">
+      <table className="w-full bg-white text-black transition-all md:h-full">
         <thead>
           <tr>
             <th
               colSpan={1}
-              className="cursor-pointer"
+              className="cursor-pointer py-4 hover:bg-slate-200"
               onClick={() => {
-                const selectedYearToPass = selectedYear;
+                let selectedYearToPass = selectedYear;
                 let monthToSubtract = selectedMonth - 1;
 
                 if (monthToSubtract === 0) {
                   monthToSubtract = 12;
-                  setSelectedYear(selectedYearToPass - 1);
+                  selectedYearToPass = selectedYearToPass - 1;
+                  setSelectedYear(selectedYearToPass);
                 }
 
                 setSelectedMonth(monthToSubtract);
@@ -74,7 +70,7 @@ export default function Schedule({ teamAbbrev, games }: ScheduleProps) {
             </th>
             <th
               colSpan={1}
-              className="cursor-pointer"
+              className="cursor-pointer py-4 hover:bg-slate-200"
               onClick={() => {
                 let monthToAdd = selectedMonth + 1;
                 let selectedYearToPass = selectedYear;
@@ -102,14 +98,14 @@ export default function Schedule({ teamAbbrev, games }: ScheduleProps) {
               &#9654;
             </th>
           </tr>
-          <tr>
-            <th>S</th>
-            <th>M</th>
-            <th>T</th>
-            <th>W</th>
-            <th>T</th>
-            <th>F</th>
-            <th>S</th>
+          <tr className="text-xs md:text-sm">
+            <th>Sunday</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wedneday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
           </tr>
         </thead>
         <tbody className="relative">
@@ -117,9 +113,7 @@ export default function Schedule({ teamAbbrev, games }: ScheduleProps) {
             return (
               <tr key={getRandomKey()}>
                 {week.map((day) => {
-                  const game = games?.[day?.dateShort];
-
-                  console.log(game);
+                  const game = teamSchedule?.gamesWithIds?.[day?.dateShort];
 
                   let teamSelect;
                   let opponent;
@@ -168,11 +162,11 @@ export default function Schedule({ teamAbbrev, games }: ScheduleProps) {
                     <td
                       role="gridcell"
                       className={cn(
-                        "group h-20 w-40 cursor-pointer border border-t p-1 text-center md:h-10 md:w-20",
+                        "group cursor-pointer border text-center md:h-10 md:w-20 md:p-1",
                         {
                           "bg-blue-950 text-white hover:bg-blue-900":
                             opponent?.isAway,
-                          "bg-white hover:bg-gray-100": opponent?.isHome,
+                          "bg-white hover:bg-gray-200": opponent?.isHome,
                           "pointer-events-none bg-gray-100": !opponent,
                         },
                       )}
@@ -182,20 +176,22 @@ export default function Schedule({ teamAbbrev, games }: ScheduleProps) {
                         navigate(`/game/${game?.id}`);
                       }}
                     >
-                      <div className="flex h-full flex-col">
-                        <div className="pl-2 text-left">{day?.dayNumber}</div>
+                      <div className="flex h-16 flex-col md:h-32 md:w-full">
+                        <div className="pl-2 text-left text-[0.70rem] md:text-xs">
+                          {day?.dayNumber}
+                        </div>
                         <div
                           className={cn(
                             "mb-3 flex w-full flex-1 items-center justify-center",
                           )}
                         >
                           {opponent ? (
-                            <div className="flex flex-col">
+                            <div className="flex w-full flex-col px-2 md:justify-center">
                               <img
                                 src={opponent?.logo}
                                 alt={opponent?.abbrev}
                                 className={cn(
-                                  "mx-auto h-10 w-10 rounded-full p-2 md:h-14 md:w-14",
+                                  "mx-auto hidden h-8 w-8 rounded-full p-1 md:block md:h-14 md:w-14 md:p-2",
                                   {
                                     "bg-gray-700 group-hover:bg-gray-600":
                                       opponent.isAway,
@@ -204,9 +200,11 @@ export default function Schedule({ teamAbbrev, games }: ScheduleProps) {
                                   },
                                 )}
                               />
-                              <div className="mt-1 text-xs font-semibold md:text-sm">
+                              <div className="text-[0.70rem] md:hidden">
+                                BOS
+                              </div>
+                              <div className="mt-0 text-[0.55rem] font-semibold md:mt-2 md:text-xs">
                                 {display}
-                                {day?.dateShort}
                               </div>
                             </div>
                           ) : (
