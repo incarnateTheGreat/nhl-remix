@@ -159,7 +159,6 @@ const convertTime = (dateStr: string) => {
     hour: "numeric",
     minute: "numeric",
     hour12: true,
-    timeZoneName: "short",
     timeZone,
   });
 

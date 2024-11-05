@@ -10,6 +10,7 @@ import type {
 } from "types/schedule";
 
 import Loading from "~/components/Loading";
+import { TEAMS } from "~/constants";
 
 import Schedule from "../components/Schedule";
 
@@ -19,7 +20,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
   const selectedMonth = formData.get("selectedMonth") as string;
 
   return redirect(
-    `/team/${params.teamAbbrev}/${selectedYear}/${selectedMonth}`,
+    `/team/schedule/${params.teamAbbrev}/${selectedYear}/${selectedMonth}`,
   );
 }
 
@@ -50,13 +51,12 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     ];
 
     const [teamSchedule]: Response[] = await Promise.all(fetchScheduleDataUrls);
-
     // allSeasons
 
     const teamScheduleResponse: ScheduleType = await teamSchedule.json();
     // const allSeasonsResponse = await allSeasons.json();
 
-    // console.log(teamScheduleResponse);
+    const teamName = TEAMS.find((team) => team.triCode === teamAbbrev);
 
     const scheduleWithIds = teamScheduleResponse?.games.reduce(
       (acc: ScheduleGamesWithIds, game) => {
@@ -71,6 +71,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 
     return {
       teamSchedule: teamScheduleResponse,
+      teamFullName: teamName?.fullName,
       month: +month,
       year: +year,
       teamAbbrev,
@@ -85,6 +86,7 @@ export type TeamScheduleData = {
   month: number;
   year: number;
   teamAbbrev: string;
+  teamFullName: string;
 };
 
 export default function Team() {

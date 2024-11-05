@@ -35,6 +35,9 @@ type ScheduledGame = {
   ticketsLink: string;
   ticketsLinkFr: string;
   gameCenterLink: string;
+  gameOutcome: {
+    lastPeriodType: string;
+  };
 };
 
 type ScheduleGamesWithIds = Record<string, ScheduledGame>;

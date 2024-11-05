@@ -1,10 +1,11 @@
-import { useNavigate, useRouteLoaderData, useSubmit } from "@remix-run/react";
+import { Link, useRouteLoaderData, useSubmit } from "@remix-run/react";
 import { useEffect, useState } from "react";
 
-import { TeamScheduleData } from "~/routes/team.($teamAbbrev).($year).($month)";
+import { TeamScheduleData } from "~/routes/team.schedule.($teamAbbrev).($year).($month)";
 import {
   cn,
   convertTime,
+  getLogo,
   getRandomKey,
   getTodaysDate,
   isGameActive,
@@ -15,11 +16,11 @@ import {
 import { getMonthData } from "./utils";
 
 export default function Schedule() {
-  const { month, year, teamAbbrev, teamSchedule } = useRouteLoaderData(
-    "routes/team.($teamAbbrev).($year).($month)",
-  ) as TeamScheduleData;
+  const { month, year, teamAbbrev, teamSchedule, teamFullName } =
+    useRouteLoaderData(
+      "routes/team.schedule.($teamAbbrev).($year).($month)",
+    ) as TeamScheduleData;
 
-  const navigate = useNavigate();
   const submit = useSubmit();
 
   const [selectedMonth, setSelectedMonth] = useState(month);
@@ -37,6 +38,17 @@ export default function Schedule() {
 
   return (
     <div className="relative overflow-x-scroll">
+      <div className="flex items-center border-b border-dashed pb-4 pl-4 pt-4">
+        <img
+          src={getLogo(teamAbbrev)}
+          alt={`${teamAbbrev} Logo}`}
+          className="w-16"
+        />
+        <h1 className="pl-2 text-2xl font-black tracking-tight md:text-4xl">
+          {teamFullName}
+        </h1>
+      </div>
+
       <div className="absolute z-10 hidden h-full w-full border border-red-500 bg-white">
         <div className="grid w-full grid-cols-3 font-semibold text-blue-500">
           <span className="flex cursor-pointer items-center justify-center hover:bg-blue-500 hover:text-white">
@@ -55,11 +67,10 @@ export default function Schedule() {
           <tr>
             <th colSpan={1}>
               <button
-                disabled={isStartofSeason}
                 className={cn(
                   "h-full w-full cursor-pointer py-4 hover:bg-slate-200",
                   {
-                    "pointer-events-none": isStartofSeason,
+                    hidden: isStartofSeason,
                   },
                 )}
                 onClick={() => {
@@ -86,7 +97,6 @@ export default function Schedule() {
                   );
                 }}
               >
-                {" "}
                 &#9664;
               </button>
             </th>
@@ -98,7 +108,7 @@ export default function Schedule() {
                 className={cn(
                   "h-full w-full cursor-pointer py-4 hover:bg-slate-200",
                   {
-                    "pointer-events-none": isEndofSeason,
+                    hidden: isEndofSeason,
                   },
                 )}
                 onClick={() => {
@@ -149,6 +159,7 @@ export default function Schedule() {
                   let teamSelect;
                   let opponent;
                   let display;
+                  const outcome = game?.gameOutcome?.lastPeriodType;
 
                   if (game) {
                     if (game.awayTeam.abbrev === teamAbbrev) {
@@ -185,7 +196,7 @@ export default function Schedule() {
                           ? `${homeScore}-${awayScore}`
                           : `${awayScore}-${homeScore}`;
 
-                      display = `${result} ${scoreline}`;
+                      display = `${result} ${scoreline} ${outcome === "OT" || outcome === "SO" ? `(${outcome})` : ""}`;
                     }
                   }
 
@@ -203,11 +214,12 @@ export default function Schedule() {
                       )}
                       key={getRandomKey()}
                       data-date={day?.dateShort}
-                      onClick={() => {
-                        navigate(`/game/${game?.id}`);
-                      }}
                     >
-                      <div className="flex h-16 flex-col md:h-32 md:w-full">
+                      <Link
+                        prefetch="intent"
+                        to={`/game/${game?.id}`}
+                        className="flex h-16 flex-col md:h-32 md:w-full"
+                      >
                         <div
                           className={cn(
                             "flex h-4 w-4 items-center justify-center pl-2 text-left text-[0.55rem] md:h-6 md:w-6 md:text-[0.70rem] md:text-xs",
@@ -240,9 +252,9 @@ export default function Schedule() {
                                 )}
                               />
                               <div className="text-[0.70rem] md:hidden">
-                                BOS
+                                {opponent.abbrev}
                               </div>
-                              <div className="mt-0 text-[0.55rem] font-semibold md:mt-2 md:text-xs">
+                              <div className="mt-0 text-[0.55rem] font-semibold md:mt-2 md:text-sm">
                                 {display}
                               </div>
                             </div>
@@ -250,7 +262,7 @@ export default function Schedule() {
                             <>&nbsp;</>
                           )}
                         </div>
-                      </div>
+                      </Link>
                     </td>
                   );
                 })}

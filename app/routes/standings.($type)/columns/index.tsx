@@ -1,3 +1,4 @@
+import { Link } from "@remix-run/react";
 import { createColumnHelper } from "@tanstack/react-table";
 import { TeamStandings } from "types/standings";
 
@@ -21,6 +22,7 @@ export default function getStandingsColumns(type: string) {
           teamName,
           conferenceSequence,
           leagueSequence,
+          teamAbbrev,
         } = info.row.original;
 
         let rankSequence;
@@ -43,8 +45,14 @@ export default function getStandingsColumns(type: string) {
         return (
           <div className="flex items-center">
             <span className="ml-2 mr-1 font-semibold">{rankSequence}.</span>
-            <img src={teamLogo} alt={teamName.default} width={30} />
-            <span className="ml-1">{teamName.default}</span>
+            <Link
+              prefetch="intent"
+              to={`/team/schedule/${teamAbbrev.default}`}
+              className="flex items-center hover:underline"
+            >
+              <img src={teamLogo} alt={teamName.default} width={30} />
+              <span className="ml-1">{teamName.default}</span>
+            </Link>
           </div>
         );
       },
