@@ -218,7 +218,7 @@ export default function Schedule() {
                       <Link
                         prefetch="intent"
                         to={`/game/${game?.id}`}
-                        className="flex h-16 flex-col md:h-32 md:w-full"
+                        className="flex h-16 flex-col p-1 md:h-32 md:w-full md:px-2 md:pt-0"
                       >
                         <div
                           className={cn(
