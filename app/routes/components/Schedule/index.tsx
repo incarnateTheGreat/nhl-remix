@@ -6,6 +6,7 @@ import {
   cn,
   convertTime,
   getRandomKey,
+  getTodaysDate,
   isGameActive,
   isGameComplete,
   isPreGame,
@@ -27,75 +28,105 @@ export default function Schedule() {
     getMonthData(selectedMonth, selectedYear),
   );
 
+  const isStartofSeason = selectedMonth - 1 === 8;
+  const isEndofSeason = selectedMonth - 1 === 5;
+
   useEffect(() => {
     setSelectedMonthData(getMonthData(selectedMonth, selectedYear));
   }, [selectedMonth, selectedYear]);
 
   return (
-    <div className="overflow-x-scroll">
+    <div className="relative overflow-x-scroll">
+      <div className="absolute z-10 hidden h-full w-full border border-red-500 bg-white">
+        <div className="grid w-full grid-cols-3 font-semibold text-blue-500">
+          <span className="flex cursor-pointer items-center justify-center hover:bg-blue-500 hover:text-white">
+            2022
+          </span>
+          <span className="flex cursor-pointer items-center justify-center hover:bg-blue-500 hover:text-white">
+            2023
+          </span>
+          <span className="flex cursor-pointer items-center justify-center hover:bg-blue-500 hover:text-white">
+            2024
+          </span>
+        </div>
+      </div>
       <table className="w-full bg-white text-black transition-all md:h-full">
         <thead>
           <tr>
-            <th
-              colSpan={1}
-              className="cursor-pointer py-4 hover:bg-slate-200"
-              onClick={() => {
-                let selectedYearToPass = selectedYear;
-                let monthToSubtract = selectedMonth - 1;
-
-                if (monthToSubtract === 0) {
-                  monthToSubtract = 12;
-                  selectedYearToPass = selectedYearToPass - 1;
-                  setSelectedYear(selectedYearToPass);
-                }
-
-                setSelectedMonth(monthToSubtract);
-
-                submit(
+            <th colSpan={1}>
+              <button
+                disabled={isStartofSeason}
+                className={cn(
+                  "h-full w-full cursor-pointer py-4 hover:bg-slate-200",
                   {
-                    selectedYear: selectedYearToPass,
-                    selectedMonth: monthToSubtract,
+                    "pointer-events-none": isStartofSeason,
                   },
-                  {
-                    encType: "multipart/form-data",
-                    method: "post",
-                  },
-                );
-              }}
-            >
-              &#9664;
+                )}
+                onClick={() => {
+                  let selectedYearToPass = selectedYear;
+                  let monthToSubtract = selectedMonth - 1;
+
+                  if (monthToSubtract === 0) {
+                    monthToSubtract = 12;
+                    selectedYearToPass = selectedYearToPass - 1;
+                    setSelectedYear(selectedYearToPass);
+                  }
+
+                  setSelectedMonth(monthToSubtract);
+
+                  submit(
+                    {
+                      selectedYear: selectedYearToPass,
+                      selectedMonth: monthToSubtract,
+                    },
+                    {
+                      encType: "multipart/form-data",
+                      method: "post",
+                    },
+                  );
+                }}
+              >
+                {" "}
+                &#9664;
+              </button>
             </th>
             <th colSpan={5} className="cursor-pointer">
               {selectedMonthData.dateStr}
             </th>
-            <th
-              colSpan={1}
-              className="cursor-pointer py-4 hover:bg-slate-200"
-              onClick={() => {
-                let monthToAdd = selectedMonth + 1;
-                let selectedYearToPass = selectedYear;
-
-                if (monthToAdd > 12) {
-                  monthToAdd = 1;
-                  selectedYearToPass += 1;
-                  setSelectedYear(selectedYearToPass);
-                }
-
-                setSelectedMonth(monthToAdd);
-
-                submit(
+            <th colSpan={1}>
+              <button
+                className={cn(
+                  "h-full w-full cursor-pointer py-4 hover:bg-slate-200",
                   {
-                    selectedYear: selectedYearToPass,
-                    selectedMonth: monthToAdd,
+                    "pointer-events-none": isEndofSeason,
                   },
-                  {
-                    encType: "multipart/form-data",
-                    method: "post",
-                  },
-                );
-              }}
-            >
-              &#9654;
+                )}
+                onClick={() => {
+                  let monthToAdd = selectedMonth + 1;
+                  let selectedYearToPass = selectedYear;
+
+                  if (monthToAdd > 12) {
+                    monthToAdd = 1;
+                    selectedYearToPass += 1;
+                    setSelectedYear(selectedYearToPass);
+                  }
+
+                  setSelectedMonth(monthToAdd);
+
+                  submit(
+                    {
+                      selectedYear: selectedYearToPass,
+                      selectedMonth: monthToAdd,
+                    },
+                    {
+                      encType: "multipart/form-data",
+                      method: "post",
+                    },
+                  );
+                }}
+              >
+                &#9654;
+              </button>
             </th>
           </tr>
           <tr className="text-xs md:text-sm">
@@ -177,7 +208,15 @@ export default function Schedule() {
                       }}
                     >
                       <div className="flex h-16 flex-col md:h-32 md:w-full">
-                        <div className="pl-2 text-left text-[0.70rem] md:text-xs">
+                        <div
+                          className={cn(
+                            "flex h-4 w-4 items-center justify-center pl-2 text-left text-[0.55rem] md:h-6 md:w-6 md:text-[0.70rem] md:text-xs",
+                            {
+                              "self-start rounded-full bg-blue-600 p-2 font-bold text-white":
+                                getTodaysDate() === day?.dateShort,
+                            },
+                          )}
+                        >
                           {day?.dayNumber}
                         </div>
                         <div

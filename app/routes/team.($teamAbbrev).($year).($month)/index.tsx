@@ -26,32 +26,46 @@ export async function action({ request, params }: ActionFunctionArgs) {
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const { teamAbbrev } = params;
   let { year, month } = params;
+  let date;
 
   if (!month && !year) {
-    month = new Date().toLocaleString("en-US", {
-      month: "2-digit",
-    });
-    year = new Date().toLocaleString("en-US", {
-      year: "numeric",
-    });
+    date = new Date();
   } else {
-    month = new Date(`${year}-${month}-02`).toLocaleString("en-US", {
-      month: "2-digit",
-    });
+    date = new Date(`${year}-${month}-02`);
   }
 
+  month = date.toLocaleString("en-US", {
+    month: "2-digit",
+  });
+  year = date.toLocaleString("en-US", {
+    year: "numeric",
+  });
+
   try {
-    const teamSchedule = await fetch(
-      `https://api-web.nhle.com/v1/club-schedule/${teamAbbrev}/month/${year}-${month}`,
-    );
+    const fetchScheduleDataUrls = [
+      fetch(
+        `https://api-web.nhle.com/v1/club-schedule/${teamAbbrev}/month/${year}-${month}`,
+      ),
+      fetch(`https://api-web.nhle.com/v1/season`),
+    ];
+
+    const [teamSchedule]: Response[] = await Promise.all(fetchScheduleDataUrls);
+
+    // allSeasons
 
     const teamScheduleResponse: ScheduleType = await teamSchedule.json();
+    // const allSeasonsResponse = await allSeasons.json();
 
-    const scheduleWithIds = teamScheduleResponse?.games.reduce((acc, game) => {
-      acc[game.gameDate] = game;
+    // console.log(teamScheduleResponse);
 
-      return acc;
-    }, {}) as ScheduleGamesWithIds;
+    const scheduleWithIds = teamScheduleResponse?.games.reduce(
+      (acc: ScheduleGamesWithIds, game) => {
+        acc[game.gameDate] = game;
+
+        return acc;
+      },
+      {},
+    ) as ScheduleGamesWithIds;
 
     teamScheduleResponse["gamesWithIds"] = scheduleWithIds;
 
@@ -61,8 +75,8 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
       year: +year,
       teamAbbrev,
     };
-  } catch (err) {
-    return {};
+  } catch (err: unknown) {
+    return { err };
   }
 };
 
