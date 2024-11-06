@@ -5,6 +5,7 @@ import {
 } from "@remix-run/node";
 import { useNavigation } from "@remix-run/react";
 import type {
+  AllSeasons,
   Schedule as ScheduleType,
   ScheduleGamesWithIds,
 } from "types/schedule";
@@ -50,11 +51,20 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
       fetch(`https://api-web.nhle.com/v1/season`),
     ];
 
-    const [teamSchedule]: Response[] = await Promise.all(fetchScheduleDataUrls);
-    // allSeasons
+    const [teamSchedule, allSeasons]: Response[] = await Promise.all(
+      fetchScheduleDataUrls,
+    );
 
     const teamScheduleResponse: ScheduleType = await teamSchedule.json();
-    // const allSeasonsResponse = await allSeasons.json();
+    const allSeasonsResponse: AllSeasons = await allSeasons.json();
+
+    const seasons = allSeasonsResponse
+      .reverse()
+      .reduce((acc: string[], season) => {
+        acc.push(season.toString().slice(0, 4));
+
+        return acc;
+      }, []);
 
     const teamName = TEAMS.find((team) => team.triCode === teamAbbrev);
 
@@ -72,6 +82,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     return {
       teamSchedule: teamScheduleResponse,
       teamFullName: teamName?.fullName,
+      allSeasons: seasons,
       month: +month,
       year: +year,
       teamAbbrev,
@@ -87,6 +98,7 @@ export type TeamScheduleData = {
   year: number;
   teamAbbrev: string;
   teamFullName: string;
+  allSeasons: AllSeasons;
 };
 
 export default function Team() {

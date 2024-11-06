@@ -53,4 +53,6 @@ type Schedule = {
   gamesWithIds: ScheduleGamesWithIds;
 };
 
-export type { Schedule, ScheduledGame, ScheduleGamesWithIds };
+type AllSeasons = number[];
+
+export type { AllSeasons, Schedule, ScheduledGame, ScheduleGamesWithIds };

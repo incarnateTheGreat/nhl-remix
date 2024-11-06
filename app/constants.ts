@@ -489,4 +489,19 @@ const TEAMS = [
   },
 ];
 
-export { TEAMS };
+const MONTHS = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+export { MONTHS, TEAMS };

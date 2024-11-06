@@ -13,6 +13,7 @@ import {
   isPreGame,
 } from "~/utils";
 
+import MonthYearSelector from "../MonthYearSelector";
 import { getMonthData } from "./utils";
 
 export default function Schedule() {
@@ -28,6 +29,7 @@ export default function Schedule() {
   const [selectedMonthData, setSelectedMonthData] = useState(
     getMonthData(selectedMonth, selectedYear),
   );
+  const [showMontYearSelector, setShowMonthYearSelector] = useState(false);
 
   const isStartofSeason = selectedMonth - 1 === 8;
   const isEndofSeason = selectedMonth - 1 === 5;
@@ -49,19 +51,14 @@ export default function Schedule() {
         </h1>
       </div>
 
-      <div className="absolute z-10 hidden h-full w-full border border-red-500 bg-white">
-        <div className="grid w-full grid-cols-3 font-semibold text-blue-500">
-          <span className="flex cursor-pointer items-center justify-center hover:bg-blue-500 hover:text-white">
-            2022
-          </span>
-          <span className="flex cursor-pointer items-center justify-center hover:bg-blue-500 hover:text-white">
-            2023
-          </span>
-          <span className="flex cursor-pointer items-center justify-center hover:bg-blue-500 hover:text-white">
-            2024
-          </span>
-        </div>
-      </div>
+      {showMontYearSelector ? (
+        <MonthYearSelector
+          setShowMonthYearSelector={setShowMonthYearSelector}
+          month={selectedMonth}
+          year={selectedYear}
+        />
+      ) : null}
+
       <table className="w-full bg-white text-black transition-all md:h-full">
         <thead>
           <tr>
@@ -101,7 +98,12 @@ export default function Schedule() {
               </button>
             </th>
             <th colSpan={5} className="cursor-pointer">
-              {selectedMonthData.dateStr}
+              <button
+                className="h-full w-full cursor-pointer py-4 hover:bg-slate-200"
+                onClick={() => setShowMonthYearSelector(!showMontYearSelector)}
+              >
+                {selectedMonthData.dateStr}
+              </button>
             </th>
             <th colSpan={1}>
               <button
@@ -159,6 +161,7 @@ export default function Schedule() {
                   let teamSelect;
                   let opponent;
                   let display;
+                  let isLive = false;
                   const outcome = game?.gameOutcome?.lastPeriodType;
 
                   if (game) {
@@ -183,13 +186,21 @@ export default function Schedule() {
                     if (isPreGame(game.gameState)) {
                       display = convertTime(game.startTimeUTC);
                     } else if (isGameActive(game.gameState)) {
-                      display = "yeah";
+                      display = `${game.awayTeam.abbrev} ${game.awayTeam.score} - ${game.homeTeam.score} ${game.homeTeam.abbrev}`;
+                      isLive = true;
                     } else if (isGameComplete(game.gameState)) {
                       const awayScore = game.awayTeam.score;
                       const homeScore = game.homeTeam.score;
 
-                      const result =
-                        teamSelect.score > opponent.score ? "W" : "L";
+                      let result;
+
+                      if (teamSelect.score > opponent.score) {
+                        result = "W";
+                      } else if (opponent.score > teamSelect.score) {
+                        result = "L";
+                      } else if (teamSelect.score === opponent.score) {
+                        result = "T";
+                      }
 
                       const scoreline =
                         homeScore > awayScore
@@ -204,7 +215,7 @@ export default function Schedule() {
                     <td
                       role="gridcell"
                       className={cn(
-                        "group cursor-pointer border text-center md:h-10 md:w-20 md:p-1",
+                        "group w-24 cursor-pointer border text-center md:h-10 md:w-20 md:p-1",
                         {
                           "bg-blue-950 text-white hover:bg-blue-900":
                             opponent?.isAway,
@@ -218,22 +229,29 @@ export default function Schedule() {
                       <Link
                         prefetch="intent"
                         to={`/game/${game?.id}`}
-                        className="flex h-16 flex-col p-1 md:h-32 md:w-full md:px-2 md:pt-0"
+                        className="flex h-16 w-16 flex-col p-1 md:h-32 md:w-full md:px-2 md:pt-0"
                       >
-                        <div
-                          className={cn(
-                            "flex h-4 w-4 items-center justify-center pl-2 text-left text-[0.55rem] md:h-6 md:w-6 md:text-[0.70rem] md:text-xs",
-                            {
-                              "self-start rounded-full bg-blue-600 p-2 font-bold text-white":
-                                getTodaysDate() === day?.dateShort,
-                            },
-                          )}
-                        >
-                          {day?.dayNumber}
+                        <div className="flex justify-between">
+                          <div
+                            className={cn(
+                              "flex h-4 w-4 items-center justify-center pl-2 text-left text-[0.55rem] md:h-6 md:w-6 md:text-[0.70rem] md:text-xs",
+                              {
+                                "self-start rounded-full bg-blue-600 p-2 font-bold text-white":
+                                  getTodaysDate() === day?.dateShort,
+                              },
+                            )}
+                          >
+                            {day?.dayNumber}
+                          </div>
+                          {isLive ? (
+                            <div className="text-xs font-semibold md:text-sm">
+                              LIVE
+                            </div>
+                          ) : null}
                         </div>
                         <div
                           className={cn(
-                            "mb-3 flex w-full flex-1 items-center justify-center",
+                            "mb-3 mt-3 flex w-full flex-1 items-center justify-center",
                           )}
                         >
                           {opponent ? (
@@ -242,7 +260,7 @@ export default function Schedule() {
                                 src={opponent?.logo}
                                 alt={opponent?.abbrev}
                                 className={cn(
-                                  "mx-auto hidden h-8 w-8 rounded-full p-1 md:block md:h-14 md:w-14 md:p-2",
+                                  "mx-auto hidden h-8 w-8 rounded-full p-1 md:block md:h-14 md:w-14",
                                   {
                                     "bg-gray-700 group-hover:bg-gray-600":
                                       opponent.isAway,
@@ -254,7 +272,7 @@ export default function Schedule() {
                               <div className="text-[0.70rem] md:hidden">
                                 {opponent.abbrev}
                               </div>
-                              <div className="mt-0 text-[0.55rem] font-semibold md:mt-2 md:text-sm">
+                              <div className="mt-0 hidden text-[0.55rem] font-semibold md:mt-2 md:block md:text-sm">
                                 {display}
                               </div>
                             </div>
