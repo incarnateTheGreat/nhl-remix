@@ -68,9 +68,7 @@ export default function MonthYearSelector({
     }
   };
 
-  const handleHistoricYear = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
+  const handleYear = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const elem = e.target as HTMLButtonElement;
     let year;
 
@@ -92,11 +90,14 @@ export default function MonthYearSelector({
   }, [showMonthSelector]);
 
   return (
-    <div id="monthYearSelector">
+    <div
+      id="monthYearSelector"
+      className="absolute flex h-1/2 w-full justify-center"
+    >
       {showMonthSelector ? (
-        <div className="absolute z-10 w-full bg-white">
+        <div className="absolute z-10 w-1/3 rounded bg-white shadow-lg">
           <button
-            className="flex justify-self-center"
+            className="flex justify-self-center font-semibold text-blue-500 hover:text-black hover:underline"
             onClick={() => {
               setShowYearSelector(!showYearSelector);
             }}
@@ -128,8 +129,8 @@ export default function MonthYearSelector({
       ) : null}
 
       {showYearSelector ? (
-        <div className="absolute z-10 w-full bg-white">
-          <div className="grid w-full grid-cols-3 font-semibold text-blue-500">
+        <div className="absolute z-10 w-1/3 rounded bg-white shadow-lg">
+          <div className="grid h-56 w-full grid-cols-3 overflow-y-scroll font-semibold text-blue-500">
             {allSeasons.map((season) => {
               return (
                 <button
@@ -140,7 +141,7 @@ export default function MonthYearSelector({
                       "bg-blue-500 text-white": +season === selectedYear,
                     },
                   )}
-                  onClick={handleHistoricYear}
+                  onClick={handleYear}
                 >
                   {season}
                 </button>

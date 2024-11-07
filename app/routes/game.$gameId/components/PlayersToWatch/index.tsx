@@ -1,8 +1,6 @@
 import { useRouteLoaderData } from "@remix-run/react";
 import { Game } from "types/types";
 
-import { getLogo } from "~/utils";
-
 const STATCODES: { [k: string]: string } = {
   points: "P",
   goals: "G",
@@ -23,8 +21,8 @@ export default function PlayersToWatch() {
     <div className="flex flex-col">
       <h2 className="heading">Players to Watch</h2>
       <div className="flex justify-between">
-        <img src={getLogo(awayTeam.abbrev)} alt={awayTeam.abbrev} width={75} />
-        <img src={getLogo(homeTeam.abbrev)} alt={homeTeam.abbrev} width={75} />
+        <img src={awayTeam.logo} alt={awayTeam.abbrev} width={75} />
+        <img src={homeTeam.logo} alt={homeTeam.abbrev} width={75} />
       </div>
       {/* <div>
         {teamLeadersL5.map((stat) => {

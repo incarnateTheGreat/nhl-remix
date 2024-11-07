@@ -9,11 +9,18 @@ const getTeamColour = ({
   awayTeamAbbrev,
   homeTeamAbbrev,
 }: GetTeamColourProps): Record<string, string> => {
-  const awayColour = Object.values(TEAM_COLOURS_UTILS[awayTeamAbbrev])[0];
-  const homeColour = Object.values(TEAM_COLOURS_UTILS[homeTeamAbbrev])[0];
+  const isAwayTeamKey = awayTeamAbbrev in TEAM_COLOURS_UTILS;
+  const isHomeTeamKey = homeTeamAbbrev in TEAM_COLOURS_UTILS;
 
-  const homeColourStr = `${homeTeamAbbrev}-${Object.keys(TEAM_COLOURS_UTILS[homeTeamAbbrev])[0]}`;
-  let awayColourStr = `${awayTeamAbbrev}-${Object.keys(TEAM_COLOURS_UTILS[awayTeamAbbrev])[0]}`;
+  const awayColour = isAwayTeamKey
+    ? Object.values(TEAM_COLOURS_UTILS?.[awayTeamAbbrev])?.[0]
+    : "#ccc";
+  const homeColour = isHomeTeamKey
+    ? Object.values(TEAM_COLOURS_UTILS?.[homeTeamAbbrev])?.[0]
+    : "#ccc";
+
+  const homeColourStr = `${homeTeamAbbrev}-${isHomeTeamKey ? Object.keys(TEAM_COLOURS_UTILS[homeTeamAbbrev])[0] : 0}`;
+  let awayColourStr = `${awayTeamAbbrev}-${isAwayTeamKey ? Object.keys(TEAM_COLOURS_UTILS[awayTeamAbbrev])[0] : 0}`;
 
   if (awayColour === homeColour) {
     awayColourStr = `${awayTeamAbbrev}-${Object.keys(TEAM_COLOURS_UTILS[awayTeamAbbrev])[1]}`;

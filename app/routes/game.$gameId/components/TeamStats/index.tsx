@@ -3,7 +3,7 @@ import { Game, TeamSeasonStatsPerTeam } from "types/types";
 
 import { getTeamColour } from "~/components/GameStats/utils";
 import StatsBar from "~/routes/game.$gameId/components/StatsBar";
-import { getLogo, getNumberWithOrdinal } from "~/utils";
+import { getNumberWithOrdinal } from "~/utils";
 
 const TEAM_GAME_STATS_TEST = [
   { "Power-Play %": ["ppPctg", "ppPctgRank"] },
@@ -29,9 +29,9 @@ export default function TeamStats() {
   return (
     <div>
       <div className="mb-2 flex justify-between">
-        <img src={getLogo(awayTeam.abbrev)} alt={awayTeam.abbrev} width={50} />
+        <img src={awayTeam.logo} alt={awayTeam.abbrev} width={50} />
         <h3 className="font-bold">Team Stats</h3>
-        <img src={getLogo(homeTeam.abbrev)} alt={homeTeam.abbrev} width={50} />
+        <img src={homeTeam.logo} alt={homeTeam.abbrev} width={50} />
       </div>
       {TEAM_GAME_STATS_TEST.map((stat) => {
         const [label] = Object.keys(stat);

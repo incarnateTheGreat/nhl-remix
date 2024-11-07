@@ -51,14 +51,6 @@ export default function Schedule() {
         </h1>
       </div>
 
-      {showMontYearSelector ? (
-        <MonthYearSelector
-          setShowMonthYearSelector={setShowMonthYearSelector}
-          month={selectedMonth}
-          year={selectedYear}
-        />
-      ) : null}
-
       <table className="w-full bg-white text-black transition-all md:h-full">
         <thead>
           <tr>
@@ -97,13 +89,22 @@ export default function Schedule() {
                 &#9664;
               </button>
             </th>
-            <th colSpan={5} className="cursor-pointer">
+            <th colSpan={5} className="relative cursor-pointer">
               <button
                 className="h-full w-full cursor-pointer py-4 hover:bg-slate-200"
                 onClick={() => setShowMonthYearSelector(!showMontYearSelector)}
               >
                 {selectedMonthData.dateStr}
               </button>
+              {showMontYearSelector ? (
+                <div className="flex justify-center">
+                  <MonthYearSelector
+                    setShowMonthYearSelector={setShowMonthYearSelector}
+                    month={selectedMonth}
+                    year={selectedYear}
+                  />
+                </div>
+              ) : null}
             </th>
             <th colSpan={1}>
               <button

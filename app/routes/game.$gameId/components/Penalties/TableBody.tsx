@@ -1,6 +1,5 @@
-import { PenaltiesType } from "types/types";
-
-import { getLogo } from "~/utils";
+import { useRouteLoaderData } from "@remix-run/react";
+import { Game, PenaltiesType } from "types/types";
 
 function penaltyStr(str: string) {
   let amendedStr;
@@ -39,6 +38,10 @@ type PenaltiesTableBodyProps = {
 };
 
 export default function TableBody({ penalties }: PenaltiesTableBodyProps) {
+  const { awayTeam, homeTeam } = useRouteLoaderData(
+    "routes/game.$gameId",
+  ) as Game;
+
   return (
     <tbody>
       {penalties.map((penalty, idx) => {
@@ -50,6 +53,11 @@ export default function TableBody({ penalties }: PenaltiesTableBodyProps) {
           servedBy,
         } = penalty;
 
+        const logo =
+          penalty.teamAbbrev.default === homeTeam.abbrev
+            ? homeTeam.logo
+            : awayTeam.logo;
+
         const amendedPenaltyStr = penaltyStr(descKey);
 
         return (
@@ -58,11 +66,7 @@ export default function TableBody({ penalties }: PenaltiesTableBodyProps) {
             className="border-b border-b-slate-200/90 text-xs odd:bg-slate-200/45 md:text-sm"
           >
             <td className="w-12 p-2">
-              <img
-                width={40}
-                src={getLogo(teamAbbrev.default)}
-                alt={`${teamAbbrev.default} Logo`}
-              />
+              <img width={40} src={logo} alt={`${teamAbbrev.default} Logo`} />
             </td>
             <td className="w-16 border-r border-gray-400 p-2 md:w-16">
               {timeInPeriod}

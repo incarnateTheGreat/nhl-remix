@@ -8,6 +8,7 @@ import type {
   AllSeasons,
   Schedule as ScheduleType,
   ScheduleGamesWithIds,
+  TeamSeasons,
 } from "types/schedule";
 
 import Loading from "~/components/Loading";
@@ -26,7 +27,9 @@ export async function action({ request, params }: ActionFunctionArgs) {
 }
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-  const { teamAbbrev } = params;
+  let { teamAbbrev } = params;
+  teamAbbrev = teamAbbrev?.toUpperCase();
+
   let { year, month } = params;
   let date;
 
@@ -49,19 +52,30 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
         `https://api-web.nhle.com/v1/club-schedule/${teamAbbrev}/month/${year}-${month}`,
       ),
       fetch(`https://api-web.nhle.com/v1/season`),
+      fetch(`https://api-web.nhle.com/v1/club-stats-season/${teamAbbrev}`),
     ];
 
-    const [teamSchedule, allSeasons]: Response[] = await Promise.all(
-      fetchScheduleDataUrls,
-    );
+    const [teamSchedule, allSeasons, teamSeasons]: Response[] =
+      await Promise.all(fetchScheduleDataUrls);
 
     const teamScheduleResponse: ScheduleType = await teamSchedule.json();
     const allSeasonsResponse: AllSeasons = await allSeasons.json();
+    const teamSeasonsResponse: TeamSeasons[] = await teamSeasons.json();
+
+    const teamFirstSeason = teamSeasonsResponse.at(-1) ?? {
+      season: "",
+      gameTypes: [],
+    };
 
     const seasons = allSeasonsResponse
       .reverse()
       .reduce((acc: string[], season) => {
-        acc.push(season.toString().slice(0, 4));
+        if (
+          season.toString().slice(0, 4) >=
+          teamFirstSeason?.season.toString().slice(0, 4)
+        ) {
+          acc.push(season.toString().slice(0, 4));
+        }
 
         return acc;
       }, []);

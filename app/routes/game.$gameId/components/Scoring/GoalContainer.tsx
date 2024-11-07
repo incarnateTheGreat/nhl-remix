@@ -28,12 +28,15 @@ export default function GoalContainer({
     scoreSituation = `${homeScore}-${awayScore} Tied`;
   }
 
+  const logo =
+    goal.teamAbbrev.default === homeTeam.abbrev ? homeTeam.logo : awayTeam.logo;
+
   return (
     <div
       key={goal.timeInPeriod}
       className="mb-3 flex flex-col justify-between lg:flex-row"
     >
-      <Player goal={goal} />
+      <Player goal={goal} logo={logo} />
       <div className="flex items-center">
         <Scenario
           scoreSituation={scoreSituation}

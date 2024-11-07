@@ -55,4 +55,15 @@ type Schedule = {
 
 type AllSeasons = number[];
 
-export type { AllSeasons, Schedule, ScheduledGame, ScheduleGamesWithIds };
+type TeamSeasons = {
+  season: number;
+  gameTypes: number[];
+};
+
+export type {
+  AllSeasons,
+  Schedule,
+  ScheduledGame,
+  ScheduleGamesWithIds,
+  TeamSeasons,
+};
