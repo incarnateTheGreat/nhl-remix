@@ -97,13 +97,11 @@ export default function Schedule() {
                 {selectedMonthData.dateStr}
               </button>
               {showMontYearSelector ? (
-                <div className="flex justify-center">
-                  <MonthYearSelector
-                    setShowMonthYearSelector={setShowMonthYearSelector}
-                    month={selectedMonth}
-                    year={selectedYear}
-                  />
-                </div>
+                <MonthYearSelector
+                  setShowMonthYearSelector={setShowMonthYearSelector}
+                  month={selectedMonth}
+                  year={selectedYear}
+                />
               ) : null}
             </th>
             <th colSpan={1}>
