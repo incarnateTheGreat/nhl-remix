@@ -5,9 +5,10 @@ import Goal from "./Goal";
 
 type PlayerProps = {
   goal: GoalsType;
+  logo: string;
 };
 
-export default function Player({ goal }: PlayerProps) {
+export default function Player({ goal, logo }: PlayerProps) {
   const { headshot, firstName, lastName, teamAbbrev, assists } = goal;
 
   return (
@@ -20,7 +21,11 @@ export default function Player({ goal }: PlayerProps) {
       />
       <div className="mx-2 flex w-full flex-col">
         <Goal goal={goal} />
-        <Assists teamAbbrev={teamAbbrev.default} assists={assists} />
+        <Assists
+          teamAbbrev={teamAbbrev.default}
+          assists={assists}
+          logo={logo}
+        />
       </div>
     </div>
   );

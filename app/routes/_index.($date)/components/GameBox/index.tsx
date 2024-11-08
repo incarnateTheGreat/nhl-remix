@@ -25,7 +25,7 @@ export default function GameBox({ game }: GameBoxProps) {
   return (
     <Link
       prefetch="intent"
-      className="mb-4 mr-2.5 cursor-pointer rounded border border-gray-300 p-3 transition-all hover:border-gray-800"
+      className="cursor-pointer rounded border border-gray-300 p-3 transition-all hover:border-gray-800"
       to={`/game/${id}`}
     >
       {gameType === 3 ? <RoundStatus seriesStatus={game.seriesStatus} /> : null}

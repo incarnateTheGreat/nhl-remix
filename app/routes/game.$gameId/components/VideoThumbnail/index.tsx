@@ -27,7 +27,7 @@ export default function VideoThumbnail({ videoId }: VideoThumbnailProps) {
     videoUrl: "",
   });
 
-  async function getData() {
+  async function getVideoData() {
     const { data } = await brightcoveApi.get(
       `/playback/v1/accounts/6415718365001/videos/${videoId}`,
     );
@@ -50,9 +50,9 @@ export default function VideoThumbnail({ videoId }: VideoThumbnailProps) {
   return (
     <>
       <button
-        className="mx-3 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-blue-700 text-lg text-sm text-white transition-colors hover:bg-blue-900"
+        className="mx-3 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-blue-700 text-lg text-white transition-colors hover:bg-blue-900"
         onClick={() => {
-          getData();
+          getVideoData();
         }}
       >
         &#9654;

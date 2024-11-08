@@ -1,13 +1,12 @@
 import type { Assists } from "types/types";
 
-import { getLogo } from "~/utils";
-
 type AssistsProps = {
   assists: Assists[];
   teamAbbrev: string;
+  logo: string;
 };
 
-export default function Assists({ assists, teamAbbrev }: AssistsProps) {
+export default function Assists({ assists, teamAbbrev, logo }: AssistsProps) {
   const assistsStr =
     assists
       .map((assist) => {
@@ -17,7 +16,7 @@ export default function Assists({ assists, teamAbbrev }: AssistsProps) {
 
   return (
     <div className="flex items-center">
-      <img width={30} src={getLogo(teamAbbrev)} alt={teamAbbrev} />
+      <img width={30} src={logo} alt={teamAbbrev} />
       <span className="mr-1 text-xs text-gray-600">{assistsStr}</span>
     </div>
   );

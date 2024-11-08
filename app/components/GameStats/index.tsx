@@ -1,8 +1,6 @@
 import { useRouteLoaderData } from "@remix-run/react";
 import { Game } from "types/types";
 
-import { getLogo } from "~/utils";
-
 import ListGaneStats from "./ListGameStats";
 
 export default function GameStats() {
@@ -13,9 +11,9 @@ export default function GameStats() {
   return (
     <div className="flex w-full flex-col overflow-x-auto">
       <div className="flex justify-between">
-        <img src={getLogo(awayTeam.abbrev)} alt={awayTeam.abbrev} width={50} />
+        <img src={awayTeam.logo} alt={awayTeam.abbrev} width={50} />
         <h3 className="font-bold">Game Stats</h3>
-        <img src={getLogo(homeTeam.abbrev)} alt={homeTeam.abbrev} width={50} />
+        <img src={homeTeam.logo} alt={homeTeam.abbrev} width={50} />
       </div>
       <ListGaneStats />
     </div>

@@ -42,7 +42,7 @@ export default function Last10Games() {
                 const { opponentAbbrev, gameResult } = game;
 
                 return (
-                  <>
+                  <div key={getRandomKey()}>
                     <div className="flex flex-col text-center text-sm">
                       <span
                         className={cn("rounded bg-gray-300", {
@@ -56,7 +56,7 @@ export default function Last10Games() {
                         {handleResultStr(gameResult)}
                       </span>
                     </div>
-                  </>
+                  </div>
                 );
               })}
             </div>

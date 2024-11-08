@@ -1,7 +1,8 @@
 import { MetaFunction } from "@remix-run/node";
-import { useParams } from "@remix-run/react";
+import { useNavigation, useParams } from "@remix-run/react";
 import { StandingsResponse, TeamStandings } from "types/standings";
 
+import Loading from "~/components/Loading";
 import TabWithNavigate from "~/components/TabLinks";
 import { getTodaysDate, reverseLeagueData } from "~/utils";
 
@@ -177,6 +178,7 @@ const tabData = [
 ];
 
 export default function Standings() {
+  const navigation = useNavigation();
   const params = useParams();
 
   const findParam = tabData.find((tab) => {
@@ -187,9 +189,15 @@ export default function Standings() {
   });
 
   return (
-    <div className="grid grid-cols-1 gap-y-4 bg-white p-4">
-      <h1 className="text-4xl font-black tracking-tight">Standings</h1>
-      <TabWithNavigate data={tabData} defaultTab={findParam?.id} />
+    <div className="grid h-full grid-cols-1 gap-y-4 bg-white p-4">
+      {navigation.state === "loading" ? <Loading /> : null}
+
+      {navigation.state === "idle" ? (
+        <>
+          <h1 className="text-4xl font-black tracking-tight">Standings</h1>
+          <TabWithNavigate data={tabData} defaultTab={findParam?.id} />
+        </>
+      ) : null}
     </div>
   );
 }
