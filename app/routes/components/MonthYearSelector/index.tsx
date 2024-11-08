@@ -1,4 +1,4 @@
-import { useRouteLoaderData, useSubmit } from "@remix-run/react";
+import { useNavigate, useRouteLoaderData, useSubmit } from "@remix-run/react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 import { MONTHS } from "~/constants";
@@ -16,7 +16,7 @@ export default function MonthYearSelector({
   year,
   setShowMonthYearSelector,
 }: MonthYearSelectorProps) {
-  const { allSeasons } = useRouteLoaderData(
+  const { allSeasons, teamAbbrev } = useRouteLoaderData(
     "routes/team.schedule.($teamAbbrev).($year).($month)",
   ) as TeamScheduleData;
 
@@ -27,6 +27,8 @@ export default function MonthYearSelector({
   const [selectedYear, setSelectedYear] = useState(year);
 
   const submit = useSubmit();
+
+  const navigate = useNavigate();
 
   const closePopupOnKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
@@ -76,6 +78,7 @@ export default function MonthYearSelector({
       year = +elem.textContent;
       setSelectedYear(year);
       setShowYearSelector(false);
+      setShowMonthSelector(true);
     }
   };
 
@@ -92,64 +95,80 @@ export default function MonthYearSelector({
   return (
     <div
       id="monthYearSelector"
-      className="absolute flex h-1/2 w-full justify-center"
+      className="border-red-green absolute z-20 flex h-1/2 w-full flex-col items-center border"
     >
-      {showMonthSelector ? (
-        <div className="absolute z-10 w-1/3 rounded bg-white shadow-lg">
+      <div className="absolute z-10 flex w-2/3 flex-col rounded bg-white shadow-lg md:w-1/3">
+        {showMonthSelector ? (
+          <div className="relative z-10 bg-white shadow-lg">
+            <div className="flex justify-center bg-gray-100">
+              <button
+                className="flex justify-self-center bg-gray-100 font-semibold text-blue-500 hover:text-black hover:underline"
+                onClick={() => {
+                  setShowYearSelector(!showYearSelector);
+                  setShowMonthSelector(false);
+                }}
+              >
+                {selectedYear}
+              </button>
+            </div>
+            <div className="grid w-full grid-cols-3 font-semibold text-blue-500">
+              {MONTHS.map((month) => {
+                const monthNum =
+                  new Date(`${selectedYear}-${month}`).getMonth() + 1;
+
+                return (
+                  <button
+                    key={getRandomKey()}
+                    className={cn(
+                      "flex cursor-pointer items-center justify-center hover:bg-blue-500 hover:text-white",
+                      {
+                        "bg-blue-500 text-white": monthNum === selectedMonth,
+                      },
+                    )}
+                    onClick={handleMonth}
+                  >
+                    {month}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ) : null}
+
+        {showYearSelector ? (
+          <div className="relative z-10 bg-white shadow-lg">
+            <div className="grid h-56 w-full grid-cols-3 grid-rows-3 overflow-y-scroll font-semibold text-blue-500">
+              {allSeasons.map((season) => {
+                return (
+                  <button
+                    key={getRandomKey()}
+                    className={cn(
+                      "flex cursor-pointer items-center justify-center hover:bg-blue-500 hover:text-white",
+                      {
+                        "bg-blue-500 text-white": +season === selectedYear,
+                      },
+                    )}
+                    onClick={handleYear}
+                  >
+                    {season}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ) : null}
+
+        <div className="flex justify-center bg-gray-100">
           <button
-            className="flex justify-self-center font-semibold text-blue-500 hover:text-black hover:underline"
+            className="flex justify-self-center bg-gray-100 font-semibold text-blue-500 hover:text-black hover:underline"
             onClick={() => {
-              setShowYearSelector(!showYearSelector);
+              navigate(`/team/schedule/${teamAbbrev}`);
             }}
           >
-            {selectedYear}
+            Today
           </button>
-          <div className="grid w-full grid-cols-3 font-semibold text-blue-500">
-            {MONTHS.map((month) => {
-              const monthNum =
-                new Date(`${selectedYear}-${month}`).getMonth() + 1;
-
-              return (
-                <button
-                  key={getRandomKey()}
-                  className={cn(
-                    "flex cursor-pointer items-center justify-center hover:bg-blue-500 hover:text-white",
-                    {
-                      "bg-blue-500 text-white": monthNum === selectedMonth,
-                    },
-                  )}
-                  onClick={handleMonth}
-                >
-                  {month}
-                </button>
-              );
-            })}
-          </div>
         </div>
-      ) : null}
-
-      {showYearSelector ? (
-        <div className="absolute z-10 w-1/3 rounded bg-white shadow-lg">
-          <div className="grid h-56 w-full grid-cols-3 overflow-y-scroll font-semibold text-blue-500">
-            {allSeasons.map((season) => {
-              return (
-                <button
-                  key={getRandomKey()}
-                  className={cn(
-                    "flex cursor-pointer items-center justify-center hover:bg-blue-500 hover:text-white",
-                    {
-                      "bg-blue-500 text-white": +season === selectedYear,
-                    },
-                  )}
-                  onClick={handleYear}
-                >
-                  {season}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      ) : null}
+      </div>
     </div>
   );
 }

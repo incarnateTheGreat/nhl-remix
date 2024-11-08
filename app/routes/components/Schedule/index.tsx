@@ -141,13 +141,13 @@ export default function Schedule() {
             </th>
           </tr>
           <tr className="text-xs md:text-sm">
-            <th>Sunday</th>
-            <th>Monday</th>
-            <th>Tuesday</th>
-            <th>Wedneday</th>
-            <th>Thursday</th>
-            <th>Friday</th>
-            <th>Saturday</th>
+            <th>Sun</th>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th>Fri</th>
+            <th>Sat</th>
           </tr>
         </thead>
         <tbody className="relative">
@@ -225,61 +225,82 @@ export default function Schedule() {
                       key={getRandomKey()}
                       data-date={day?.dateShort}
                     >
-                      <Link
-                        prefetch="intent"
-                        to={`/game/${game?.id}`}
-                        className="flex h-16 w-16 flex-col p-1 md:h-32 md:w-full md:px-2 md:pt-0"
-                      >
-                        <div className="flex justify-between">
+                      {!opponent ? (
+                        <div className="h-12 w-10 md:h-24">
+                          <div className="flex justify-between">
+                            <div
+                              className={cn(
+                                "flex h-4 w-4 items-center justify-center pl-2 text-left text-[0.55rem] md:h-6 md:w-6 md:text-[0.70rem] md:text-xs",
+                                {
+                                  "self-start rounded-full bg-blue-600 p-2 font-bold text-white":
+                                    getTodaysDate() === day?.dateShort,
+                                },
+                              )}
+                            >
+                              {day?.dayNumber}
+                            </div>
+                          </div>
+                        </div>
+                      ) : null}
+
+                      {opponent ? (
+                        <Link
+                          prefetch="intent"
+                          to={`/game/${game?.id}`}
+                          className="flex flex-col p-1 md:h-32 md:w-full md:px-2 md:pt-0"
+                        >
+                          <div className="flex justify-between">
+                            <div
+                              className={cn(
+                                "flex h-4 w-4 items-center justify-center pl-2 text-left text-[0.55rem] md:h-6 md:w-6 md:text-[0.70rem] md:text-xs",
+                                {
+                                  "self-start rounded-full bg-blue-600 p-2 font-bold text-white":
+                                    getTodaysDate() === day?.dateShort,
+                                },
+                              )}
+                            >
+                              {day?.dayNumber}
+                            </div>
+                            {isLive ? (
+                              <div className="text-[0.60rem] font-semibold md:text-sm">
+                                LIVE
+                              </div>
+                            ) : null}
+                          </div>
                           <div
                             className={cn(
-                              "flex h-4 w-4 items-center justify-center pl-2 text-left text-[0.55rem] md:h-6 md:w-6 md:text-[0.70rem] md:text-xs",
-                              {
-                                "self-start rounded-full bg-blue-600 p-2 font-bold text-white":
-                                  getTodaysDate() === day?.dateShort,
-                              },
+                              "mb-3 mt-3 flex w-full flex-1 items-center justify-center",
                             )}
                           >
-                            {day?.dayNumber}
+                            {opponent ? (
+                              <div className="flex w-full flex-col px-2 md:justify-center">
+                                <img
+                                  src={opponent?.logo}
+                                  alt={opponent?.abbrev}
+                                  className={cn(
+                                    "mx-auto hidden h-8 w-8 rounded-full p-1 md:block md:h-14 md:w-14",
+                                    {
+                                      "bg-gray-700 group-hover:bg-gray-600":
+                                        opponent.isAway,
+                                      "border border-slate-600":
+                                        opponent.isAway,
+                                      "bg-slate-300": opponent.isHome,
+                                    },
+                                  )}
+                                />
+                                <div className="text-[0.70rem] md:hidden">
+                                  {opponent.abbrev}
+                                </div>
+                                <div className="mt-0 hidden text-[0.55rem] font-semibold md:mt-2 md:block md:text-sm">
+                                  {display}
+                                </div>
+                              </div>
+                            ) : (
+                              <>&nbsp;</>
+                            )}
                           </div>
-                          {isLive ? (
-                            <div className="text-xs font-semibold md:text-sm">
-                              LIVE
-                            </div>
-                          ) : null}
-                        </div>
-                        <div
-                          className={cn(
-                            "mb-3 mt-3 flex w-full flex-1 items-center justify-center",
-                          )}
-                        >
-                          {opponent ? (
-                            <div className="flex w-full flex-col px-2 md:justify-center">
-                              <img
-                                src={opponent?.logo}
-                                alt={opponent?.abbrev}
-                                className={cn(
-                                  "mx-auto hidden h-8 w-8 rounded-full p-1 md:block md:h-14 md:w-14",
-                                  {
-                                    "bg-gray-700 group-hover:bg-gray-600":
-                                      opponent.isAway,
-                                    "border border-slate-600": opponent.isAway,
-                                    "bg-slate-300": opponent.isHome,
-                                  },
-                                )}
-                              />
-                              <div className="text-[0.70rem] md:hidden">
-                                {opponent.abbrev}
-                              </div>
-                              <div className="mt-0 hidden text-[0.55rem] font-semibold md:mt-2 md:block md:text-sm">
-                                {display}
-                              </div>
-                            </div>
-                          ) : (
-                            <>&nbsp;</>
-                          )}
-                        </div>
-                      </Link>
+                        </Link>
+                      ) : null}
                     </td>
                   );
                 })}

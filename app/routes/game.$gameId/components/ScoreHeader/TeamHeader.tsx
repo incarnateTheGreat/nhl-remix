@@ -56,11 +56,9 @@ export default function TeamHeader({
           {name.default}
         </span>
         <div>
-          {isPreGame(gameState) ? (
-            <>{team.record}</>
-          ) : (
-            <span className="text-xs">SOG: {sog}</span>
-          )}
+          <span className="text-sm">
+            {isPreGame(gameState) ? team.record : <>SOG: {sog}</>}
+          </span>
         </div>
       </Link>
       <div className={scoreClasses}>{score}</div>
