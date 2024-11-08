@@ -63,11 +63,13 @@ export const loader = async ({ params }: LoaderProps) => {
     const rightRail = await rightRailResponse.json();
 
     return deepMerge(gameData, boxscoreData, rightRail);
-  } catch (e) {
-    return {
-      gameData: [],
-      boxscoreData: [],
-    };
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      return {
+        gameData: [],
+        boxscoreData: [],
+      };
+    }
   }
 };
 

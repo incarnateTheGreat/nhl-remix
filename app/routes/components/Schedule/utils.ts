@@ -1,4 +1,4 @@
-type MonthDataType = {
+export type MonthDataType = {
   date: Date;
   index: number;
   dayNumOfWeek: number;
@@ -9,6 +9,11 @@ type MonthDataType = {
 type GetAllDaysInMonthType = {
   dateStr: string;
   monthData: MonthDataType[];
+};
+
+export type GetMonthDataType = {
+  dateStr: string;
+  weeks: MonthDataType[][];
 };
 
 const getAllDaysInMonth = (
@@ -53,7 +58,7 @@ const getAllDaysInMonth = (
   };
 };
 
-const getMonthData = (month: number, year: number) => {
+const getMonthData = (month: number, year: number): GetMonthDataType => {
   const { monthData, dateStr } = getAllDaysInMonth(month, year);
 
   // Get the first day number of the week and use this to get the number of blank dates at the start of the calendar.

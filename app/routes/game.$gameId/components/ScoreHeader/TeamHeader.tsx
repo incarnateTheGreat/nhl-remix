@@ -5,7 +5,8 @@ import { isPreGame } from "~/utils";
 
 const CLASSES = {
   away: {
-    parentClasses: "order-2 flex w-full items-center lg:order-1 lg:flex-1",
+    parentClasses:
+      "order-2 flex w-full items-center lg:order-1 lg:flex-1 mb-2 lg:mb-0",
     scoreClasses: "ml-auto text-4xl font-bold",
     teamClasses: "flex flex-col group",
     imageClasses: "mr-4 w-20",
@@ -56,9 +57,11 @@ export default function TeamHeader({
           {name.default}
         </span>
         <div>
-          <span className="text-sm">
-            {isPreGame(gameState) ? team.record : <>SOG: {sog}</>}
-          </span>
+          {isPreGame(gameState) ? (
+            <span className="text-sm">{team.record}</span>
+          ) : (
+            <span className="text-xs">SOG: {sog}</span>
+          )}
         </div>
       </Link>
       <div className={scoreClasses}>{score}</div>
