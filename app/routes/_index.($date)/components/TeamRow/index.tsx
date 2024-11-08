@@ -13,7 +13,7 @@ type TeamRowProps = {
 };
 
 export default function TeamRow({ team, gameState }: TeamRowProps) {
-  const { logo, name, score, sog } = team;
+  const { logo, name, score, sog = "--" } = team;
   const [...teamName] = name.default.split(" ");
 
   const scoreIndicator = score ?? "";
