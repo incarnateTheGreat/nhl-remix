@@ -11,7 +11,7 @@ import {
   isPreGame,
 } from "~/utils";
 
-import { GetMonthDataType, MonthDataType } from "./utils";
+import { GetMonthDataType, MonthDataType } from "../utils";
 
 type TableCellProps = {
   day: MonthDataType;
@@ -22,7 +22,7 @@ const TableCell = ({ day }: TableCellProps) => {
     <div className="flex justify-between">
       <div
         className={cn(
-          "flex h-4 w-4 items-center justify-center pl-2 text-left text-[0.55rem] md:h-6 md:w-6 md:text-[0.70rem] md:text-xs",
+          "flex h-4 w-4 items-center justify-center text-left text-[0.55rem] md:h-6 md:w-6 md:text-[0.70rem] md:text-xs",
           {
             "self-start rounded-full bg-blue-600 p-2 font-bold text-white":
               getTodaysDate() === day?.dateShort,
@@ -109,7 +109,7 @@ export default function TableBody({ selectedMonthData }: TableBodyProps) {
                 <td
                   role="gridcell"
                   className={cn(
-                    "group w-24 cursor-pointer border text-center md:h-10 md:w-20 md:p-1",
+                    "group h-10 w-24 cursor-pointer border text-center md:w-20",
                     {
                       "bg-blue-950 text-white hover:bg-blue-900":
                         opponent?.isAway,
@@ -121,7 +121,7 @@ export default function TableBody({ selectedMonthData }: TableBodyProps) {
                   data-date={day?.dateShort}
                 >
                   {!opponent ? (
-                    <div className="h-12 w-10 md:h-24">
+                    <div className="h-16 min-h-24 md:h-32">
                       <TableCell day={day} />
                     </div>
                   ) : null}
@@ -130,9 +130,9 @@ export default function TableBody({ selectedMonthData }: TableBodyProps) {
                     <Link
                       prefetch="intent"
                       to={`/game/${game?.id}`}
-                      className="flex flex-col p-1 md:h-32 md:w-full md:px-2 md:pt-0"
+                      className="flex h-full flex-col md:w-full md:pt-0"
                     >
-                      <div className="flex justify-between">
+                      <div className="flex h-full justify-between">
                         <TableCell day={day} />
                         {isLive ? (
                           <div className="text-[0.60rem] font-semibold md:text-sm">

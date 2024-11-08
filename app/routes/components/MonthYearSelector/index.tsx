@@ -95,11 +95,11 @@ export default function MonthYearSelector({
   return (
     <div
       id="monthYearSelector"
-      className="border-red-green absolute z-20 flex h-1/2 w-full flex-col items-center border"
+      className="absolute z-20 flex h-1/2 w-full flex-col items-center"
     >
       <div className="absolute z-10 flex w-2/3 flex-col rounded bg-white shadow-lg md:w-1/3">
         {showMonthSelector ? (
-          <div className="relative z-10 bg-white shadow-lg">
+          <div className="relative z-10 bg-white">
             <div className="flex justify-center bg-gray-100">
               <button
                 className="flex justify-self-center bg-gray-100 font-semibold text-blue-500 hover:text-black hover:underline"
@@ -136,8 +136,8 @@ export default function MonthYearSelector({
         ) : null}
 
         {showYearSelector ? (
-          <div className="relative z-10 bg-white shadow-lg">
-            <div className="grid h-56 w-full grid-cols-3 grid-rows-3 overflow-y-scroll font-semibold text-blue-500">
+          <div className="relative z-10 bg-white">
+            <div className="grid h-56 w-full grid-flow-row-dense grid-cols-3 overflow-y-scroll font-semibold text-blue-500">
               {allSeasons.map((season) => {
                 return (
                   <button

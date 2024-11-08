@@ -73,19 +73,23 @@ export default function Schedule() {
               </button>
             </th>
             <th colSpan={5} className="relative cursor-pointer">
-              <button
-                className="h-full w-full cursor-pointer py-4 hover:bg-slate-200"
-                onClick={() => setShowMonthYearSelector(!showMontYearSelector)}
-              >
-                {selectedMonthData.dateStr}
-              </button>
-              {showMontYearSelector ? (
-                <MonthYearSelector
-                  setShowMonthYearSelector={setShowMonthYearSelector}
-                  month={selectedMonth}
-                  year={selectedYear}
-                />
-              ) : null}
+              <div>
+                <button
+                  className="h-full cursor-pointer py-4 hover:bg-slate-200"
+                  onClick={() =>
+                    setShowMonthYearSelector(!showMontYearSelector)
+                  }
+                >
+                  {selectedMonthData.dateStr}
+                </button>
+                {showMontYearSelector ? (
+                  <MonthYearSelector
+                    setShowMonthYearSelector={setShowMonthYearSelector}
+                    month={selectedMonth}
+                    year={selectedYear}
+                  />
+                ) : null}
+              </div>
             </th>
             <th colSpan={1}>
               <button
