@@ -132,10 +132,30 @@ const getTimeZone = (tz = "EST") => {
   return tzOptions[tz];
 };
 
-const getTodaysDate = (tz = "EST") => {
+const getDate = (dateStr: string) => {
+  const date = new Date(dateStr);
+
+  const tzName = getTimeZone("EST");
+
+  const day = date.toLocaleString("en-US", {
+    day: "numeric",
+    timeZone: tzName,
+  });
+
+  const month = date.toLocaleString("en-US", {
+    month: "short",
+    timeZone: tzName,
+  });
+
+  const year = date.getUTCFullYear();
+
+  return `${month} ${day}, ${year}`;
+};
+
+const getTodaysDate = () => {
   const date = new Date();
 
-  const tzName = getTimeZone(tz);
+  const tzName = getTimeZone("EST");
 
   const day = date.toLocaleString("en-US", {
     day: "2-digit",
@@ -229,6 +249,7 @@ export {
   cn,
   convertTime,
   deepMerge,
+  getDate,
   getLogo,
   getNumberWithOrdinal,
   getRandomKey,

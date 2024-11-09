@@ -1,5 +1,6 @@
+import { useRouteLoaderData } from "@remix-run/react";
 import React from "react";
-import { GoalsType, Team } from "types/types";
+import { Game, GoalsType, Team } from "types/types";
 
 import VideoThumbnail from "../VideoThumbnail";
 import Player from "./Player";
@@ -16,7 +17,12 @@ export default function GoalContainer({
   awayTeam,
   homeTeam,
 }: GoalContainerProps) {
+  const { season } = useRouteLoaderData("routes/game.$gameId") as Game;
   const { awayScore, homeScore, highlightClip } = goal;
+
+  const currentSeason = season.toString().slice(0, 4);
+
+  const isVideoAvailable = highlightClip && +currentSeason >= 2023;
 
   let scoreSituation = "";
 
@@ -43,11 +49,11 @@ export default function GoalContainer({
           timeInPeriod={goal.timeInPeriod}
           shotType={goal.shotType}
         />
-        {highlightClip ? (
-          <VideoThumbnail videoId={highlightClip} />
-        ) : (
+
+        {isVideoAvailable ? <VideoThumbnail videoId={highlightClip} /> : null}
+        {!highlightClip && +currentSeason >= 2023 ? (
           <span className="mx-3 flex h-8 w-8">&nbsp;</span>
-        )}
+        ) : null}
       </div>
     </div>
   );

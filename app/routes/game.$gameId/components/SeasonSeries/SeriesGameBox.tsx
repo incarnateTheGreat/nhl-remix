@@ -1,7 +1,13 @@
 import { Link } from "@remix-run/react";
 import { SeasonSeries } from "types/types";
 
-import { cn, getNumberWithOrdinal, isGameComplete, isPreGame } from "~/utils";
+import {
+  cn,
+  getDate,
+  getNumberWithOrdinal,
+  isGameComplete,
+  isPreGame,
+} from "~/utils";
 
 import SeriesGameStatus from "./SeriesGameStatus";
 import SeriesTeamRow from "./SeriesTeamRow";
@@ -61,7 +67,7 @@ export default function SeriesGameBox({ game }: SeriesGameBoxProps) {
       ) : null}
       {isGameComplete(gameState) ? (
         <div className="mt-2 flex justify-between text-xs text-gray-500">
-          <div>&nbsp;</div>
+          <div>{getDate(startTimeUTC)}</div>
           <div>Final</div>
         </div>
       ) : null}
