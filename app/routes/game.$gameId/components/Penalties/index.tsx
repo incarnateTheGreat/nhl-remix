@@ -1,7 +1,7 @@
 import { useRouteLoaderData } from "@remix-run/react";
 import { Game } from "types/types";
 
-import { getRandomKey, PERIODS } from "~/utils";
+import { getRandomKey, handlePeriodLabel } from "~/utils";
 
 import PenaltyByPeriod from "./PenaltyByPeriod";
 
@@ -19,7 +19,7 @@ export default function Penalties() {
         return (
           <div key={getRandomKey()} className="mb-4 flex flex-col">
             <h2 className="border-b border-gray-700 font-bold">
-              {PERIODS[periodPenalty.periodDescriptor.number]} Period
+              {handlePeriodLabel(periodPenalty.periodDescriptor)} Period
             </h2>
             {periodPenalty.penalties.length > 0 ? (
               <PenaltyByPeriod periodPenalty={periodPenalty} />

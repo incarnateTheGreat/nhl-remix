@@ -11,7 +11,7 @@ type GameStateProps = {
 };
 
 const OT_OR_CRITIAL =
-  "rounded bg-red-700 px-2 py-0.5 text-xs md:text-sm font-semibold text-whit";
+  "rounded bg-red-700 px-2 py-0.5 text-xs md:text-sm font-semibold text-white";
 const FINAL =
   "rounded bg-gray-200 px-2 py-0.5 text-xs md:text-sm font-semibold text-black";
 

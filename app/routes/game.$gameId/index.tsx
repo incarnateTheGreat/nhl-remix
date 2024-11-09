@@ -7,7 +7,6 @@ import type { Game } from "types/types";
 import ActiveGameData from "~/components/ActiveGameData";
 import {
   deepMerge,
-  getTodaysDate,
   isGameActive,
   isGameComplete,
   isPreGame,
@@ -79,7 +78,6 @@ export default function Game() {
 
   const {
     gameState,
-    gameDate,
     clock: { inIntermission },
   } = gameDataToRender;
 
@@ -88,16 +86,14 @@ export default function Game() {
   const timerToUse = new Timer();
 
   useEffect(() => {
-    if (getTodaysDate() === gameDate) {
-      if (isPreGame(gameState) || inIntermission) {
-        timerToUse.start(() => {
-          revalidator.revalidate();
-        }, 60000);
-      } else if (isGameActive(gameState) && !inIntermission) {
-        timerToUse.start(() => {
-          revalidator.revalidate();
-        }, 15000);
-      }
+    if (isPreGame(gameState) || inIntermission) {
+      timerToUse.start(() => {
+        revalidator.revalidate();
+      }, 60000);
+    } else if (isGameActive(gameState) && !inIntermission) {
+      timerToUse.start(() => {
+        revalidator.revalidate();
+      }, 45000);
     }
 
     return () => timerToUse.stop();

@@ -15,7 +15,7 @@ export default function DatePickerInternal({
   gameWeek,
 }: DatePickerProps) {
   return (
-    <div className="mb-4 flex flex-col">
+    <div className="mb-4 flex flex-col overflow-x-auto">
       {/* <RangeSelector gameWeek={gameWeek} />
        */}
 

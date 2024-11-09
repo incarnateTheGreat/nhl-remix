@@ -55,12 +55,16 @@ export default function SeriesGameBox({ game }: SeriesGameBoxProps) {
       <SeriesTeamRow team={awayTeam} classNames={awayTeamRow} />
       <SeriesTeamRow team={homeTeam} classNames={homeTeamRow} />
       {isPreGame(gameState) ? (
-        <SeriesGameStatus startTimeUTC={startTimeUTC} />
+        <div className="ml-2 mt-2">
+          <SeriesGameStatus startTimeUTC={startTimeUTC} />
+        </div>
       ) : null}
       {isLive ? (
-        <div className="mt-1 flex justify-between text-xs text-gray-500">
+        <div className="mt-2 flex justify-between text-xs text-gray-500">
           <div className="ml-2">
-            {getNumberWithOrdinal(periodDescriptor.number)}
+            {clock.inIntermission
+              ? `${getNumberWithOrdinal(periodDescriptor.number)} INT`
+              : getNumberWithOrdinal(periodDescriptor.number)}
           </div>
           <div>{clock.timeRemaining}</div>
         </div>
