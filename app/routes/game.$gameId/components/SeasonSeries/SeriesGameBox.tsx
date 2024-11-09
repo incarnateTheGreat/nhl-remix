@@ -70,7 +70,7 @@ export default function SeriesGameBox({ game }: SeriesGameBoxProps) {
         </div>
       ) : null}
       {isGameComplete(gameState) ? (
-        <div className="mt-2 flex justify-between text-xs text-gray-500">
+        <div className="ml-2 mt-2 flex justify-between text-xs text-gray-500">
           <div>{getDate(startTimeUTC)}</div>
           <div>Final</div>
         </div>

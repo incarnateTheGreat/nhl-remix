@@ -18,8 +18,8 @@ export default function SeriesGameStatus({
 
   return (
     <div className="mt-2 flex justify-between text-xs text-gray-500">
-      <span>{gameTime} EDT</span>
       <span>{gameDate}</span>
+      <span>{gameTime} EDT</span>
     </div>
   );
 }

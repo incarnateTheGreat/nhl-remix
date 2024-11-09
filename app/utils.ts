@@ -147,9 +147,7 @@ const getDate = (dateStr: string) => {
     timeZone: tzName,
   });
 
-  const year = date.getUTCFullYear();
-
-  return `${month} ${day}, ${year}`;
+  return `${month} ${day}`;
 };
 
 const getTodaysDate = () => {
