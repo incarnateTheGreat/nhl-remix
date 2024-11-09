@@ -15,7 +15,7 @@ export default function DatePickerInternal({
   gameWeek,
 }: DatePickerProps) {
   return (
-    <div className="mb-4 flex flex-col overflow-x-auto">
+    <div className="mb-4 flex flex-col">
       {/* <RangeSelector gameWeek={gameWeek} />
        */}
 
@@ -30,7 +30,7 @@ export default function DatePickerInternal({
         />
       </DatePicker> */}
 
-      <div className="mt-4 flex">
+      <div className="mt-4 flex overflow-x-auto">
         {gameWeek.map((dateObj) => {
           const { label, date } = dateObj;
 
