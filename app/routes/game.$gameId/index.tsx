@@ -1,17 +1,16 @@
 import { MetaFunction } from "@remix-run/node";
-import { useLoaderData, useRevalidator } from "@remix-run/react";
+import { useParams } from "@remix-run/react";
 import { format } from "date-fns";
-import { useEffect } from "react";
+import {
+  EventSourceMap,
+  EventSourceProvider,
+  useEventSource,
+} from "remix-utils/sse/react";
 import type { Game } from "types/types";
 
 import ActiveGameData from "~/components/ActiveGameData";
-import {
-  deepMerge,
-  isGameActive,
-  isGameComplete,
-  isPreGame,
-  Timer,
-} from "~/utils";
+import Loading from "~/components/Loading";
+import { deepMerge, isGameActive, isGameComplete, isPreGame } from "~/utils";
 
 import PreGameData from "./components/PreGameData";
 import ScoreHeader from "./components/ScoreHeader";
@@ -44,6 +43,8 @@ export const meta: MetaFunction = (e) => {
 };
 
 export const loader = async ({ params }: LoaderProps) => {
+  // This initially runs. The Stream/useEventSource runs subsequent calls.
+
   const fetchGameDataUrls = [
     fetch(`https://api-web.nhle.com/v1/gamecenter/${params.gameId}/landing`),
     fetch(`https://api-web.nhle.com/v1/gamecenter/${params.gameId}/boxscore`),
@@ -72,54 +73,92 @@ export const loader = async ({ params }: LoaderProps) => {
   }
 };
 
+const map: EventSourceMap = new Map();
+
 export default function Game() {
-  const gameDataToRender = useLoaderData<Game>();
-  const revalidator = useRevalidator();
+  // const loaderData = useLoaderData<Game>();
+
+  const params = useParams();
+  const key = `/sse/gameData/${params.gameId}`;
+  const stream = useEventSource(key, {
+    event: "gameData",
+  });
+
+  // useEffect(() => {
+  //   map = new Map(JSON.parse(stream));
+  // }, [stream]);
+
+  if (!stream) {
+    return <Loading />;
+  }
+
+  const thing: Game = JSON.parse(stream);
+
+  console.log("Parent:", thing);
+  console.log({ key });
 
   const {
     gameState,
-    clock: { inIntermission },
-  } = gameDataToRender;
+    // clock: { inIntermission },
+  } = thing;
 
+  // console.log("hit load
+
+  // console.log(JSON.parse(stream));
+
+  // const revalidator = useRevalidator();
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const timerToUse = new Timer();
+  // const timerToUse = new Timer();
 
-  useEffect(() => {
-    if (isPreGame(gameState) || inIntermission) {
-      timerToUse.start(() => {
-        revalidator.revalidate();
-      }, 60000);
-    } else if (isGameActive(gameState) && !inIntermission) {
-      timerToUse.start(() => {
-        revalidator.revalidate();
-      }, 45000);
-    }
+  // useEffect(() => {
+  //   if (isPreGame(gameState) || inIntermission) {
+  //     timerToUse.start(() => {
+  //       revalidator.revalidate();
+  //     }, 60000);
+  //   } else if (isGameActive(gameState) && !inIntermission) {
+  //     timerToUse.start(() => {
+  //       revalidator.revalidate();
+  //     }, 45000);
+  //   }
 
-    return () => timerToUse.stop();
-  }, [inIntermission, gameState]);
+  //   return () => timerToUse.stop();
+  // }, [inIntermission, gameState]);
 
-  useEffect(() => {
-    if (timerToUse.running && isGameComplete(gameState)) {
-      timerToUse.stop();
-    }
-  }, [gameState, timerToUse]);
+  // useEffect(() => {
+  //   if (timerToUse.running && isGameComplete(gameState)) {
+  //     timerToUse.stop();
+  //   }
+  // }, [gameState, timerToUse]);
 
-  useEffect(() => {
-    if (isGameComplete(gameState)) {
-      timerToUse.stop();
-    }
-  }, [gameState, timerToUse]);
+  // useEffect(() => {
+  //   if (isGameComplete(gameState)) {
+  //     timerToUse.stop();
+  //   }
+  // }, [gameState, timerToUse]);
 
   return (
-    <div className="mx-auto flex w-full flex-col bg-white px-4 py-2">
-      <ScoreHeader />
+    <EventSourceProvider value={map}>
+      <div className="mx-auto flex w-full flex-col bg-white px-4 py-2">
+        <ScoreHeader thing={key} />
 
-      {isPreGame(gameState) ? <PreGameData /> : null}
+        {isPreGame(gameState) ? <PreGameData /> : null}
 
-      {isGameActive(gameState) || isGameComplete(gameState) ? (
-        <ActiveGameData />
-      ) : null}
-    </div>
+        {isGameActive(gameState) || isGameComplete(gameState) ? (
+          <ActiveGameData />
+        ) : null}
+        {/* <Suspense fallback={<div>Loading thingy...</div>}>
+        <Await resolve={stream.length > 0}>
+          <ScoreHeader />
+
+          {isPreGame(gameState) ? <PreGameData /> : null}
+
+          {isGameActive(gameState) || isGameComplete(gameState) ? (
+            <ActiveGameData />
+          ) : null}
+        </Await>
+      </Suspense> */}
+      </div>
+    </EventSourceProvider>
   );
 }

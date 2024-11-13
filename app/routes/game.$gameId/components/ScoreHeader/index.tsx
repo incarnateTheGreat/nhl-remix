@@ -1,11 +1,25 @@
-import { useRouteLoaderData } from "@remix-run/react";
+import { useEventSource } from "remix-utils/sse/react";
 import { Game } from "types/types";
 
 import GameState from "./GameState";
 import TeamHeader from "./TeamHeader";
 
-export default function ScoreHeader() {
-  const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
+export default function ScoreHeader({ thing }) {
+  console.log({ thing });
+
+  // const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
+
+  const stream = useEventSource(thing);
+
+  console.log("ScoreHeader:", stream);
+
+  const streamData: Game = JSON.parse(stream);
+
+  // useEffect(() => {
+  //   console.log(JSON.parse(stream));
+  // }, [stream]);
+
+  // return <div>Header.</div>;
 
   const {
     awayTeam,
@@ -14,7 +28,7 @@ export default function ScoreHeader() {
     periodDescriptor,
     gameState,
     startTimeUTC,
-  } = gameDataToRender;
+  } = streamData;
 
   const time = new Date(startTimeUTC).toLocaleString("en-US", {
     day: "2-digit",

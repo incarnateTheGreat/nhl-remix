@@ -8,6 +8,9 @@ installGlobals();
 export default defineConfig({
   plugins: [
     remix({
+      future: {
+        v3_singleFetch: true,
+      },
       ignoredRouteFiles: ["**/*.css"],
     }),
     tsconfigPaths(),
