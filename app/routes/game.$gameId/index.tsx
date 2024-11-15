@@ -1,17 +1,10 @@
 import { MetaFunction } from "@remix-run/node";
-import { useLoaderData, useRevalidator } from "@remix-run/react";
 import { format } from "date-fns";
-import { useEffect } from "react";
 import type { Game } from "types/types";
 
 import ActiveGameData from "~/components/ActiveGameData";
-import {
-  deepMerge,
-  isGameActive,
-  isGameComplete,
-  isPreGame,
-  Timer,
-} from "~/utils";
+import { useLiveLoader } from "~/sse/use-live-loader";
+import { deepMerge, isGameActive, isGameComplete, isPreGame } from "~/utils";
 
 import PreGameData from "./components/PreGameData";
 import ScoreHeader from "./components/ScoreHeader";
@@ -73,43 +66,9 @@ export const loader = async ({ params }: LoaderProps) => {
 };
 
 export default function Game() {
-  const gameDataToRender = useLoaderData<Game>();
-  const revalidator = useRevalidator();
+  const gameDataToRender = useLiveLoader<Game>();
 
-  const {
-    gameState,
-    clock: { inIntermission },
-  } = gameDataToRender;
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const timerToUse = new Timer();
-
-  useEffect(() => {
-    if (isPreGame(gameState) || inIntermission) {
-      timerToUse.start(() => {
-        revalidator.revalidate();
-      }, 60000);
-    } else if (isGameActive(gameState) && !inIntermission) {
-      timerToUse.start(() => {
-        revalidator.revalidate();
-      }, 45000);
-    }
-
-    return () => timerToUse.stop();
-  }, [inIntermission, gameState]);
-
-  useEffect(() => {
-    if (timerToUse.running && isGameComplete(gameState)) {
-      timerToUse.stop();
-    }
-  }, [gameState, timerToUse]);
-
-  useEffect(() => {
-    if (isGameComplete(gameState)) {
-      timerToUse.stop();
-    }
-  }, [gameState, timerToUse]);
+  const { gameState } = gameDataToRender;
 
   return (
     <div className="mx-auto flex w-full flex-col bg-white px-4 py-2">
