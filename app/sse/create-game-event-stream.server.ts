@@ -4,8 +4,6 @@ import { Game } from "types/types";
 import getGameData from "~/api/getGameData";
 import { isGameActive, isGameComplete, isPreGame, Timer } from "~/utils";
 
-import { emitter } from "./emitter.server";
-
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const timerToUse = new Timer();
@@ -19,7 +17,7 @@ export function createGameEventStream(
 
   request.signal.addEventListener("abort", () => controller.abort());
 
-  return eventStream(request.signal, (send) => {
+  return eventStream(controller.signal, function setup(send) {
     const run = async () => {
       const gameData: Game = await getGameData(gameId);
       const gameDataToString = JSON.stringify(gameData);
@@ -40,8 +38,10 @@ export function createGameEventStream(
       } else if (timerToUse.running && isGameComplete(gameState)) {
         timerToUse.stop();
       } else {
-        controller.abort();
-        emitter.removeListener(eventName, run);
+        // emitter.removeListener(eventName, run);
+        console.log("Abort controller.");
+
+        return controller.abort();
       }
 
       send({
@@ -51,12 +51,16 @@ export function createGameEventStream(
 
     run();
 
-    emitter.addListener(eventName, run);
+    // emitter.addListener(eventName, run);
 
     return () => {
-      emitter.removeListener(eventName, run);
-      timerToUse.stop();
-      controller.abort();
+      // emitter.removeListener(eventName, run);
+      if (timerToUse.running) {
+        console.log("Stop running the clock.");
+
+        timerToUse.stop();
+      }
+      // return controller.abort();
     };
   });
 }
