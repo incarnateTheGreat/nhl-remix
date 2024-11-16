@@ -15,6 +15,10 @@ export function createGameEventStream(
   eventName: string,
   gameId: string,
 ) {
+  const controller = new AbortController();
+
+  request.signal.addEventListener("abort", () => controller.abort());
+
   return eventStream(request.signal, (send) => {
     const run = async () => {
       const gameData: Game = await getGameData(gameId);
@@ -36,8 +40,7 @@ export function createGameEventStream(
       } else if (timerToUse.running && isGameComplete(gameState)) {
         timerToUse.stop();
       } else {
-        console.log("Remove listender.");
-
+        controller.abort();
         emitter.removeListener(eventName, run);
       }
 
@@ -48,13 +51,12 @@ export function createGameEventStream(
 
     run();
 
-    console.log("Add listender.");
-
     emitter.addListener(eventName, run);
 
     return () => {
       emitter.removeListener(eventName, run);
       timerToUse.stop();
+      controller.abort();
     };
   });
 }
