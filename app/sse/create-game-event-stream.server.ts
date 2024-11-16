@@ -8,10 +8,24 @@ import { isGameActive, isGameComplete, isPreGame, Timer } from "~/utils";
 // @ts-ignore
 const timerToUse = new Timer();
 
+const controller = new AbortController();
+
 export function createGameEventStream(request: Request, gameId: string) {
-  return eventStream(request.signal, (send) => {
+  let cancel = false;
+  // request.signal.addEventListener("abort", () => controller.abort());
+
+  return eventStream(controller.signal, (send) => {
     const run = async () => {
       const gameData: Game = await getGameData(gameId);
+
+      console.log({ cancel });
+
+      if (cancel) {
+        console.log("ABORT.");
+
+        return controller.abort();
+      }
+
       const gameDataToString = JSON.stringify(gameData);
 
       const {
@@ -29,7 +43,14 @@ export function createGameEventStream(request: Request, gameId: string) {
         }, 15000);
       } else if (timerToUse.running && isGameComplete(gameState)) {
         timerToUse.stop();
+        cancel = true;
+      } else {
+        console.log("Switch to TRUE.");
+
+        cancel = true;
       }
+
+      // console.log(timerToUse);
 
       send({
         data: gameDataToString,
