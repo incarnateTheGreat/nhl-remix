@@ -8,16 +8,8 @@ import { isGameActive, isGameComplete, isPreGame, Timer } from "~/utils";
 // @ts-ignore
 const timerToUse = new Timer();
 
-export function createGameEventStream(
-  request: Request,
-  eventName: string,
-  gameId: string,
-) {
-  const controller = new AbortController();
-
-  request.signal.addEventListener("abort", () => controller.abort());
-
-  return eventStream(controller.signal, function setup(send) {
+export function createGameEventStream(request: Request, gameId: string) {
+  return eventStream(request.signal, (send) => {
     const run = async () => {
       const gameData: Game = await getGameData(gameId);
       const gameDataToString = JSON.stringify(gameData);
@@ -37,30 +29,25 @@ export function createGameEventStream(
         }, 15000);
       } else if (timerToUse.running && isGameComplete(gameState)) {
         timerToUse.stop();
-      } else {
-        // emitter.removeListener(eventName, run);
-        console.log("Abort controller.");
-
-        return controller.abort();
       }
 
       send({
         data: gameDataToString,
       });
+
+      if (isGameComplete(gameState)) {
+        console.log("Game complete. Close connection.");
+
+        return;
+      }
     };
 
     run();
 
-    // emitter.addListener(eventName, run);
-
     return () => {
-      // emitter.removeListener(eventName, run);
-      if (timerToUse.running) {
-        console.log("Stop running the clock.");
+      console.log("Cleanup.");
 
-        timerToUse.stop();
-      }
-      // return controller.abort();
+      timerToUse.stop();
     };
   });
 }
