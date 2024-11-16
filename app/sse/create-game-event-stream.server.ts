@@ -35,6 +35,10 @@ export function createGameEventStream(
         }, 15000);
       } else if (timerToUse.running && isGameComplete(gameState)) {
         timerToUse.stop();
+      } else {
+        console.log("Remove listender.");
+
+        emitter.removeListener(eventName, run);
       }
 
       send({
@@ -43,6 +47,8 @@ export function createGameEventStream(
     };
 
     run();
+
+    console.log("Add listender.");
 
     emitter.addListener(eventName, run);
 
