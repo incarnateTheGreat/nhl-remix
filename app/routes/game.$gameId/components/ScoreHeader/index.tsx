@@ -6,7 +6,7 @@ import GameState from "./GameState";
 import TeamHeader from "./TeamHeader";
 
 export default function ScoreHeader() {
-  const gameDataToRender = useLiveLoader<Game>();
+  const gameDataToRender = useLiveLoader() as Game;
 
   const {
     awayTeam,

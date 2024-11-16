@@ -1,5 +1,6 @@
-import { useRouteLoaderData } from "@remix-run/react";
 import { Game, LinescoreByPeriod, LinescoreTotals } from "types/types";
+
+import { useLiveLoader } from "~/sse/use-live-loader";
 
 import TableBody from "./TableBody";
 import TableHeader from "./TableHeader";
@@ -14,7 +15,7 @@ export type LinescoreProps = {
 };
 
 export default function Linescore() {
-  const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
+  const gameDataToRender = useLiveLoader() as Game;
 
   const {
     linescore: { byPeriod },

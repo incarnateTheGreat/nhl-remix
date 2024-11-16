@@ -1,6 +1,6 @@
-import { useRouteLoaderData } from "@remix-run/react";
 import type { Game, GoalsType, PeriodDescriptior } from "types/types";
 
+import { useLiveLoader } from "~/sse/use-live-loader";
 import { getRandomKey } from "~/utils";
 
 import GoalContainer from "./GoalContainer";
@@ -13,7 +13,7 @@ type GoalsProps = {
 };
 
 export default function Goals({ period }: GoalsProps) {
-  const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
+  const gameDataToRender = useLiveLoader() as Game;
 
   const { awayTeam, homeTeam } = gameDataToRender;
 

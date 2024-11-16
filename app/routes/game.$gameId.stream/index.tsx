@@ -1,9 +1,9 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 
-import { createEventStream } from "~/sse/create-event-stream.server";
+import { createGameEventStream } from "~/sse/create-game-event-stream.server";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const { gameId = "" } = params;
 
-  return createEventStream(request, "gameData", gameId);
+  return createGameEventStream(request, gameId);
 }

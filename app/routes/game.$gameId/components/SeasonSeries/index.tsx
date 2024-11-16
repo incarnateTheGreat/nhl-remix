@@ -1,10 +1,11 @@
-import { useRouteLoaderData } from "@remix-run/react";
 import type { Game, SeasonSeries } from "types/types";
+
+import { useLiveLoader } from "~/sse/use-live-loader";
 
 import SeriesGameBox from "./SeriesGameBox";
 
 export default function SeasonSeries() {
-  const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
+  const gameDataToRender = useLiveLoader() as Game;
 
   let seasonSeriesData: SeasonSeries[] = [];
 

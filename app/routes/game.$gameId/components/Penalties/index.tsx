@@ -1,12 +1,12 @@
-import { useRouteLoaderData } from "@remix-run/react";
 import { Game } from "types/types";
 
+import { useLiveLoader } from "~/sse/use-live-loader";
 import { getRandomKey, handlePeriodLabel } from "~/utils";
 
 import PenaltyByPeriod from "./PenaltyByPeriod";
 
 export default function Penalties() {
-  const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
+  const gameDataToRender = useLiveLoader() as Game;
 
   const {
     summary: { penalties },

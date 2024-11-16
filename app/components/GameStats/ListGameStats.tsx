@@ -1,8 +1,8 @@
-import { useRouteLoaderData } from "@remix-run/react";
 import { useCallback } from "react";
 import { Game } from "types/types";
 
 import StatsBar from "~/routes/game.$gameId/components/StatsBar";
+import { useLiveLoader } from "~/sse/use-live-loader";
 
 import { getTeamColour } from "./utils";
 
@@ -18,7 +18,7 @@ const LIST_GAME_STATS: { [k: string]: string } = {
 };
 
 export default function ListGaneStats() {
-  const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
+  const gameDataToRender = useLiveLoader() as Game;
 
   const { awayTeam, homeTeam, teamGameStats } = gameDataToRender;
 

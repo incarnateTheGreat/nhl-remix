@@ -1,7 +1,7 @@
-import { useRouteLoaderData } from "@remix-run/react";
 import { Game, PlayerByGameStats } from "types/types";
 
 import Tabs from "~/components/Tabs";
+import { useLiveLoader } from "~/sse/use-live-loader";
 import { cn, isGameComplete, isPreGame } from "~/utils";
 
 import Defensemen from "./Defensemen";
@@ -23,7 +23,7 @@ const tabData = [
 ];
 
 export default function Boxscore() {
-  const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
+  const gameDataToRender = useLiveLoader() as Game;
 
   const { awayTeam, homeTeam, gameState } = gameDataToRender;
 

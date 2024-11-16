@@ -2,9 +2,10 @@ import { MetaFunction } from "@remix-run/node";
 import { format } from "date-fns";
 import type { Game } from "types/types";
 
+import getGameData from "~/api/getGameData";
 import ActiveGameData from "~/components/ActiveGameData";
 import { useLiveLoader } from "~/sse/use-live-loader";
-import { deepMerge, isGameActive, isGameComplete, isPreGame } from "~/utils";
+import { isGameActive, isGameComplete, isPreGame } from "~/utils";
 
 import PreGameData from "./components/PreGameData";
 import ScoreHeader from "./components/ScoreHeader";
@@ -37,32 +38,7 @@ export const meta: MetaFunction = (e) => {
 };
 
 export const loader = async ({ params }: LoaderProps) => {
-  const fetchGameDataUrls = [
-    fetch(`https://api-web.nhle.com/v1/gamecenter/${params.gameId}/landing`),
-    fetch(`https://api-web.nhle.com/v1/gamecenter/${params.gameId}/boxscore`),
-    fetch(`https://api-web.nhle.com/v1/gamecenter/${params.gameId}/right-rail`),
-  ];
-
-  try {
-    const [
-      gameDataResponse,
-      boxscoreDataResponse,
-      rightRailResponse,
-    ]: Response[] = await Promise.all(fetchGameDataUrls);
-
-    const gameData = await gameDataResponse.json();
-    const boxscoreData = await boxscoreDataResponse.json();
-    const rightRail = await rightRailResponse.json();
-
-    return deepMerge(gameData, boxscoreData, rightRail);
-  } catch (e: unknown) {
-    if (e instanceof Error) {
-      return {
-        gameData: [],
-        boxscoreData: [],
-      };
-    }
-  }
+  return getGameData(params.gameId);
 };
 
 export default function Game() {
