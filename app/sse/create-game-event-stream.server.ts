@@ -7,14 +7,9 @@ import { isGameActive, isGameComplete, isPreGame, Timer } from "~/utils";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const timerToUse = new Timer();
-const controller = new AbortController();
 
 export function createGameEventStream(request: Request, gameId: string) {
-  // request.signal.addEventListener("abort", () => controller.abort());
-
-  return eventStream(controller.signal, (send) => {
-    let cancelled = false;
-
+  return eventStream(request.signal, (send) => {
     const run = async () => {
       const gameData: Game = await getGameData(gameId);
       const gameDataToString = JSON.stringify(gameData);
@@ -36,31 +31,14 @@ export function createGameEventStream(request: Request, gameId: string) {
         timerToUse.stop();
       }
 
-      if (isGameComplete(gameState)) {
-        console.log("Game complete. Close connection.");
-        send({
-          data: gameDataToString,
-        });
-        cancelled = true;
-
-        // controller.abort();
-      }
-
-      console.log({ cancelled });
-
       send({
         data: gameDataToString,
       });
     };
 
-    if (!cancelled) {
-      run();
-    }
+    run();
 
     return () => {
-      console.log("Cleanup.");
-      cancelled = true;
-
       timerToUse.stop();
     };
   });
