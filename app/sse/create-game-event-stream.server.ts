@@ -2,44 +2,57 @@ import { eventStream } from "remix-utils/sse/server";
 import { Game } from "types/types";
 
 import getGameData from "~/api/getGameData";
-import { isGameActive, isGameComplete, isPreGame, Timer } from "~/utils";
+
+import { emitter } from "./emitter.server";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-const timerToUse = new Timer();
+// const timerToUse = new Timer();
 
-export function createGameEventStream(request: Request, gameId: string) {
+export function createGameEventStream(
+  request: Request,
+  eventName: string,
+  gameId: string,
+) {
   return eventStream(request.signal, (send) => {
     const run = async () => {
       const gameData: Game = await getGameData(gameId);
       const gameDataToString = JSON.stringify(gameData);
 
-      const {
-        gameState,
-        clock: { inIntermission },
-      } = gameData;
+      // const {
+      //   gameState,
+      //   clock: { inIntermission },
+      // } = gameData;
 
-      if (isPreGame(gameState) || inIntermission) {
-        timerToUse.start(() => {
-          run();
-        }, 60000);
-      } else if (isGameActive(gameState) && !inIntermission) {
-        timerToUse.start(() => {
-          run();
-        }, 15000);
-      } else if (timerToUse.running && isGameComplete(gameState)) {
-        timerToUse.stop();
-      }
+      // if (isPreGame(gameState) || inIntermission) {
+      //   timerToUse.start(() => {
+      //     run();
+      //   }, 60000);
+      // } else if (isGameActive(gameState) && !inIntermission) {
+      //   timerToUse.start(() => {
+      //     run();
+      //   }, 15000);
+      // } else if (timerToUse.running && isGameComplete(gameState)) {
+      //   timerToUse.stop();
+      // }
 
       send({
         data: gameDataToString,
       });
+
+      return gameData;
     };
 
-    run();
+    emitter.addListener(eventName, run);
+
+    // timerToUse.start(() => {
+    //   console.log("Get Game Data via Emitter.");
+
+    //   emitter.emit("gameData");
+    // }, 5000);
 
     return () => {
-      timerToUse.stop();
+      emitter.removeListener(eventName, run);
     };
   });
 }
