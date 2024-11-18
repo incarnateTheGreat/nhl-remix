@@ -5,7 +5,9 @@ import { Game } from "types/types";
 export function useLiveLoader<T>() {
   const path = useResolvedPath("./stream");
   const init = useLoaderData<T>() as Game;
-  useEventSource(path.pathname);
+  useEventSource(path.pathname, {
+    enabled: false,
+  });
 
   return init;
 }
