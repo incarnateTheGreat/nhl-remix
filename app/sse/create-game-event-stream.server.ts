@@ -39,17 +39,9 @@ export function createGameEventStream(
       send({
         data: gameDataToString,
       });
-
-      return gameData;
     };
 
     emitter.addListener(eventName, run);
-
-    // timerToUse.start(() => {
-    //   console.log("Get Game Data via Emitter.");
-
-    //   emitter.emit("gameData");
-    // }, 5000);
 
     return () => {
       emitter.removeListener(eventName, run);

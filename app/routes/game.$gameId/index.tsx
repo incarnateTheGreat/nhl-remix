@@ -4,6 +4,7 @@ import type { Game } from "types/types";
 
 import getGameData from "~/api/getGameData";
 import ActiveGameData from "~/components/ActiveGameData";
+import { emitter } from "~/sse/emitter.server";
 import { useLiveLoader } from "~/sse/use-live-loader";
 import { isGameActive, isGameComplete, isPreGame } from "~/utils";
 
@@ -38,7 +39,13 @@ export const meta: MetaFunction = (e) => {
 };
 
 export const loader = async ({ params }: LoaderProps) => {
-  return getGameData(params.gameId);
+  const res = await getGameData(params.gameId);
+
+  setTimeout(() => {
+    emitter.emit("gameData");
+  }, 3000);
+
+  return res;
 };
 
 export default function Game() {
