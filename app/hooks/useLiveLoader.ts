@@ -4,13 +4,12 @@ import { Game } from "types/types";
 
 export function useLiveLoader<T>() {
   const { gameId } = useParams();
+  const init = useLoaderData<T>() as Game;
 
   const eventStreamData = useEventStream(`/emitter/${gameId}`, {
     returnLatestOnly: true,
     deserialize: (raw) => JSON.parse(raw) as Game,
   });
-
-  const init = useLoaderData<T>() as Game;
 
   if (eventStreamData) {
     return eventStreamData;
