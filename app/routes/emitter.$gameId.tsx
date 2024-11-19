@@ -16,7 +16,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const { gameState } = gameData;
 
   if (isGameComplete(gameState)) {
-    return null;
+    return gameData;
   }
 
   // Return the EventStream from your route loader
@@ -37,12 +37,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       if (isPreGame(gameState) || inIntermission) {
         timerToUse.start(() => {
           send(JSON.stringify(gameData));
-          run();
-        }, 5000); // Change back to 60000
+        }, 60000);
       } else if (isGameActive(gameState) && !inIntermission) {
         timerToUse.start(() => {
           send(JSON.stringify(gameData));
-          run();
         }, 15000);
       }
 
