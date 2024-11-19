@@ -1,12 +1,10 @@
-import { useRouteLoaderData } from "@remix-run/react";
-import { Game } from "types/types";
-
+import { useLiveLoader } from "~/hooks/useLiveLoader";
 import { handlePeriodGoals } from "~/utils";
 
 import LineScoreRow from "./LinescoreRow";
 
 export default function TableBody() {
-  const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
+  const gameDataToRender = useLiveLoader();
 
   const {
     awayTeam,

@@ -1,5 +1,4 @@
-import { useRouteLoaderData } from "@remix-run/react";
-import { Game } from "types/types";
+import { useLiveLoader } from "~/hooks/useLiveLoader";
 
 const STATCODES: { [k: string]: string } = {
   points: "P",
@@ -9,7 +8,7 @@ const STATCODES: { [k: string]: string } = {
 };
 
 export default function PlayersToWatch() {
-  const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
+  const gameDataToRender = useLiveLoader();
 
   const {
     matchup: { teamLeadersL5 },

@@ -36,12 +36,12 @@ export const loader: LoaderFunction = ({ request, params }) => {
         timerToUse.start(() => {
           send(JSON.stringify(gameData));
           run();
-        }, 10000);
+        }, 5000);
       } else if (isGameActive(gameState) && !inIntermission) {
         timerToUse.start(() => {
           send(JSON.stringify(gameData));
           run();
-        }, 5000);
+        }, 45000);
       }
 
       if (timerToUse.running && isGameComplete(gameState)) {
