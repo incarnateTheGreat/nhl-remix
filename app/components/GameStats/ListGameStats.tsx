@@ -27,7 +27,7 @@ export default function ListGaneStats() {
     });
   }, [teamGameStats]);
 
-  const powerPlayFractionValues = teamGameStats.find(
+  const powerPlayFractionValues = teamGameStats?.find(
     (gameStat) => gameStat.category === "powerPlay",
   );
 
