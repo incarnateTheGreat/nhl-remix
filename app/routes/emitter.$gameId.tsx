@@ -21,10 +21,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   // Return the EventStream from your route loader
   return new EventStream(request, (send) => {
-    // const init = async () => {
-    //   const gameData = await getGameData(gameId);
-    //   send(JSON.stringify(gameData));
-    // };
+    const init = async () => {
+      const gameData = await getGameData(gameId);
+      send(JSON.stringify(gameData));
+    };
 
     const run = async () => {
       const gameData = await getGameData(gameId);
@@ -50,7 +50,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       }
     };
 
-    // init();
+    init();
     run();
 
     return () => {
