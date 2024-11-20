@@ -44,7 +44,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
           send(JSON.stringify(gameData));
           run();
         }, 15000);
-      } else if (timerToUse.running && isGameComplete(gameState)) {
+      } else if (isGameComplete(gameState)) {
         send(JSON.stringify(gameData));
         timerToUse.stop();
       }
