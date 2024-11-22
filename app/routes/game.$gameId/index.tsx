@@ -1,14 +1,11 @@
 import { MetaFunction } from "@remix-run/node";
-import { useParams } from "@remix-run/react";
-import { useEventStream } from "@remix-sse/client";
 import { format } from "date-fns";
-import { useEffect, useState } from "react";
 import type { Game } from "types/types";
 
 import getGameData from "~/api/getGemeData";
 import ActiveGameData from "~/components/ActiveGameData";
-import Loading from "~/components/Loading";
 import { GameContext } from "~/context/game.context";
+import { useLiveLoader } from "~/hooks/useLiveLoader";
 import { isGameActive, isGameComplete, isPreGame } from "~/utils";
 
 import PreGameData from "./components/PreGameData";
@@ -46,21 +43,23 @@ export const loader = async ({ params }: LoaderProps) => {
 };
 
 export default function Game() {
-  const { gameId } = useParams();
-  const eventData = useEventStream(`/emitter/${gameId}`, {
-    returnLatestOnly: true,
-    deserialize: (raw) => JSON.parse(raw) as Game,
-  });
+  const gameDataToRender = useLiveLoader();
 
-  const [gameDataToRender, setGameDataToRender] = useState<Game>(eventData);
+  // const { gameId } = useParams();
+  // const eventData = useEventStream(`/emitter/${gameId}`, {
+  //   returnLatestOnly: true,
+  //   deserialize: (raw) => JSON.parse(raw) as Game,
+  // });
 
-  useEffect(() => {
-    setGameDataToRender(eventData);
-  }, [eventData]);
+  // const [gameDataToRender, setGameDataToRender] = useState<Game>(eventData);
 
-  if (!gameDataToRender) {
-    return <Loading />;
-  }
+  // useEffect(() => {
+  //   setGameDataToRender(eventData);
+  // }, [eventData]);
+
+  // if (!gameDataToRender) {
+  //   return <Loading />;
+  // }
 
   const { gameState } = gameDataToRender;
 

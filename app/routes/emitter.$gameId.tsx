@@ -1,5 +1,6 @@
 import { LoaderFunction } from "@remix-run/node";
 import { EventStream } from "@remix-sse/server";
+import { Game } from "types/types";
 
 import getGameData from "~/api/getGemeData";
 import { isGameActive, isGameComplete, isPreGame, Timer } from "~/utils";
@@ -29,7 +30,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     // };
 
     const run = async () => {
-      const gameData = await getGameData(gameId);
+      const gameData = (await getGameData(gameId)) as Game;
 
       const {
         gameState,

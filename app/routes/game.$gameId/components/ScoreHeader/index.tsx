@@ -1,12 +1,12 @@
-import { useContext } from "react";
-
-import { GameContext } from "~/context/game.context";
+import { useLiveLoader } from "~/hooks/useLiveLoader";
 
 import GameState from "./GameState";
 import TeamHeader from "./TeamHeader";
 
 export default function ScoreHeader() {
-  const { gameDataToRender } = useContext(GameContext);
+  // const { gameDataToRender } = useContext(GameContext);
+
+  const gameDataToRender = useLiveLoader();
 
   const {
     awayTeam,
