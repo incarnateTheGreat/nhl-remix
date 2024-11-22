@@ -1,11 +1,12 @@
+import { useContext } from "react";
 import type { SeasonSeries } from "types/types";
 
-import { useLiveLoader } from "~/hooks/useLiveLoader";
+import { GameContext } from "~/context/game.context";
 
 import SeriesGameBox from "./SeriesGameBox";
 
 export default function SeasonSeries() {
-  const gameDataToRender = useLiveLoader();
+  const { gameDataToRender } = useContext(GameContext);
 
   let seasonSeriesData: SeasonSeries[] = [];
 

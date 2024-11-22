@@ -1,10 +1,12 @@
-import { useLiveLoader } from "~/hooks/useLiveLoader";
+import { useContext } from "react";
+
+import { GameContext } from "~/context/game.context";
 import { handlePeriodGoals } from "~/utils";
 
 import LineScoreRow from "./LinescoreRow";
 
 export default function TableBody() {
-  const gameDataToRender = useLiveLoader();
+  const { gameDataToRender } = useContext(GameContext);
 
   const {
     awayTeam,

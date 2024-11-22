@@ -1,7 +1,8 @@
+import { useContext } from "react";
 import { TeamSeasonStatsPerTeam } from "types/types";
 
 import { getTeamColour } from "~/components/GameStats/utils";
-import { useLiveLoader } from "~/hooks/useLiveLoader";
+import { GameContext } from "~/context/game.context";
 import StatsBar from "~/routes/game.$gameId/components/StatsBar";
 import { getNumberWithOrdinal } from "~/utils";
 
@@ -14,7 +15,7 @@ const TEAM_GAME_STATS_TEST = [
 ];
 
 export default function TeamStats() {
-  const gameDataToRender = useLiveLoader();
+  const { gameDataToRender } = useContext(GameContext);
 
   const { awayTeam, homeTeam, teamSeasonStats } = gameDataToRender;
 

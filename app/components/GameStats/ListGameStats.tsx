@@ -1,6 +1,6 @@
-import { useCallback } from "react";
+import { useCallback, useContext } from "react";
 
-import { useLiveLoader } from "~/hooks/useLiveLoader";
+import { GameContext } from "~/context/game.context";
 import StatsBar from "~/routes/game.$gameId/components/StatsBar";
 
 import { getTeamColour } from "./utils";
@@ -17,7 +17,7 @@ const LIST_GAME_STATS: { [k: string]: string } = {
 };
 
 export default function ListGaneStats() {
-  const gameDataToRender = useLiveLoader();
+  const { gameDataToRender } = useContext(GameContext);
 
   const { awayTeam, homeTeam, teamGameStats } = gameDataToRender;
 

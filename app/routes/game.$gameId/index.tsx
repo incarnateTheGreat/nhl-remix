@@ -1,10 +1,14 @@
 import { MetaFunction } from "@remix-run/node";
+import { useParams } from "@remix-run/react";
+import { useEventStream } from "@remix-sse/client";
 import { format } from "date-fns";
+import { useEffect, useState } from "react";
 import type { Game } from "types/types";
 
 import getGameData from "~/api/getGemeData";
 import ActiveGameData from "~/components/ActiveGameData";
-import { useLiveLoader } from "~/hooks/useLiveLoader";
+import Loading from "~/components/Loading";
+import { GameContext } from "~/context/game.context";
 import { isGameActive, isGameComplete, isPreGame } from "~/utils";
 
 import PreGameData from "./components/PreGameData";
@@ -42,19 +46,39 @@ export const loader = async ({ params }: LoaderProps) => {
 };
 
 export default function Game() {
-  const gameDataToRender = useLiveLoader();
+  const { gameId } = useParams();
+  const eventData = useEventStream(`/emitter/${gameId}`, {
+    returnLatestOnly: true,
+    deserialize: (raw) => JSON.parse(raw) as Game,
+  });
+
+  const [gameDataToRender, setGameDataToRender] = useState<Game>(eventData);
+
+  useEffect(() => {
+    setGameDataToRender(eventData);
+  }, [eventData]);
+
+  if (!gameDataToRender) {
+    return <Loading />;
+  }
 
   const { gameState } = gameDataToRender;
 
   return (
-    <div className="mx-auto flex w-full flex-col bg-white px-4 py-2">
-      <ScoreHeader />
+    <GameContext.Provider
+      value={{
+        gameDataToRender,
+      }}
+    >
+      <div className="mx-auto flex w-full flex-col bg-white px-4 py-2">
+        <ScoreHeader />
 
-      {isPreGame(gameState) ? <PreGameData /> : null}
+        {isPreGame(gameState) ? <PreGameData /> : null}
 
-      {isGameActive(gameState) || isGameComplete(gameState) ? (
-        <ActiveGameData />
-      ) : null}
-    </div>
+        {isGameActive(gameState) || isGameComplete(gameState) ? (
+          <ActiveGameData />
+        ) : null}
+      </div>
+    </GameContext.Provider>
   );
 }

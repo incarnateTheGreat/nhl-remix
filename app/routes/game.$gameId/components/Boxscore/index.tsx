@@ -1,7 +1,8 @@
+import { useContext } from "react";
 import { PlayerByGameStats } from "types/types";
 
 import Tabs from "~/components/Tabs";
-import { useLiveLoader } from "~/hooks/useLiveLoader";
+import { GameContext } from "~/context/game.context";
 import { cn, isGameComplete, isPreGame } from "~/utils";
 
 import Defensemen from "./Defensemen";
@@ -23,7 +24,7 @@ const tabData = [
 ];
 
 export default function Boxscore() {
-  const gameDataToRender = useLiveLoader();
+  const { gameDataToRender } = useContext(GameContext);
 
   const { awayTeam, homeTeam, gameState } = gameDataToRender;
 

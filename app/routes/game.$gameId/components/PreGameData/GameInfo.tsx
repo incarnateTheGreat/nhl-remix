@@ -1,7 +1,9 @@
-import { useLiveLoader } from "~/hooks/useLiveLoader";
+import { useContext } from "react";
+
+import { GameContext } from "~/context/game.context";
 
 export default function GameInfo() {
-  const gameDataToRender = useLiveLoader();
+  const { gameDataToRender } = useContext(GameContext);
 
   const { awayTeam, homeTeam, tvBroadcasts, venue, gameInfo } =
     gameDataToRender;

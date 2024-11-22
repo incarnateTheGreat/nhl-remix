@@ -1,10 +1,12 @@
-import { useLiveLoader } from "~/hooks/useLiveLoader";
+import { useContext } from "react";
+
+import { GameContext } from "~/context/game.context";
 import { getRandomKey, handlePeriodLabel } from "~/utils";
 
 import PenaltyByPeriod from "./PenaltyByPeriod";
 
 export default function Penalties() {
-  const gameDataToRender = useLiveLoader();
+  const { gameDataToRender } = useContext(GameContext);
 
   const {
     summary: { penalties },

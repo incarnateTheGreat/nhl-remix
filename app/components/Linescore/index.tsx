@@ -1,6 +1,7 @@
+import { useContext } from "react";
 import { LinescoreByPeriod, LinescoreTotals } from "types/types";
 
-import { useLiveLoader } from "~/hooks/useLiveLoader";
+import { GameContext } from "~/context/game.context";
 
 import TableBody from "./TableBody";
 import TableHeader from "./TableHeader";
@@ -15,7 +16,7 @@ export type LinescoreProps = {
 };
 
 export default function Linescore() {
-  const gameDataToRender = useLiveLoader();
+  const { gameDataToRender } = useContext(GameContext);
 
   const {
     linescore: { byPeriod },

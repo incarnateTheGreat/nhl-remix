@@ -1,11 +1,13 @@
-import { useLiveLoader } from "~/hooks/useLiveLoader";
+import { useContext } from "react";
+
+import { GameContext } from "~/context/game.context";
 import { handlePeriodLabel } from "~/utils";
 
 import Shootout from "../Shootout";
 import Goals from "./Goals";
 
 export default function Scoring() {
-  const gameDataToRender = useLiveLoader();
+  const { gameDataToRender } = useContext(GameContext);
 
   const {
     awayTeam,

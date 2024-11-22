@@ -1,4 +1,6 @@
-import { useLiveLoader } from "~/hooks/useLiveLoader";
+import { useContext } from "react";
+
+import { GameContext } from "~/context/game.context";
 
 const STATCODES: { [k: string]: string } = {
   points: "P",
@@ -8,7 +10,7 @@ const STATCODES: { [k: string]: string } = {
 };
 
 export default function PlayersToWatch() {
-  const gameDataToRender = useLiveLoader();
+  const { gameDataToRender } = useContext(GameContext);
 
   const {
     matchup: { teamLeadersL5 },

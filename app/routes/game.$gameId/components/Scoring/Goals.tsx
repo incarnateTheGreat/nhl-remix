@@ -1,6 +1,7 @@
+import { useContext } from "react";
 import type { GoalsType, PeriodDescriptior } from "types/types";
 
-import { useLiveLoader } from "~/hooks/useLiveLoader";
+import { GameContext } from "~/context/game.context";
 import { getRandomKey } from "~/utils";
 
 import GoalContainer from "./GoalContainer";
@@ -13,7 +14,7 @@ type GoalsProps = {
 };
 
 export default function Goals({ period }: GoalsProps) {
-  const gameDataToRender = useLiveLoader();
+  const { gameDataToRender } = useContext(GameContext);
 
   const { awayTeam, homeTeam } = gameDataToRender;
 

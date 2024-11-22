@@ -1,12 +1,13 @@
+import { useContext } from "react";
 import { TeamGameStats } from "types/types";
 
-import { useLiveLoader } from "~/hooks/useLiveLoader";
+import { GameContext } from "~/context/game.context";
 
 import TableBody from "./TableBody";
 import TableHeader from "./TableHeader";
 
 export default function ShotsOnGoal() {
-  const gameDataToRender = useLiveLoader();
+  const { gameDataToRender } = useContext(GameContext);
 
   const { awayTeam, homeTeam, shotsByPeriod, teamGameStats } = gameDataToRender;
 
