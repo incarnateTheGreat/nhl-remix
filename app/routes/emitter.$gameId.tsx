@@ -21,6 +21,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     clock: { inIntermission },
   } = gameData;
 
+  console.log("At the start:", gameState);
+
   if (isGameComplete(gameState)) {
     return gameData;
   }
@@ -31,7 +33,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     //   const gameData = await getGameData(gameId);
 
     //   send(JSON.stringify(gameData));
-
     // };
 
     const run = async () => {
@@ -41,6 +42,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
         gameState,
         clock: { inIntermission },
       } = gameData;
+
+      console.log("In Run:", gameState);
 
       if (isPreGame(gameState) || inIntermission) {
         timerToUse.start(() => {
@@ -71,7 +74,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     }
 
     return () => {
-      console.log("Stopped.");
       timerToUse.stop();
     };
   });
