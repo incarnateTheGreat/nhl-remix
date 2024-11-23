@@ -37,14 +37,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     const run = async () => {
       const gameData = (await getGameData(gameId)) as Game;
 
-      let {
+      const {
         gameState,
-        // clock: { inIntermission },
+        clock: { inIntermission },
       } = gameData;
 
-      gameState = "OFF";
-
-      if (isPreGame(gameState)) {
+      if (isPreGame(gameState) || inIntermission) {
         timerToUse.start(() => {
           send(JSON.stringify(gameData));
           run();
@@ -55,10 +53,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
           run();
         }, 15000);
       } else if (isGameComplete(gameState)) {
-        console.log("Closed.");
-
         send(JSON.stringify(gameData));
-        timerToUse.stop();
         controller.abort();
       }
     };
@@ -76,8 +71,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     }
 
     return () => {
-      console.log("Exit.");
-
+      console.log("Stopped.");
       timerToUse.stop();
     };
   });
