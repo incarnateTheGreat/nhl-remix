@@ -9,6 +9,8 @@ import { isGameActive, isGameComplete, isPreGame, Timer } from "~/utils";
 // @ts-ignore
 const timerToUse = new Timer();
 
+const controller = new AbortController();
+
 export const loader: LoaderFunction = async ({ request, params }) => {
   const { gameId = "" } = params;
 
@@ -57,7 +59,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
         send(JSON.stringify(gameData));
         timerToUse.stop();
-        return;
+        controller.abort();
       }
     };
 
@@ -74,6 +76,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     }
 
     return () => {
+      console.log("Exit.");
+
       timerToUse.stop();
     };
   });
