@@ -14,11 +14,14 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const gameData = await getGameData(gameId);
 
-  // const { gameState } = gameData;
+  const {
+    gameState,
+    clock: { inIntermission },
+  } = gameData;
 
-  // if (isGameComplete(gameState)) {
-  //   return gameData;
-  // }
+  if (isGameComplete(gameState)) {
+    return gameData;
+  }
 
   // Return the EventStream from your route loader
   return new EventStream(request, (send) => {
@@ -56,11 +59,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     // init();
 
     send(JSON.stringify(gameData));
-
-    const {
-      gameState,
-      clock: { inIntermission },
-    } = gameData;
 
     if (
       isPreGame(gameState) ||
