@@ -38,6 +38,12 @@ export default function GameState({
           <span className="text-sm">{clock.timeRemaining}</span>
         </div>
       );
+    } else if (periodDescriptor.periodType === "SO") {
+      return (
+        <div className={classnames}>
+          <span className={OT_OR_CRITIAL}>SO</span>
+        </div>
+      );
     }
 
     if ("otPeriods" in periodDescriptor) {

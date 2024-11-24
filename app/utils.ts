@@ -229,7 +229,7 @@ function Timer(this: TimerProps) {
   };
   this.set_interval = (iv) => {
     clearInterval(this.timeout);
-    this.start(() => {}, iv);
+    this.start(this.cb, iv);
   };
 }
 

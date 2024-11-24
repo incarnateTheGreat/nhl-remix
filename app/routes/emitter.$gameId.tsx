@@ -9,17 +9,12 @@ import { isGameActive, isGameComplete, isPreGame, Timer } from "~/utils";
 // @ts-ignore
 const timerToUse = new Timer();
 
-const controller = new AbortController();
-
 export const loader: LoaderFunction = async ({ request, params }) => {
   const { gameId = "" } = params;
 
   const gameData = await getGameData(gameId);
 
-  const {
-    gameState,
-    clock: { inIntermission },
-  } = gameData;
+  const { gameState, clock } = gameData;
 
   console.log("At the start:", gameState);
 
@@ -38,26 +33,28 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     const run = async () => {
       const gameData = (await getGameData(gameId)) as Game;
 
-      const {
-        gameState,
-        clock: { inIntermission },
-      } = gameData;
-
+      const { gameState } = gameData;
+      console.log(timerToUse);
       console.log("In Run:", gameState);
 
-      if (isPreGame(gameState) || inIntermission) {
+      if (isPreGame(gameState) || clock?.inIntermission) {
+        timerToUse.stop();
         timerToUse.start(() => {
           send(JSON.stringify(gameData));
           run();
         }, 60000);
-      } else if (isGameActive(gameState) && !inIntermission) {
+      } else if (isGameActive(gameState) && !clock?.inIntermission) {
+        timerToUse.stop();
         timerToUse.start(() => {
           send(JSON.stringify(gameData));
           run();
         }, 15000);
       } else if (isGameComplete(gameState)) {
         send(JSON.stringify(gameData));
-        controller.abort();
+        timerToUse.stop();
+        console.log("Game over.");
+
+        return;
       }
     };
 
@@ -67,8 +64,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
     if (
       isPreGame(gameState) ||
-      inIntermission ||
-      (isGameActive(gameState) && !inIntermission)
+      clock?.inIntermission ||
+      (isGameActive(gameState) && !clock?.inIntermission)
     ) {
       run();
     }
