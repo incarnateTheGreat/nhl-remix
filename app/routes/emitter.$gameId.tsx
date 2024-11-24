@@ -19,8 +19,20 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   console.log("At the start:", gameState);
 
   if (isGameComplete(gameState)) {
-    return gameData;
+    // return gameData;
+
+    return new EventStream(request, (send) => {
+      console.log("Send single stream to return.");
+
+      send(JSON.stringify(gameData));
+
+      return () => {
+        timerToUse.stop();
+      };
+    });
   }
+
+  console.log("Afters.");
 
   // Return the EventStream from your route loader
   return new EventStream(request, (send) => {
