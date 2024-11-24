@@ -16,14 +16,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const { gameState, clock } = gameData;
 
-  console.log("At the start:", gameState);
-
+  // TODO: Find a way to abort Event Stream on Vercel Edge Runtimes.
   if (isGameComplete(gameState)) {
-    // return gameData;
-
     return new EventStream(request, (send) => {
-      console.log("Send single stream to return.");
-
       send(JSON.stringify(gameData));
 
       return () => {
@@ -31,8 +26,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       };
     });
   }
-
-  console.log("Afters.");
 
   // Return the EventStream from your route loader
   return new EventStream(request, (send) => {
