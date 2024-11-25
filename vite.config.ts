@@ -14,6 +14,9 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  ssr: {
+    noExternal: ["tailwind-merge"],
+  },
   server: {
     host: true,
     port: 5175,
