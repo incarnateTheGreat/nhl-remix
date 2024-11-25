@@ -10,8 +10,6 @@ import { isGameActive, isGameComplete, isPreGame, Timer } from "~/utils";
 const timerToUse = new Timer();
 
 export const loader: LoaderFunction = async ({ request, params }) => {
-  console.log("Enter Loader.");
-
   const { gameId = "" } = params;
 
   const gameData = await getGameData(gameId);
@@ -30,26 +28,22 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   }
 
   // Return the EventStream from your route loader
-  return new EventStream(request, (send) => {
-    // const init = async () => {
-    //   const gameData = await getGameData(gameId);
-
-    //   send(JSON.stringify(gameData));
-    // };
-
+  return new EventStream(request, async (send) => {
     const run = async () => {
-      const gameData = (await getGameData(gameId)) as Game;
+      const gameData: Game = await getGameData(gameId);
 
       const { gameState } = gameData;
       console.log(timerToUse);
-      console.log("In Run:", gameState);
+      console.log("In Run:", gameState, gameId);
 
       if (isPreGame(gameState) || clock?.inIntermission) {
         timerToUse.stop();
         timerToUse.start(() => {
+          console.log("Pre-game.");
+
           send(JSON.stringify(gameData));
           run();
-        }, 60000);
+        }, 10000);
       } else if (isGameActive(gameState) && !clock?.inIntermission) {
         timerToUse.stop();
         timerToUse.start(() => {
@@ -65,8 +59,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       }
     };
 
-    // init();
-
     send(JSON.stringify(gameData));
 
     if (
@@ -77,7 +69,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       run();
     }
 
-    return () => {
+    return async () => {
       console.log("Stop Timer.");
 
       timerToUse.stop();
