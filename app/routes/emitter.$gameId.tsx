@@ -1,5 +1,5 @@
-import { LoaderFunction } from "@remix-run/node";
 import { EventStream } from "@remix-sse/server";
+import type { LoaderFunctionArgs } from "@vercel/remix";
 import { Game } from "types/types";
 
 import getGameData from "~/api/getGemeData";
@@ -11,7 +11,7 @@ const timerToUse = new Timer();
 
 export const config = { runtime: "edge" };
 
-export const loader: LoaderFunction = async ({ request, params }) => {
+export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const { gameId = "" } = params;
 
   const gameData = await getGameData(gameId);
