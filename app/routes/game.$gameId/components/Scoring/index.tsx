@@ -1,4 +1,3 @@
-import type { Game } from "types/types";
 
 import { useLiveLoader } from "~/sse/use-live-loader";
 import { handlePeriodLabel } from "~/utils";
@@ -7,7 +6,7 @@ import Shootout from "../Shootout";
 import Goals from "./Goals";
 
 export default function Scoring() {
-  const gameDataToRender = useLiveLoader() as Game;
+  const gameDataToRender = useLiveLoader();
 
   const {
     awayTeam,

@@ -1,11 +1,11 @@
-import type { Game, SeasonSeries } from "types/types";
+import type { SeasonSeries } from "types/types";
 
 import { useLiveLoader } from "~/sse/use-live-loader";
 
 import SeriesGameBox from "./SeriesGameBox";
 
 export default function SeasonSeries() {
-  const gameDataToRender = useLiveLoader() as Game;
+  const gameDataToRender = useLiveLoader();
 
   let seasonSeriesData: SeasonSeries[] = [];
 

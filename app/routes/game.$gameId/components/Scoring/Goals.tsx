@@ -1,4 +1,4 @@
-import type { Game, GoalsType, PeriodDescriptior } from "types/types";
+import type { GoalsType, PeriodDescriptior } from "types/types";
 
 import { useLiveLoader } from "~/sse/use-live-loader";
 import { getRandomKey } from "~/utils";
@@ -13,7 +13,7 @@ type GoalsProps = {
 };
 
 export default function Goals({ period }: GoalsProps) {
-  const gameDataToRender = useLiveLoader() as Game;
+  const gameDataToRender = useLiveLoader();
 
   const { awayTeam, homeTeam } = gameDataToRender;
 

@@ -1,11 +1,10 @@
-import { Game } from "types/types";
 
 import { useLiveLoader } from "~/sse/use-live-loader";
 
 import ListGaneStats from "./ListGameStats";
 
 export default function GameStats() {
-  const gameDataToRender = useLiveLoader() as Game;
+  const gameDataToRender = useLiveLoader();
 
   const { awayTeam, homeTeam } = gameDataToRender;
 

@@ -1,4 +1,3 @@
-import { Game } from "types/types";
 
 import { useLiveLoader } from "~/sse/use-live-loader";
 import { handlePeriodGoals } from "~/utils";
@@ -6,7 +5,7 @@ import { handlePeriodGoals } from "~/utils";
 import LineScoreRow from "./LinescoreRow";
 
 export default function TableBody() {
-  const gameDataToRender = useLiveLoader() as Game;
+  const gameDataToRender = useLiveLoader();
 
   const {
     awayTeam,

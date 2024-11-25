@@ -1,4 +1,4 @@
-import { Game, PlayerByGameStats } from "types/types";
+import { PlayerByGameStats } from "types/types";
 
 import Tabs from "~/components/Tabs";
 import { useLiveLoader } from "~/sse/use-live-loader";
@@ -23,7 +23,7 @@ const tabData = [
 ];
 
 export default function Boxscore() {
-  const gameDataToRender = useLiveLoader() as Game;
+  const gameDataToRender = useLiveLoader();
 
   const { awayTeam, homeTeam, gameState } = gameDataToRender;
 

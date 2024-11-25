@@ -1,4 +1,4 @@
-import { Game, TeamGameStats } from "types/types";
+import { TeamGameStats } from "types/types";
 
 import { useLiveLoader } from "~/sse/use-live-loader";
 
@@ -6,7 +6,7 @@ import TableBody from "./TableBody";
 import TableHeader from "./TableHeader";
 
 export default function ShotsOnGoal() {
-  const gameDataToRender = useLiveLoader() as Game;
+  const gameDataToRender = useLiveLoader();
 
   const { awayTeam, homeTeam, shotsByPeriod, teamGameStats } = gameDataToRender;
 

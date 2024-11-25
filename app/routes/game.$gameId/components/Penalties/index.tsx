@@ -1,4 +1,3 @@
-import { Game } from "types/types";
 
 import { useLiveLoader } from "~/sse/use-live-loader";
 import { getRandomKey, handlePeriodLabel } from "~/utils";
@@ -6,7 +5,7 @@ import { getRandomKey, handlePeriodLabel } from "~/utils";
 import PenaltyByPeriod from "./PenaltyByPeriod";
 
 export default function Penalties() {
-  const gameDataToRender = useLiveLoader() as Game;
+  const gameDataToRender = useLiveLoader();
 
   const {
     summary: { penalties },

@@ -1,5 +1,4 @@
 import { useCallback } from "react";
-import { Game } from "types/types";
 
 import StatsBar from "~/routes/game.$gameId/components/StatsBar";
 import { useLiveLoader } from "~/sse/use-live-loader";
@@ -18,7 +17,7 @@ const LIST_GAME_STATS: { [k: string]: string } = {
 };
 
 export default function ListGaneStats() {
-  const gameDataToRender = useLiveLoader() as Game;
+  const gameDataToRender = useLiveLoader();
 
   const { awayTeam, homeTeam, teamGameStats } = gameDataToRender;
 

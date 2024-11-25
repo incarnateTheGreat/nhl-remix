@@ -1,4 +1,4 @@
-import { Game, LinescoreByPeriod, LinescoreTotals } from "types/types";
+import { LinescoreByPeriod, LinescoreTotals } from "types/types";
 
 import { useLiveLoader } from "~/sse/use-live-loader";
 
@@ -15,7 +15,7 @@ export type LinescoreProps = {
 };
 
 export default function Linescore() {
-  const gameDataToRender = useLiveLoader() as Game;
+  const gameDataToRender = useLiveLoader();
 
   const {
     linescore: { byPeriod },

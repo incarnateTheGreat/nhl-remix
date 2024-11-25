@@ -20,7 +20,7 @@ function handleResultStr(result: string) {
 }
 
 export default function Last10Games() {
-  const gameDataToRender = useLiveLoader() as Game;
+  const gameDataToRender = useLiveLoader();
 
   const { last10Record } = gameDataToRender;
 

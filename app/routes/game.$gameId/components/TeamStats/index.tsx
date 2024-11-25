@@ -1,4 +1,4 @@
-import { Game, TeamSeasonStatsPerTeam } from "types/types";
+import { TeamSeasonStatsPerTeam } from "types/types";
 
 import { getTeamColour } from "~/components/GameStats/utils";
 import StatsBar from "~/routes/game.$gameId/components/StatsBar";
@@ -14,7 +14,7 @@ const TEAM_GAME_STATS_TEST = [
 ];
 
 export default function TeamStats() {
-  const gameDataToRender = useLiveLoader() as Game;
+  const gameDataToRender = useLiveLoader();
 
   const { awayTeam, homeTeam, teamSeasonStats } = gameDataToRender;
 

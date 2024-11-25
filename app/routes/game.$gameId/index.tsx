@@ -39,15 +39,6 @@ export const meta: MetaFunction = (e) => {
 
 export const loader = async ({ params }: LoaderProps) => {
   return getGameData(params.gameId);
-  // const res = await getGameData(params.gameId);
-
-  // setTimeout(() => {
-  //   console.log("Emit!");
-
-  //   emitter.emit("gameData");
-  // }, 3000);
-
-  // return res;
 };
 
 export default function Game() {
