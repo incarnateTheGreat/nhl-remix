@@ -78,6 +78,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     }
 
     return () => {
+      console.log("Stop Timer.");
+
       timerToUse.stop();
     };
   });
