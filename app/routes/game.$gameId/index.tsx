@@ -17,6 +17,8 @@ type LoaderProps = {
   };
 };
 
+export const config = { runtime: "edge" };
+
 export const meta: MetaFunction = (e) => {
   const { awayTeam, homeTeam, startTimeUTC } = e.data as Game;
   const date = format(startTimeUTC, "MMM d, yyyy");
