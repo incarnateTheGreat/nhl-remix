@@ -9,7 +9,11 @@ import { isGameActive, isGameComplete, isPreGame, Timer } from "~/utils";
 // @ts-ignore
 const timerToUse = new Timer();
 
+export const config = { runtime: "edge" };
+
 export const loader: LoaderFunction = async ({ request, params }) => {
+  console.log("Enter Loader.");
+
   const { gameId = "" } = params;
 
   const gameData = await getGameData(gameId);
@@ -18,10 +22,16 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   // TODO: Find a way to abort Event Stream on Vercel Edge Runtimes.
   if (isGameComplete(gameState)) {
+    console.log("Game Complete.");
+
     return new EventStream(request, (send) => {
+      console.log("Event Stream.");
+
       send(JSON.stringify(gameData));
 
       return () => {
+        console.log("Exit.");
+
         timerToUse.stop();
       };
     });
