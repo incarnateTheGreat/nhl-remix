@@ -18,6 +18,8 @@ export function useLiveLoader<T>() {
 
   useEffect(() => {
     if (eventData) {
+      console.log({ eventData });
+
       setGameDataToRender(JSON.parse(eventData));
     }
   }, [eventData]);

@@ -25,6 +25,8 @@ export function createGameEventStream(
         clock: { inIntermission },
       } = gameData;
 
+      console.log({ gameState });
+
       if (isPreGame(gameState) || inIntermission) {
         timerToUse.start(() => {
           emitter.emit("gameData");
