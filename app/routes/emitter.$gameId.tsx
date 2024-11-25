@@ -9,6 +9,8 @@ import { isGameActive, isGameComplete, isPreGame, Timer } from "~/utils";
 // @ts-ignore
 const timerToUse = new Timer();
 
+export const config = { runtime: "edge" };
+
 export const loader: LoaderFunction = async ({ request, params }) => {
   const { gameId = "" } = params;
 
