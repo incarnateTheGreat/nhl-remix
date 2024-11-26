@@ -24,13 +24,11 @@ export function createGameEventStream(
 
       if (isPreGame(gameState) || clock?.inIntermission) {
         timerToUse.start(() => {
-          // emitter.emit(eventName);
-          run();
+          emitter.emit(eventName);
         }, 60000);
       } else if (isGameActive(gameState) && !clock?.inIntermission) {
         timerToUse.start(() => {
-          // emitter.emit(eventName);
-          run();
+          emitter.emit(eventName);
         }, 5000);
       } else if (timerToUse.running && isGameComplete(gameState)) {
         timerToUse.stop();
@@ -43,8 +41,7 @@ export function createGameEventStream(
 
     emitter.addListener(eventName, run);
 
-    // emitter.emit(eventName);
-    run();
+    emitter.emit(eventName);
 
     return () => {
       emitter.removeListener(eventName, run);
