@@ -16,8 +16,6 @@ export function useLiveLoader<T>() {
     enabled: isPreGame(gameState) || isGameActive(gameState),
   });
 
-  console.log({ eventData });
-
   useEffect(() => {
     if (eventData) {
       setGameDataToRender(JSON.parse(eventData));

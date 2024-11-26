@@ -10,48 +10,44 @@ import { emitter } from "./emitter.server";
 // @ts-ignore
 const timerToUse = new Timer();
 
-function setTimer(ms: number) {
-  return timerToUse.start(() => {
-    emitter.emit("gameData");
-  }, ms);
-}
-
 export function createGameEventStream(
   request: Request,
   eventName: string,
   gameId: string,
 ) {
-  return eventStream(
-    request.signal,
-    (send) => {
-      const run = async () => {
-        const gameData: Game = await getGameData(gameId);
+  return eventStream(request.signal, (send) => {
+    const run = async () => {
+      const gameData: Game = await getGameData(gameId);
 
-        const { gameState, clock } = gameData;
+      const { gameState, clock } = gameData;
 
-        if (isPreGame(gameState) || clock?.inIntermission) {
-          setTimer(60000);
-        } else if (isGameActive(gameState) && !clock?.inIntermission) {
-          setTimer(15000);
-        } else if (timerToUse.running && isGameComplete(gameState)) {
-          timerToUse.stop();
-        }
+      console.log({ gameState });
 
-        send({
-          data: JSON.stringify(gameData),
-        });
+      if (isPreGame(gameState) || clock?.inIntermission) {
+        timerToUse.start(() => {
+          emitter.emit("gameData");
+        }, 60000);
+      } else if (isGameActive(gameState) && !clock?.inIntermission) {
+        timerToUse.start(() => {
+          emitter.emit("gameData");
+        }, 5000);
+      } else if (timerToUse.running && isGameComplete(gameState)) {
+        timerToUse.stop();
+      }
 
-        console.log("Data sent.");
-      };
+      send({
+        data: JSON.stringify(gameData),
+      });
 
-      emitter.addListener(eventName, run);
+      console.log("Data sent.");
+    };
 
-      emitter.emit("gameData");
+    emitter.addListener(eventName, run);
 
-      return () => {
-        emitter.removeListener(eventName, run);
-      };
-    },
-    { headers: { "Cache-Control": "no-cache" } },
-  );
+    emitter.emit("gameData");
+
+    return () => {
+      emitter.removeListener(eventName, run);
+    };
+  });
 }
