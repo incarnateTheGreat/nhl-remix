@@ -35,7 +35,7 @@ export default function GameState({
       return (
         <div className={classnames}>
           <span className={OT_OR_CRITIAL}>OT</span>
-          <span className="text-sm">{clock.timeRemaining}</span>
+          <span className="text-sm">{clock?.timeRemaining}</span>
         </div>
       );
     }
@@ -46,7 +46,7 @@ export default function GameState({
           <span className={OT_OR_CRITIAL}>
             {`${periodDescriptor.otPeriods}OT`}
           </span>
-          <span className="text-sm">{clock.timeRemaining}</span>
+          <span className="text-sm">{clock?.timeRemaining}</span>
         </div>
       );
     }
@@ -57,13 +57,13 @@ export default function GameState({
           className={cn(
             "rounded bg-green-700 px-2 py-0.5 text-xs font-semibold text-white md:text-sm",
             {
-              "bg-yellow-700": clock.inIntermission,
+              "bg-yellow-700": clock?.inIntermission,
             },
           )}
         >
-          {PERIODS[period]} {clock.inIntermission ? "INT" : ""}
+          {PERIODS[period]} {clock?.inIntermission ? "INT" : ""}
         </span>
-        <span className="text-sm">{clock.timeRemaining}</span>
+        <span className="text-sm">{clock?.timeRemaining}</span>
       </div>
     );
   }

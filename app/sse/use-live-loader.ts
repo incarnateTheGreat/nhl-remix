@@ -16,10 +16,10 @@ export function useLiveLoader<T>() {
     enabled: isPreGame(gameState) || isGameActive(gameState),
   });
 
+  console.log({ eventData });
+
   useEffect(() => {
     if (eventData) {
-      console.log({ eventData });
-
       setGameDataToRender(JSON.parse(eventData));
     }
   }, [eventData]);
