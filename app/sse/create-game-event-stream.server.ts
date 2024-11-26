@@ -4,6 +4,8 @@ import { Game } from "types/types";
 import getGameData from "~/api/getGameData";
 import { isGameActive, isGameComplete, isPreGame, Timer } from "~/utils";
 
+import { emitter } from "./emitter.server";
+
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const timerToUse = new Timer();
@@ -13,44 +15,39 @@ export function createGameEventStream(
   eventName: string,
   gameId: string,
 ) {
-  return eventStream(
-    request.signal,
-    (send) => {
-      const run = async () => {
-        const gameData: Game = await getGameData(gameId);
+  return eventStream(request.signal, (send) => {
+    const run = async () => {
+      const gameData: Game = await getGameData(gameId);
+      const gameDataToString = JSON.stringify(gameData);
 
-        const { gameState, clock } = gameData;
+      const {
+        gameState,
+        clock: { inIntermission },
+      } = gameData;
 
-        console.log(gameData);
-
-        send({
-          data: JSON.stringify(gameData),
-        });
-
-        if (isPreGame(gameState) || clock?.inIntermission) {
-          timerToUse.start(() => {
-            run();
-          }, 60000);
-        } else if (isGameActive(gameState) && !clock?.inIntermission) {
-          timerToUse.start(() => {
-            run();
-          }, 5000);
-        } else if (timerToUse.running && isGameComplete(gameState)) {
-          timerToUse.stop();
-        }
-      };
-
-      // emitter.addListener(eventName, run);
-
-      // emitter.emit("gameData");
-
-      run();
-
-      return () => {
-        // emitter.removeListener(eventName, run);
+      if (isPreGame(gameState) || inIntermission) {
+        timerToUse.start(() => {
+          emitter.emit("gameData");
+        }, 5000);
+      } else if (isGameActive(gameState) && !inIntermission) {
+        timerToUse.start(() => {
+          emitter.emit("gameData");
+        }, 15000);
+      } else if (timerToUse.running && isGameComplete(gameState)) {
         timerToUse.stop();
-      };
-    },
-    { headers: { "Cache-Control": "no-cache" } },
-  );
+      }
+
+      send({
+        data: gameDataToString,
+      });
+    };
+
+    emitter.addListener(eventName, run);
+
+    emitter.emit("gameData");
+
+    return () => {
+      emitter.removeListener(eventName, run);
+    };
+  });
 }
