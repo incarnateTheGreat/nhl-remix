@@ -7,6 +7,7 @@ import { isGameActive, isPreGame } from "~/utils";
 
 export function useLiveLoader<T>() {
   const path = useResolvedPath("./stream");
+
   const init = useLoaderData<T>() as Game;
   const [gameDataToRender, setGameDataToRender] = useState<Game>(init);
 

@@ -15,24 +15,27 @@ export function createGameEventStream(
   eventName: string,
   gameId: string,
 ) {
+  console.log("createGameEventStream");
+
   return eventStream(request.signal, (send) => {
+    console.log("eventStream");
+
     const run = async () => {
+      console.log("Run.");
+
       const gameData: Game = await getGameData(gameId);
       const gameDataToString = JSON.stringify(gameData);
 
-      const {
-        gameState,
-        clock: { inIntermission },
-      } = gameData;
+      const { gameState, clock } = gameData;
 
-      if (isPreGame(gameState) || inIntermission) {
+      if (isPreGame(gameState) || clock?.inIntermission) {
         timerToUse.start(() => {
-          emitter.emit("gameData");
+          emitter.emit(eventName);
+        }, 60000);
+      } else if (isGameActive(gameState) && !clock?.inIntermission) {
+        timerToUse.start(() => {
+          emitter.emit(eventName);
         }, 5000);
-      } else if (isGameActive(gameState) && !inIntermission) {
-        timerToUse.start(() => {
-          emitter.emit("gameData");
-        }, 15000);
       } else if (timerToUse.running && isGameComplete(gameState)) {
         timerToUse.stop();
       }
@@ -44,7 +47,7 @@ export function createGameEventStream(
 
     emitter.addListener(eventName, run);
 
-    emitter.emit("gameData");
+    emitter.emit(eventName);
 
     return () => {
       emitter.removeListener(eventName, run);
