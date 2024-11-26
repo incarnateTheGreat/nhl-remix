@@ -29,7 +29,7 @@ export function createGameEventStream(
       } else if (isGameActive(gameState) && !clock?.inIntermission) {
         timerToUse.start(() => {
           emitter.emit(eventName);
-        }, 5000);
+        }, 15000);
       } else if (timerToUse.running && isGameComplete(gameState)) {
         timerToUse.stop();
       }
