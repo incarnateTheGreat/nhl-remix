@@ -13,8 +13,6 @@ export function createGameEventStream(
   eventName: string,
   gameId: string,
 ) {
-  console.log("HIT");
-
   return eventStream(
     request.signal,
     (send) => {
@@ -22,6 +20,8 @@ export function createGameEventStream(
         const gameData: Game = await getGameData(gameId);
 
         const { gameState, clock } = gameData;
+
+        console.log(gameData);
 
         send({
           data: JSON.stringify(gameData),
@@ -38,8 +38,6 @@ export function createGameEventStream(
         } else if (timerToUse.running && isGameComplete(gameState)) {
           timerToUse.stop();
         }
-
-        console.log("Data sent.");
       };
 
       // emitter.addListener(eventName, run);
