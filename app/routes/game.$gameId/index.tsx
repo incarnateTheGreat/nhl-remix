@@ -1,5 +1,7 @@
 import { MetaFunction } from "@remix-run/node";
+import { useResolvedPath } from "@remix-run/react";
 import { format } from "date-fns";
+import { useEventSource } from "remix-utils/sse/react";
 import type { Game } from "types/types";
 
 import getGameData from "~/api/getGameData";
@@ -43,6 +45,12 @@ export const loader = async ({ params }: LoaderProps) => {
 
 export default function Game() {
   const gameDataToRender = useLiveLoader<Game>();
+  const path = useResolvedPath("./stream");
+  const eventData = useEventSource(path.pathname, {
+    enabled: true,
+  });
+
+  console.log({ eventData });
 
   const { gameState } = gameDataToRender;
 

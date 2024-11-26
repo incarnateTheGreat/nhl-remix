@@ -2,10 +2,13 @@ import { eventStream } from "remix-utils/sse/server";
 import { Game } from "types/types";
 
 import getGameData from "~/api/getGameData";
+import { isGameActive, isGameComplete, isPreGame, Timer } from "~/utils";
+
+import { emitter } from "./emitter.server";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-// const timerToUse = new Timer();
+const timerToUse = new Timer();
 
 export function createGameEventStream(
   request: Request,
@@ -17,34 +20,34 @@ export function createGameEventStream(
       const gameData: Game = await getGameData(gameId);
       const gameDataToString = JSON.stringify(gameData);
 
-      // const { gameState, clock } = gameData;
+      const { gameState, clock } = gameData;
 
-      // if (isPreGame(gameState) || clock?.inIntermission) {
-      //   timerToUse.start(() => {
-      //     emitter.emit(eventName);
-      //   }, 60000);
-      // } else if (isGameActive(gameState) && !clock?.inIntermission) {
-      //   timerToUse.start(() => {
-      //     emitter.emit(eventName);
-      //   }, 5000);
-      // } else if (timerToUse.running && isGameComplete(gameState)) {
-      //   timerToUse.stop();
-      // }
+      if (isPreGame(gameState) || clock?.inIntermission) {
+        timerToUse.start(() => {
+          // emitter.emit(eventName);
+          run();
+        }, 60000);
+      } else if (isGameActive(gameState) && !clock?.inIntermission) {
+        timerToUse.start(() => {
+          // emitter.emit(eventName);
+          run();
+        }, 5000);
+      } else if (timerToUse.running && isGameComplete(gameState)) {
+        timerToUse.stop();
+      }
 
       send({
         data: gameDataToString,
       });
     };
 
-    // emitter.addListener(eventName, run);
+    emitter.addListener(eventName, run);
 
-    setInterval(() => {
-      // emitter.emit(eventName);
-      run();
-    }, 5000);
+    // emitter.emit(eventName);
+    run();
 
     return () => {
-      // emitter.removeListener(eventName, run);
+      emitter.removeListener(eventName, run);
     };
   });
 }
