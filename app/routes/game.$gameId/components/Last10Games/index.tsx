@@ -34,7 +34,9 @@ export default function Last10Games() {
         return (
           <div key={getRandomKey()}>
             <div className="flex justify-between">
-              <span className="font-bold">{teamToDisplay.name.default}</span>
+              <span className="font-bold">
+                {teamToDisplay.commonName.default}
+              </span>
               <span>{recordData.record}</span>
             </div>
             <div className="mt-2 grid grid-cols-5 gap-x-4 gap-y-1">

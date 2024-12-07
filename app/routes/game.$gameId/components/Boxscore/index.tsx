@@ -43,7 +43,7 @@ export default function Boxscore() {
     playersData.homeTeam.goalies = reorderGoalies(playersData.homeTeam.goalies);
   }
 
-  tabData[0].title = awayTeam.name.default;
+  tabData[0].title = awayTeam.commonName.default;
   tabData[0].component = () => {
     return (
       <>
@@ -63,7 +63,7 @@ export default function Boxscore() {
     );
   };
 
-  tabData[1].title = homeTeam.name.default;
+  tabData[1].title = homeTeam.commonName.default;
   tabData[1].component = () => {
     return (
       <>

@@ -32,7 +32,7 @@ export default function TeamHeader({
   homeAway,
   gameState,
 }: TeamHeaderProps) {
-  const { abbrev, logo, placeName, name, sog = 0, score } = team;
+  const { abbrev, logo, placeName, commonName, sog = 0, score } = team;
   const { parentClasses, scoreClasses, teamClasses, imageClasses } =
     CLASSES[homeAway];
 
@@ -43,7 +43,7 @@ export default function TeamHeader({
         to={`/team/schedule/${abbrev}`}
         className={imageClasses}
       >
-        <img src={logo} alt={`${placeName.default} ${name.default}`} />
+        <img src={logo} alt={`${placeName.default} ${commonName.default}`} />
       </Link>
       <Link
         prefetch="intent"
@@ -54,7 +54,7 @@ export default function TeamHeader({
           {placeName.default}
         </span>
         <span className="text-xl font-bold leading-none group-hover:underline">
-          {name.default}
+          {commonName.default}
         </span>
         <div>
           {isPreGame(gameState) ? (
