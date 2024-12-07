@@ -1,5 +1,6 @@
 import { Clock, PeriodDescriptior } from "types/types";
 
+import Whistle from "~/components/Whistle";
 import { cn, PERIODS } from "~/utils";
 
 type GameStateProps = {
@@ -8,6 +9,23 @@ type GameStateProps = {
   clock: Clock;
   startTimeUTC: string;
   classnames?: string;
+};
+
+type CurrentGameStatusType = {
+  isPlayStopped: boolean;
+  timeRemaining: string;
+};
+
+const CurrentGameStatus = ({
+  isPlayStopped,
+  timeRemaining,
+}: CurrentGameStatusType) => {
+  return (
+    <div className="flex items-center justify-center text-sm">
+      {isPlayStopped ? <Whistle /> : null}
+      {timeRemaining}
+    </div>
+  );
 };
 
 const OT_OR_CRITIAL =
@@ -29,13 +47,17 @@ export default function GameState({
     timeZoneName: "short",
   });
   const period = periodDescriptor?.number ?? undefined;
+  const isPlayStopped = !clock?.running && !clock?.inIntermission;
 
   if (gameState === "LIVE" || gameState === "CRIT") {
     if (periodDescriptor.periodType === "OT") {
       return (
         <div className={classnames}>
-          <span className={OT_OR_CRITIAL}>OT</span>
-          <span className="text-sm">{clock?.timeRemaining}</span>
+          <div className={OT_OR_CRITIAL}>OT</div>
+          <CurrentGameStatus
+            isPlayStopped={isPlayStopped}
+            timeRemaining={clock?.timeRemaining}
+          />
         </div>
       );
     }
@@ -43,17 +65,17 @@ export default function GameState({
     if ("otPeriods" in periodDescriptor) {
       return (
         <div className={classnames}>
-          <span className={OT_OR_CRITIAL}>
+          <div className={OT_OR_CRITIAL}>
             {`${periodDescriptor.otPeriods}OT`}
-          </span>
-          <span className="text-sm">{clock?.timeRemaining}</span>
+          </div>
+          <div className="text-sm">{clock?.timeRemaining}</div>
         </div>
       );
     }
 
     return (
       <div className={classnames}>
-        <span
+        <div
           className={cn(
             "rounded bg-green-700 px-2 py-0.5 text-xs font-semibold text-white md:text-sm",
             {
@@ -62,29 +84,34 @@ export default function GameState({
           )}
         >
           {PERIODS[period]} {clock?.inIntermission ? "INT" : ""}
-        </span>
-        <span className="text-sm">{clock?.timeRemaining}</span>
+        </div>
+        <div className="md:mt-0.5">
+          <CurrentGameStatus
+            isPlayStopped={isPlayStopped}
+            timeRemaining={clock?.timeRemaining}
+          />
+        </div>
       </div>
     );
   }
 
   if (gameState === "OFF" || gameState === "FINAL") {
     if (periodDescriptor.periodType === "SO") {
-      return <span className={FINAL}>FINAL/SO</span>;
+      return <div className={FINAL}>FINAL/SO</div>;
     }
 
     if (periodDescriptor.periodType === "OT" && !periodDescriptor.otPeriods) {
-      return <span className={FINAL}>FINAL/OT</span>;
+      return <div className={FINAL}>FINAL/OT</div>;
     }
 
     if ("otPeriods" in periodDescriptor) {
       return (
-        <span className={FINAL}>{`FINAL/${periodDescriptor.otPeriods}OT`}</span>
+        <div className={FINAL}>{`FINAL/${periodDescriptor.otPeriods}OT`}</div>
       );
     }
 
-    return <span className={FINAL}>FINAL</span>;
+    return <div className={FINAL}>FINAL</div>;
   }
 
-  return <span className="text-xs font-bold md:text-sm">{time}</span>;
+  return <div className="text-xs font-bold md:text-sm">{time}</div>;
 }

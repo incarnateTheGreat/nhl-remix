@@ -13,7 +13,7 @@ export function useLiveLoader<T>() {
   const { gameState } = init;
 
   const eventData = useEventSource(path.pathname, {
-    enabled: isPreGame(gameState) || isGameActive(gameState),
+    enabled: isPreGame(gameState) || isGameActive(gameState) || false,
   });
 
   useEffect(() => {
