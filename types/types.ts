@@ -1,6 +1,6 @@
 type Team = {
   id: number;
-  name: { default: string };
+  commonName: { default: string };
   abbrev: string;
   placeName: { default: string };
   score: number;

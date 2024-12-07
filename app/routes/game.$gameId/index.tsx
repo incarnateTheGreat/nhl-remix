@@ -26,7 +26,7 @@ export const meta: MetaFunction = (e) => {
   const { awayTeam, homeTeam, startTimeUTC } = e.data as Game;
   const date = format(startTimeUTC, "MMM d, yyyy");
 
-  const title = `${awayTeam.placeName.default} ${awayTeam.name.default} vs. ${homeTeam.placeName.default} ${homeTeam.name.default} - ${date}`;
+  const title = `${awayTeam.placeName.default} ${awayTeam.commonName.default} vs. ${homeTeam.placeName.default} ${homeTeam.commonName.default} - ${date}`;
 
   return [
     {
@@ -38,7 +38,7 @@ export const meta: MetaFunction = (e) => {
     },
     {
       name: "description",
-      content: `This is the Game detail page for ${awayTeam.placeName.default} ${awayTeam.name.default} vs. ${homeTeam.placeName.default} ${homeTeam.name.default}`,
+      content: `This is the Game detail page for ${awayTeam.placeName.default} ${awayTeam.commonName.default} vs. ${homeTeam.placeName.default} ${homeTeam.commonName.default}`,
     },
   ];
 };
