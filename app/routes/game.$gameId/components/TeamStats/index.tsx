@@ -1,8 +1,8 @@
-import { useRouteLoaderData } from "@remix-run/react";
-import { Game, TeamSeasonStatsPerTeam } from "types/types";
+import { TeamSeasonStatsPerTeam } from "types/types";
 
 import { getTeamColour } from "~/components/GameStats/utils";
 import StatsBar from "~/routes/game.$gameId/components/StatsBar";
+import { useLiveLoader } from "~/sse/use-live-loader";
 import { getNumberWithOrdinal } from "~/utils";
 
 const TEAM_GAME_STATS_TEST = [
@@ -14,7 +14,7 @@ const TEAM_GAME_STATS_TEST = [
 ];
 
 export default function TeamStats() {
-  const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
+  const gameDataToRender = useLiveLoader();
 
   const { awayTeam, homeTeam, teamSeasonStats } = gameDataToRender;
 

@@ -1,6 +1,6 @@
-import { useRouteLoaderData } from "@remix-run/react";
-import React from "react";
 import { Game, GoalsType, Team } from "types/types";
+
+import { useLiveLoader } from "~/sse/use-live-loader";
 
 import VideoThumbnail from "../VideoThumbnail";
 import Player from "./Player";
@@ -17,7 +17,7 @@ export default function GoalContainer({
   awayTeam,
   homeTeam,
 }: GoalContainerProps) {
-  const { season } = useRouteLoaderData("routes/game.$gameId") as Game;
+  const { season } = useLiveLoader() as Game;
   const { awayScore, homeScore, highlightClip } = goal;
 
   const currentSeason = season.toString().slice(0, 4);

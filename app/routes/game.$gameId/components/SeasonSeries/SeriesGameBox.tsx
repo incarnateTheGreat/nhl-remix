@@ -62,7 +62,7 @@ export default function SeriesGameBox({ game }: SeriesGameBoxProps) {
       {isLive ? (
         <div className="mt-2 flex justify-between text-xs text-gray-500">
           <div className="ml-2">
-            {clock.inIntermission
+            {clock?.inIntermission
               ? `${getNumberWithOrdinal(periodDescriptor.number)} INT`
               : getNumberWithOrdinal(periodDescriptor.number)}
           </div>

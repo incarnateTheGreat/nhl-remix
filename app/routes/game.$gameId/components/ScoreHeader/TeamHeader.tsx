@@ -32,7 +32,7 @@ export default function TeamHeader({
   homeAway,
   gameState,
 }: TeamHeaderProps) {
-  const { abbrev, logo, placeName, commonName, sog = "--", score } = team;
+  const { abbrev, logo, placeName, commonName, sog = 0, score } = team;
   const { parentClasses, scoreClasses, teamClasses, imageClasses } =
     CLASSES[homeAway];
 

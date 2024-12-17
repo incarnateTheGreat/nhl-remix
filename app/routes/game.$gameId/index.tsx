@@ -1,17 +1,11 @@
 import { MetaFunction } from "@remix-run/node";
-import { useLoaderData, useRevalidator } from "@remix-run/react";
 import { format } from "date-fns";
-import { useEffect } from "react";
 import type { Game } from "types/types";
 
+import getGameData from "~/api/getGameData";
 import ActiveGameData from "~/components/ActiveGameData";
-import {
-  deepMerge,
-  isGameActive,
-  isGameComplete,
-  isPreGame,
-  Timer,
-} from "~/utils";
+import { useLiveLoader } from "~/sse/use-live-loader";
+import { isGameActive, isGameComplete, isPreGame } from "~/utils";
 
 import PreGameData from "./components/PreGameData";
 import ScoreHeader from "./components/ScoreHeader";
@@ -44,72 +38,13 @@ export const meta: MetaFunction = (e) => {
 };
 
 export const loader = async ({ params }: LoaderProps) => {
-  const fetchGameDataUrls = [
-    fetch(`https://api-web.nhle.com/v1/gamecenter/${params.gameId}/landing`),
-    fetch(`https://api-web.nhle.com/v1/gamecenter/${params.gameId}/boxscore`),
-    fetch(`https://api-web.nhle.com/v1/gamecenter/${params.gameId}/right-rail`),
-  ];
-
-  try {
-    const [
-      gameDataResponse,
-      boxscoreDataResponse,
-      rightRailResponse,
-    ]: Response[] = await Promise.all(fetchGameDataUrls);
-
-    const gameData = await gameDataResponse.json();
-    const boxscoreData = await boxscoreDataResponse.json();
-    const rightRail = await rightRailResponse.json();
-
-    return deepMerge(gameData, boxscoreData, rightRail);
-  } catch (e: unknown) {
-    if (e instanceof Error) {
-      return {
-        gameData: [],
-        boxscoreData: [],
-      };
-    }
-  }
+  return getGameData(params.gameId);
 };
 
 export default function Game() {
-  const gameDataToRender = useLoaderData<Game>();
-  const revalidator = useRevalidator();
+  const gameDataToRender = useLiveLoader<Game>();
 
-  const {
-    gameState,
-    clock: { inIntermission },
-  } = gameDataToRender;
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const timerToUse = new Timer();
-
-  useEffect(() => {
-    if (isPreGame(gameState) || inIntermission) {
-      timerToUse.start(() => {
-        revalidator.revalidate();
-      }, 60000);
-    } else if (isGameActive(gameState) && !inIntermission) {
-      timerToUse.start(() => {
-        revalidator.revalidate();
-      }, 45000);
-    }
-
-    return () => timerToUse.stop();
-  }, [inIntermission, gameState]);
-
-  useEffect(() => {
-    if (timerToUse.running && isGameComplete(gameState)) {
-      timerToUse.stop();
-    }
-  }, [gameState, timerToUse]);
-
-  useEffect(() => {
-    if (isGameComplete(gameState)) {
-      timerToUse.stop();
-    }
-  }, [gameState, timerToUse]);
+  const { gameState } = gameDataToRender;
 
   return (
     <div className="mx-auto flex w-full flex-col bg-white px-4 py-2">

@@ -1,6 +1,6 @@
-import { useRouteLoaderData } from "@remix-run/react";
 import { Game, Last10RecordTeam, Team } from "types/types";
 
+import { useLiveLoader } from "~/sse/use-live-loader";
 import { cn, getRandomKey } from "~/utils";
 
 function isWin(result: string) {
@@ -20,16 +20,16 @@ function handleResultStr(result: string) {
 }
 
 export default function Last10Games() {
-  const gameRenderData = useRouteLoaderData("routes/game.$gameId") as Game;
+  const gameDataToRender = useLiveLoader();
 
-  const { last10Record } = gameRenderData;
+  const { last10Record } = gameDataToRender;
 
   return (
     <>
       {Object.entries(last10Record)?.map((team) => {
         const [teamName, recordData] = team as [string, Last10RecordTeam];
 
-        const teamToDisplay = gameRenderData[teamName as keyof Game] as Team;
+        const teamToDisplay = gameDataToRender[teamName as keyof Game] as Team;
 
         return (
           <div key={getRandomKey()}>

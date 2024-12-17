@@ -145,7 +145,7 @@ export default function Scores() {
       {navigation.state === "idle" && games?.length > 0 ? <Games /> : null}
 
       {navigation.state === "idle" && games?.length === 0 ? (
-        <>No Games.</>
+        <section className="pl-3 text-sm">No Games.</section>
       ) : null}
     </div>
   );

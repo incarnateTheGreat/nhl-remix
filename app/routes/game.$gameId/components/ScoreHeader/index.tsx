@@ -1,11 +1,10 @@
-import { useRouteLoaderData } from "@remix-run/react";
-import { Game } from "types/types";
+import { useLiveLoader } from "~/sse/use-live-loader";
 
 import GameState from "./GameState";
 import TeamHeader from "./TeamHeader";
 
 export default function ScoreHeader() {
-  const gameDataToRender = useRouteLoaderData("routes/game.$gameId") as Game;
+  const gameDataToRender = useLiveLoader();
 
   const {
     awayTeam,
