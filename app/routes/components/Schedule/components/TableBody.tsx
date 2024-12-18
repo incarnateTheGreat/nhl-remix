@@ -121,7 +121,7 @@ export default function TableBody({ selectedMonthData }: TableBodyProps) {
                   data-date={day?.dateShort}
                 >
                   {!opponent ? (
-                    <div className="h-16 min-h-24 md:h-32">
+                    <div className="h-16 min-h-24 md:h-full">
                       <TableCell day={day} />
                     </div>
                   ) : null}
@@ -132,7 +132,7 @@ export default function TableBody({ selectedMonthData }: TableBodyProps) {
                       to={`/game/${game?.id}`}
                       className="flex h-full flex-col md:w-full md:pt-0"
                     >
-                      <div className="flex h-full justify-between">
+                      <div className="ml-1 mr-1.5 mt-1 flex h-full justify-between">
                         <TableCell day={day} />
                         {isLive ? (
                           <div className="text-[0.60rem] font-semibold md:text-sm">
