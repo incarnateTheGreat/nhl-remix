@@ -1,11 +1,11 @@
 import type { SeasonSeries } from "types/types";
 
-import { useLiveLoader } from "~/sse/use-live-loader";
+import { useGameLiveLoader } from "~/sse/use-game-live-loader";
 
 import SeriesGameBox from "./SeriesGameBox";
 
 export default function SeasonSeries() {
-  const gameDataToRender = useLiveLoader();
+  const gameDataToRender = useGameLiveLoader();
 
   let seasonSeriesData: SeasonSeries[] = [];
 
@@ -17,7 +17,7 @@ export default function SeasonSeries() {
     <div className="flex flex-col">
       <h2 className="text-base font-bold">Season Series</h2>
       <div className="mt-4 grid grid-cols-2 gap-1 md:grid-cols-3 lg:grid-cols-2">
-        {seasonSeriesData.map((game) => {
+        {seasonSeriesData?.map((game) => {
           return <SeriesGameBox key={game.id} game={game} />;
         })}
       </div>

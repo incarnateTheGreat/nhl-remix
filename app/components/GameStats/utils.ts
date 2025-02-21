@@ -23,7 +23,8 @@ const getTeamColour = ({
   let awayColourStr = `${awayTeamAbbrev}-${isAwayTeamKey ? Object.keys(TEAM_COLOURS_UTILS[awayTeamAbbrev])[0] : 0}`;
 
   if (awayColour === homeColour) {
-    awayColourStr = `${awayTeamAbbrev}-${Object.keys(TEAM_COLOURS_UTILS[awayTeamAbbrev])[1]}`;
+    // awayColourStr = `${awayTeamAbbrev}-${Object.keys(TEAM_COLOURS_UTILS?.[awayTeamAbbrev])?.[1]}`;
+    awayColourStr = "#CCC";
   }
 
   return { homeColourStr, awayColourStr };
