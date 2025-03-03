@@ -1,4 +1,9 @@
-import { Game, GoalieStats, PlayerByGameStats } from "types/types";
+import {
+  Game,
+  GoalieSeasonStat,
+  GoalieStats,
+  PlayerByGameStats,
+} from "types/types";
 
 const preGameData = (
   gameDataToRender: Game,
@@ -9,7 +14,7 @@ const preGameData = (
     matchup: { skaterSeasonStats, goalieSeasonStats },
   } = gameDataToRender;
 
-  const preGameSkaters = skaterSeasonStats.reduce(
+  const preGameSkaters = skaterSeasonStats?.skaters?.reduce(
     (acc: PlayerByGameStats, elem) => {
       if (awayTeamId === elem.teamId) {
         if (elem.position === "D") {
@@ -49,7 +54,7 @@ const preGameData = (
     },
   );
 
-  const preGameGoaltenders = goalieSeasonStats.reduce(
+  const preGameGoaltenders = goalieSeasonStats?.goalies?.reduce(
     (acc, elem) => {
       if (awayTeamId === elem.teamId) {
         acc.awayTeam.goalies.push(elem);
@@ -61,10 +66,10 @@ const preGameData = (
     },
     {
       awayTeam: {
-        goalies: [] as GoalieStats[],
+        goalies: [] as GoalieSeasonStat[],
       },
       homeTeam: {
-        goalies: [] as GoalieStats[],
+        goalies: [] as GoalieSeasonStat[],
       },
     },
   );

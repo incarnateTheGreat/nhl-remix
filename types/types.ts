@@ -148,14 +148,14 @@ type GoalieStats = {
 
 type PlayerByGameStats = {
   awayTeam: {
-    forwards: SkaterStats[];
-    defense: SkaterStats[];
-    goalies: GoalieStats[];
+    forwards: SkaterSeasonStat[];
+    defense: SkaterSeasonStat[];
+    goalies: GoalieSeasonStat[];
   };
   homeTeam: {
-    forwards: SkaterStats[];
-    defense: SkaterStats[];
-    goalies: GoalieStats[];
+    forwards: SkaterSeasonStat[];
+    defense: SkaterSeasonStat[];
+    goalies: GoalieSeasonStat[];
   };
 };
 
@@ -349,10 +349,10 @@ type GameBoxType = {
   // teamLeaders: [ [Object], [Object], [Object], [Object], [Object], [Object] ]
 };
 
-interface Name {
+type Name = {
   default: string;
-}
-interface AwayLeader {
+};
+type AwayLeader = {
   playerId: number;
   name: Name;
   firstName: Name;
@@ -361,24 +361,24 @@ interface AwayLeader {
   positionCode: string;
   headshot: string;
   value: number;
-}
-interface Leader {
+};
+type Leader = {
   category: string;
   awayLeader: AwayLeader;
   homeLeader: AwayLeader;
-}
-interface TeamLeaders {
+};
+type TeamLeaders = {
   context: string;
   contextSeason: number;
   leaders: Leader[];
-}
-interface TeamTotals {
+};
+type TeamTotals = {
   record: string;
   gaa: number;
   savePctg: number;
   shutouts: number;
-}
-interface Leader2 {
+};
+type Leader2 = {
   playerId: number;
   name: Name;
   firstName: Name;
@@ -392,17 +392,17 @@ interface Leader2 {
   gaa: number;
   savePctg: number;
   shutouts: number;
-}
-interface HomeTeam {
+};
+type HomeTeam = {
   teamTotals: TeamTotals;
   leaders: Leader2[];
-}
-interface Name2 {
+};
+type Name2 = {
   default: string;
   cs?: string;
   sk?: string;
-}
-interface Leader3 {
+};
+type Leader3 = {
   playerId: number;
   name: Name2;
   firstName: Name;
@@ -416,36 +416,36 @@ interface Leader3 {
   gaa: number;
   savePctg: number;
   shutouts: number;
-}
-interface AwayTeam {
+};
+type AwayTeam = {
   teamTotals: TeamTotals;
   leaders: Leader3[];
-}
-interface GoalieComparison {
+};
+type GoalieComparison = {
   homeTeam: HomeTeam;
   awayTeam: AwayTeam;
-}
-interface PastGameResult {
+};
+type PastGameResult = {
   opponentAbbrev: string;
   gameResult: string;
-}
-interface Last10RecordTeam {
+};
+type Last10RecordTeam = {
   record: string;
   streakType: string;
   streak: number;
   pastGameResults: PastGameResult[];
-}
-interface Last10Record {
+};
+type Last10Record = {
   awayTeam: Last10RecordTeam;
   homeTeam: Last10RecordTeam;
-}
-interface Name3 {
+};
+type Name3 = {
   default: string;
   cs?: string;
   fi?: string;
   sk?: string;
-}
-interface SkaterSeasonStat {
+};
+type SkaterSeasonStat = {
   playerId: number;
   teamId: number;
   sweaterNumber: number;
@@ -466,8 +466,8 @@ interface SkaterSeasonStat {
   powerPlayGoals: number;
   blockedShots: number;
   hits: number;
-}
-interface GoalieSeasonStat {
+};
+type GoalieSeasonStat = {
   playerId: number;
   teamId: number;
   sweaterNumber: number;
@@ -483,16 +483,24 @@ interface GoalieSeasonStat {
   shutouts: number;
   saves: number;
   toi: string;
-}
-interface Matchup {
+};
+type Matchup = {
   season: number;
   gameType: number;
   teamLeaders: TeamLeaders;
   goalieComparison: GoalieComparison;
   last10Record: Last10Record;
-  skaterSeasonStats: SkaterSeasonStat[];
-  goalieSeasonStats: GoalieSeasonStat[];
-}
+  skaterSeasonStats: {
+    contextLabel: string;
+    contextSeason: number;
+    skaters: SkaterSeasonStat[];
+  };
+  goalieSeasonStats: {
+    contextLabel: string;
+    contextSeason: number;
+    goalies: GoalieSeasonStat[];
+  };
+};
 
 type Game = {
   id: number;
@@ -589,6 +597,7 @@ export type {
   GameState,
   GamesType,
   GameWeek,
+  GoalieSeasonStat,
   GoalieStats,
   GoalsType,
   Last10RecordTeam,
