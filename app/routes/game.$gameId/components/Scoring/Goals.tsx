@@ -18,7 +18,7 @@ export default function Goals({ period }: GoalsProps) {
   const { awayTeam, homeTeam } = gameDataToRender;
 
   if (period.goals.length === 0) {
-    return "No scoring.";
+    return <span className="text-sm">No scoring.</span>;
   }
 
   return period.goals.map((goal) => (

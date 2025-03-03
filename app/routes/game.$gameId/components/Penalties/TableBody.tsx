@@ -66,16 +66,19 @@ export default function TableBody({ penalties }: PenaltiesTableBodyProps) {
             className="border-b border-b-slate-200/90 text-xs odd:bg-slate-200/45 md:text-sm"
           >
             <td className="w-12 p-2">
-              <img width={40} src={logo} alt={`${teamAbbrev.default} Logo`} />
+              <img width={40} src={logo} alt={`${teamAbbrev?.default} Logo`} />
             </td>
             <td className="w-16 border-r border-gray-400 p-2 md:w-16">
               {timeInPeriod}
             </td>
             <td className="w-28 border-r border-gray-400 p-2 md:w-44">
-              {committedByPlayer ? `${committedByPlayer}` : "Team"}{" "}
+              {committedByPlayer?.default
+                ? `${committedByPlayer?.default}`
+                : "Team"}
             </td>
             <td className="p-2 capitalize">
-              {amendedPenaltyStr} {servedBy ? `(Served by ${servedBy})` : null}
+              {amendedPenaltyStr}{" "}
+              {servedBy ? `(Served by ${servedBy.default})` : null}
             </td>
           </tr>
         );

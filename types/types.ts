@@ -63,11 +63,15 @@ type GoalsType = {
 };
 
 type PenaltiesType = {
-  servedBy: string;
+  servedBy: {
+    default: string;
+  };
   timeInPeriod: string;
   type: string;
   duration: number;
-  committedByPlayer: string;
+  committedByPlayer: {
+    default: string;
+  };
   teamAbbrev: {
     default: string;
   };
