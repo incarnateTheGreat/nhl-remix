@@ -266,9 +266,9 @@ type SeasonSeries = {
 type Shootout = {
   sequence: number;
   playerId: number;
-  teamAbbrev: string;
-  firstName: string;
-  lastName: string;
+  teamAbbrev: { default: string };
+  firstName: { default: string };
+  lastName: { default: string };
   shotType: string;
   result: string;
   headshot: string;
