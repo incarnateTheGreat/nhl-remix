@@ -16,7 +16,7 @@ export default function Shootout({
   const shootoutScore = shootout.reduce(
     (acc, elem) => {
       if (elem.result === "goal") {
-        acc[elem.teamAbbrev] += 1;
+        acc[elem.teamAbbrev.default] += 1;
       }
 
       return acc;
@@ -50,23 +50,26 @@ export default function Shootout({
         return (
           <div
             key={getRandomKey()}
-            className={cn("mb-3 flex border p-2 md:flex-col lg:flex-row", {
+            className={cn("mb-3 flex border p-2", {
               "bg-green-200/25": gameWinner,
             })}
           >
             <img
-              className="default_border rounded-full"
+              className="default_border h-12 w-12 rounded-full"
               src={headshot}
-              width={50}
-              alt={`${firstName} ${lastName}`}
+              alt={`${firstName.default} ${lastName.default}`}
             />
             <div className="ml-2 flex w-full items-center justify-between">
               <div>
                 <div>
-                  {firstName} {lastName}
+                  {firstName.default} {lastName.default}
                 </div>
                 <div className="flex">
-                  <img width={30} src={getLogo(teamAbbrev)} alt={teamAbbrev} />
+                  <img
+                    width={30}
+                    src={getLogo(teamAbbrev.default)}
+                    alt={teamAbbrev.default}
+                  />
                   <div className="my-0.5 ml-0.5 text-xs capitalize">
                     {result}
                   </div>
