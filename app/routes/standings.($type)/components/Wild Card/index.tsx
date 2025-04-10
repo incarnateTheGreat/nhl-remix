@@ -31,6 +31,7 @@ export default function WildCard() {
                     <StandingsTable
                       data={divisionData}
                       standingsColumnType={STANDING_TYPES.Wild_Card}
+                      divisionName={divisionName}
                     />
                   </div>
                 );

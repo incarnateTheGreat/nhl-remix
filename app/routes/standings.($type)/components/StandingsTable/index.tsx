@@ -15,6 +15,7 @@ import getStandingsColumns, { STANDING_TYPES } from "../../columns";
 type StandingsTableProps = {
   data: TeamStandings[];
   standingsColumnType: string;
+  divisionName?: string;
 };
 
 const handleSortArrow = (
@@ -36,6 +37,7 @@ const handleSortArrow = (
 export default function StandingsTable({
   data,
   standingsColumnType,
+  divisionName,
 }: StandingsTableProps) {
   const [sorting, setSorting] = useState<SortingState>([
     {
@@ -96,8 +98,11 @@ export default function StandingsTable({
                 key={row.id}
                 className={cn("border-b border-slate-300", {
                   "border-b border-dashed border-black":
-                    standingsColumnType === STANDING_TYPES.Conference &&
-                    rowIdx === 7,
+                    (standingsColumnType === STANDING_TYPES.Conference &&
+                      rowIdx === 7) ||
+                    (standingsColumnType === STANDING_TYPES.Wild_Card &&
+                      divisionName === "Wild Card" &&
+                      rowIdx === 1),
                 })}
               >
                 {row.getVisibleCells().map((cell, idx) => {
@@ -107,7 +112,7 @@ export default function StandingsTable({
                       className={cn(
                         "p-2 text-center",
                         {
-                          "sticky left-0 w-56 min-w-56 bg-white text-left":
+                          "sticky left-0 w-60 min-w-60 bg-white text-left":
                             idx === 0,
                         },
                         { "border-l border-slate-400/40": idx === 1 },

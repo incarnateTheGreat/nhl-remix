@@ -17,6 +17,7 @@ export default function getStandingsColumns(type: string) {
       header: () => <span>Team</span>,
       cell: (info) => {
         const {
+          clinchIndicator,
           divisionSequence,
           teamLogo,
           teamName,
@@ -53,6 +54,11 @@ export default function getStandingsColumns(type: string) {
               <img src={teamLogo} alt={teamName.default} width={30} />
               <span className="ml-1">{teamName.default}</span>
             </Link>
+            {clinchIndicator ? (
+              <span className="ml-auto rounded-md bg-gray-200 px-2 py-0.5 font-bold capitalize">
+                {clinchIndicator}
+              </span>
+            ) : null}
           </div>
         );
       },

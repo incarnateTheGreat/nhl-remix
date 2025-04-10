@@ -8,6 +8,7 @@ type TeamName = {
 };
 
 type TeamStandings = {
+  clinchIndicator: string;
   conferenceAbbrev: string;
   conferenceHomeSequence: number;
   conferenceL10Sequence: number;
