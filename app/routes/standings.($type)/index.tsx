@@ -9,6 +9,7 @@ import { getTodaysDate, reverseLeagueData } from "~/utils";
 import Conference from "./components/Conference";
 import Division from "./components/Division";
 import League from "./components/League";
+import PlayoffPicture from "./components/PlayoffPicture";
 import WildCard from "./components/Wild Card";
 
 export const meta: MetaFunction = () => {
@@ -41,7 +42,7 @@ export type DivisionsType = {
   };
 };
 
-type WildCardType = {
+export type WildCardType = {
   [k: string]: {
     [k: string]: TeamStandings[];
   };
@@ -140,7 +141,50 @@ export const loader = async () => {
     {},
   );
 
-  return { divisions, wildcard, conferences, league };
+  const playoffPicture = ["Eastern", "Western"].reduce(
+    (conferenceAcc: TeamStandings[][][], conferenceName) => {
+      const divisionLeaders: TeamStandings[] = [];
+
+      const conference = Object.entries(wildcard[conferenceName])
+        .reduce((acc: TeamStandings[][], division) => {
+          const [divisionName, divisionData] = division;
+
+          if (divisionName === "Wild Card") {
+            const wildcardTeams = divisionData.slice(0, 2);
+            const conferenceWinner =
+              divisionLeaders.find((team) => team.conferenceSequence === 1) ??
+              divisionLeaders[0];
+            const otherDivisionWinner =
+              divisionLeaders.find(
+                (team) =>
+                  team.divisionSequence === 1 && team.conferenceSequence !== 1,
+              ) ?? divisionLeaders[1];
+
+            acc.push([
+              conferenceWinner,
+              wildcardTeams[wildcardTeams.length - 1],
+            ]);
+            acc.push([
+              otherDivisionWinner,
+              wildcardTeams[wildcardTeams.length - 2],
+            ]);
+          } else {
+            divisionLeaders.push(divisionData[0]);
+            acc.push(divisionData.slice(1, 3));
+          }
+
+          return acc;
+        }, [])
+        .reverse();
+
+      conferenceAcc.push(conference);
+
+      return conferenceAcc;
+    },
+    [],
+  );
+
+  return { divisions, wildcard, conferences, league, playoffPicture };
 };
 
 export type StandingsData = {
@@ -148,6 +192,7 @@ export type StandingsData = {
   wildcard: WildCardType;
   conferences: ConferencesType;
   league: League;
+  playoffPicture: TeamStandings[][][];
 };
 
 const tabData = [
@@ -175,6 +220,12 @@ const tabData = [
     component: () => <League />,
     url: "/standings/league",
   },
+  {
+    id: 4,
+    title: "Playoff Picture",
+    component: () => <PlayoffPicture />,
+    url: "/standings/playoffpicture",
+  },
 ];
 
 export default function Standings() {
@@ -189,7 +240,7 @@ export default function Standings() {
   });
 
   return (
-    <div className="grid h-full grid-cols-1 gap-y-4 bg-white p-4">
+    <div className="h-full gap-y-4 bg-white p-4">
       {navigation.state === "loading" ? <Loading /> : null}
 
       {navigation.state === "idle" ? (

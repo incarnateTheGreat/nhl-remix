@@ -1,10 +1,10 @@
 import { useNavigate } from "@remix-run/react";
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 
 import { cn } from "~/utils";
 
 const tabClasses =
-  "min-w-20 px-2 cursor-pointer border-b text-center hover:font-semibold  text-sm ";
+  "min-w-20 px-2 cursor-pointer border-b text-center hover:font-semibold text-xs md:text-sm";
 
 type TabWithNavigateProps = {
   data: {
@@ -33,7 +33,7 @@ export default function TabWithNavigate({
   }
 
   return (
-    <div>
+    <div className="mt-4">
       <ul className="flex">
         {data.map((tab) => {
           return (
