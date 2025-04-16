@@ -19,8 +19,8 @@ export default function ShotsOnGoal() {
       <h3 className="font-bold">Shots on Goal</h3>
       <table className="mt-4">
         <TableHeader
-          homeTeamAbbrev={awayTeam.abbrev}
-          awayTeamAbbrev={homeTeam.abbrev}
+          homeTeamAbbrev={homeTeam.abbrev}
+          awayTeamAbbrev={awayTeam.abbrev}
         />
         <TableBody shotsByPeriod={shotsByPeriod} totalSOG={totalSOG} />
       </table>
