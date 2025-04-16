@@ -141,8 +141,8 @@ export const loader = async () => {
     {},
   );
 
-  const playoffPicture = ["Eastern", "Western"].reduce(
-    (conferenceAcc: TeamStandings[][][], conferenceName) => {
+  const playoffPicture = Object.keys(conferences).reduce(
+    (conferenceAcc: Record<string, TeamStandings[][]>, conferenceName) => {
       const divisionLeaders: TeamStandings[] = [];
 
       const conference = Object.entries(wildcard[conferenceName])
@@ -177,11 +177,11 @@ export const loader = async () => {
         }, [])
         .reverse();
 
-      conferenceAcc.push(conference);
+      conferenceAcc[conferenceName] = conference;
 
       return conferenceAcc;
     },
-    [],
+    {},
   );
 
   return { divisions, wildcard, conferences, league, playoffPicture };
@@ -192,7 +192,7 @@ export type StandingsData = {
   wildcard: WildCardType;
   conferences: ConferencesType;
   league: League;
-  playoffPicture: TeamStandings[][][];
+  playoffPicture: Record<string, TeamStandings[][]>;
 };
 
 const tabData = [

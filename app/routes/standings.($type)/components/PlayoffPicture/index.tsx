@@ -14,16 +14,20 @@ function getPositionAbbevition(team: TeamStandings) {
 }
 
 type ConferencePlayoffProps = {
-  conference: TeamStandings[][];
+  conference: [string, TeamStandings[][]];
 };
 
 const ConferencePlayoff = ({ conference }: ConferencePlayoffProps) => {
+  const [conferenceName, conferenceData] = conference;
+
   return (
     <div className="w-full">
-      <h3 className="mb-2 text-lg font-extrabold text-black">Eastern</h3>
-      <table className="w-full md:w-3/4">
+      <h3 className="mb-2 text-lg font-extrabold text-black">
+        {conferenceName}
+      </h3>
+      <table className="md:text-sm">
         <tbody>
-          {conference.map((match) => {
+          {conferenceData.map((match) => {
             const [firstTeam, secondTeam] = match;
 
             const firstTeamPositionAbbreviation =
@@ -33,11 +37,11 @@ const ConferencePlayoff = ({ conference }: ConferencePlayoffProps) => {
 
             return (
               <tr key={getRandomKey()}>
-                <td className="w-7">{firstTeamPositionAbbreviation}</td>
-                <td className="w-36">{firstTeam.teamName.default}</td>
-                <td className="w-12 text-center">vs. </td>
-                <td className="w-7">{secondTeamPositionAbbreviation}</td>
-                <td className="w-40">{secondTeam.teamName.default}</td>
+                <td className="pr-1">{firstTeamPositionAbbreviation}</td>
+                <td className="pr-1">{firstTeam.teamName.default}</td>
+                <td className="px-1 text-center">vs. </td>
+                <td className="pr-1">{secondTeamPositionAbbreviation}</td>
+                <td className="pr-1">{secondTeam.teamName.default}</td>
               </tr>
             );
           })}
@@ -52,17 +56,18 @@ export default function PlayoffPicture() {
     "routes/standings.($type)",
   ) as StandingsData;
 
-  const [eastern, western] = playoffPicture;
-
   return (
     <section>
-      <div className="my-6">
+      <div>
         <h2 className="mb-2 text-lg font-extrabold text-black">
           Playoff Picture
         </h2>
-        <div className="grid gap-x-24 gap-y-4 text-sm md:grid-cols-2">
-          <ConferencePlayoff conference={eastern} />
-          <ConferencePlayoff conference={western} />
+        <div className="grid gap-x-24 gap-y-4 text-sm md:gap-x-12 lg:grid-cols-2">
+          {Object.entries(playoffPicture).map((conference) => {
+            return (
+              <ConferencePlayoff key={getRandomKey()} conference={conference} />
+            );
+          })}
         </div>
       </div>
     </section>

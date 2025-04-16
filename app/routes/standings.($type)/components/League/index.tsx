@@ -10,7 +10,7 @@ export default function League() {
   ) as StandingsData;
 
   return (
-    <div className="my-6">
+    <div>
       <h2 className="mb-2 text-lg font-extrabold text-black">League</h2>
       <div className="grid grid-cols-1 gap-y-6">
         <StandingsTable

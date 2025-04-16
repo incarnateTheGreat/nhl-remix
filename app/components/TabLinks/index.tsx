@@ -4,7 +4,7 @@ import { JSX, useEffect, useState } from "react";
 import { cn } from "~/utils";
 
 const tabClasses =
-  "min-w-20 px-2 cursor-pointer border-b text-center hover:font-semibold text-xs md:text-sm";
+  "min-w-20 px-2 cursor-pointer border-b text-center hover:font-semibold text-xs md:text-sm whitespace-nowrap ";
 
 type TabWithNavigateProps = {
   data: {
@@ -34,7 +34,7 @@ export default function TabWithNavigate({
 
   return (
     <div className="mt-4">
-      <ul className="flex">
+      <ul className="flex overflow-x-scroll">
         {data.map((tab) => {
           return (
             <li
@@ -57,7 +57,7 @@ export default function TabWithNavigate({
           );
         })}
       </ul>
-      <div>{data[activeTabId].component()}</div>
+      <div className="p-3">{data[activeTabId].component()}</div>
     </div>
   );
 }

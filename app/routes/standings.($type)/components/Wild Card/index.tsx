@@ -15,7 +15,7 @@ export default function WildCard() {
     <>
       {Object.keys(wildcard).map((conferenceName) => {
         return (
-          <div className="my-6" key={getRandomKey()}>
+          <div key={getRandomKey()}>
             <h2 className="mb-2 text-lg font-extrabold text-black">
               {conferenceName}
             </h2>
