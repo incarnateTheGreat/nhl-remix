@@ -34,7 +34,7 @@ export default function RoundStatus({ seriesStatus }: RoundStatusProps) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center rounded bg-slate-200 p-1 text-sm">
+    <div className="flex flex-col items-center justify-center rounded bg-slate-200 p-1 text-xs">
       <div className="font-semibold">{`${seriesTitle}, Game ${gameNumberOfSeries}`}</div>
       {roundStatus()}
     </div>
