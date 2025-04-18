@@ -49,7 +49,24 @@ export type WildCardType = {
 };
 
 export const loader = async () => {
-  const date = getTodaysDate();
+  const standingsSeason = await fetch(
+    "https://api-web.nhle.com/v1/standings-season",
+  );
+
+  const standingsSeasonResponse = await standingsSeason.json();
+
+  const [lastStandingsItem] = standingsSeasonResponse.seasons.slice(-1);
+
+  const d1 = new Date();
+  const d2 = new Date(lastStandingsItem.standingsEnd);
+
+  let date;
+
+  if (d1 >= d2) {
+    date = lastStandingsItem.standingsEnd;
+  } else {
+    date = getTodaysDate();
+  }
 
   const standings = await fetch(
     `https://api-web.nhle.com/v1/standings/${date}`,
