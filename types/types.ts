@@ -589,6 +589,46 @@ type GamesType = {
   games: GameBoxType[];
 };
 
+type PlayoffSeries = {
+  seriesUrl: string;
+  seriesTitle: string;
+  seriesAbbrev: string;
+  seriesLetter: string;
+  playoffRound: number;
+  topSeedRank: number;
+  topSeedRankAbbrev: string;
+  topSeedWins: number;
+  bottomSeedRank: number;
+  bottomSeedRankAbbrev: string;
+  bottomSeedWins: number;
+  topSeedTeam: SeedTeam;
+  bottomSeedTeam: SeedTeam;
+};
+
+type SeedTeam = {
+  id: number;
+  abbrev: string;
+  name: {
+    default: string;
+    fr: string;
+  };
+  commonName: {
+    default: string;
+  };
+  placeNameWithPreposition: {
+    default: string;
+    fr: string;
+  };
+  logo: string;
+  darkLogo: string;
+};
+
+type PlayoffBracket = {
+  bracketLogo: string;
+  bracketLogoFr: string;
+  series: PlayoffSeries[];
+};
+
 export type {
   Assists,
   Clock,
@@ -608,7 +648,9 @@ export type {
   PenaltiesType,
   PeriodDescriptior,
   PlayerByGameStats,
+  PlayoffBracket,
   SeasonSeries,
+  SeedTeam,
   SeriesStatus,
   Shootout,
   SkaterStats,

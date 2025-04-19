@@ -139,3 +139,41 @@ nav {
 .default_border {
   @apply border border-slate-500/20;
 }
+
+/* Playoff Bracket */
+.playoff-bracket {
+  grid-template:
+    [row1-start] 'seriesE . . year year . . seriesA' [row1-end]
+    [row3-start] 'seriesE seriesK seriesK seriesK seriesI seriesI seriesI seriesA' [row3-end]
+    [row6-start] 'seriesF seriesK seriesK seriesK seriesI seriesI seriesI seriesB' [row6-end]
+    [row8-start] 'seriesF . . . . . . seriesB' [row8-end]
+    [row9-start] '. . . seriesO seriesO . . .' [row9-end]
+    [row10-start] 'seriesN seriesN seriesN seriesO seriesO seriesM seriesM seriesM' [row10-end]
+    [row12-start] 'seriesN seriesN seriesN seriesO seriesO seriesM seriesM seriesM' [row12-end]
+    [row13-start] '. . . seriesO seriesO . . .' [row13-end]
+    [row14-start] 'seriesG . . . . . . seriesC' [row14-end]
+    [row16-start] 'seriesG seriesL seriesL seriesL seriesJ seriesJ seriesJ seriesC' [row16-end]
+    [row18-start] 'seriesH seriesL seriesL seriesL seriesJ seriesJ seriesJ seriesD' [row18-end]
+    [row20-start] 'seriesH . . . . . . seriesD' [row20-end];
+}
+
+@media (min-width: 768px) {
+  .playoff-bracket {
+    grid-template: 
+      [row1-start] 'seriesE . . . year . . . seriesA' [row1-end]
+      [row2-start] 'seriesE . . . . . . . seriesA' [row2-end]
+      [row3-start] 'seriesE seriesK . . . . . seriesI seriesA' [row3-end]
+      [row4-start] '. seriesK . . . . . seriesI .' [row4-end]
+      [row6-start] 'seriesF seriesK . . . . . seriesI seriesB' [row6-end]
+      [row7-start] 'seriesF . . . seriesO . . . seriesB' [row7-end]
+      [row8-start] 'seriesF seriesN seriesN seriesN seriesO seriesM seriesM seriesM seriesB' [row8-end]
+      [row9-start] '. seriesN seriesN seriesN seriesO seriesM seriesM seriesM .' [row9-end]
+      [row10-start] 'seriesG seriesN seriesN seriesN seriesO seriesM seriesM seriesM seriesC' [row10-end]
+      [row11-start] 'seriesG . . . seriesO . . . seriesC' [row11-end]
+      [row12-start] 'seriesG seriesL . . . . . seriesJ seriesC' [row12-end]
+      [row13-start] '. seriesL . . . . . seriesJ .' [row13-end]
+      [row14-start] 'seriesH seriesL . . . . . seriesJ seriesD' [row14-end]
+      [row15-start] 'seriesH . . . . . . . seriesD' [row15-end]
+      [row16-start] 'seriesH . . . . . . . seriesD' [row16-end];
+  }
+}

@@ -1,11 +1,16 @@
-import { Link, useLocation } from "@remix-run/react";
+import { Link, NavLink, useLocation } from "@remix-run/react";
 
 import NHL_Logo from "~/assets/nhl_logo.svg";
 import { cn } from "~/utils";
 
 const links = [
   {
+    label: "Standings",
     path: "/standings",
+  },
+  {
+    label: "Playoffs",
+    path: "/playoffs",
   },
 ];
 
@@ -30,9 +35,17 @@ export default function SiteHeader() {
                     underline: pathname === link.path,
                   })}
                 >
-                  <Link prefetch="intent" to={link.path}>
-                    Standings
-                  </Link>
+                  <NavLink
+                    prefetch="intent"
+                    to={link.path}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "border-b border-dashed border-slate-500 font-semibold"
+                        : "border-slate-500 hover:border-b hover:border-dashed"
+                    }
+                  >
+                    {link.label}
+                  </NavLink>
                 </div>
               );
             })}
