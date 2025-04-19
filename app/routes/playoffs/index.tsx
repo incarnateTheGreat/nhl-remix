@@ -54,14 +54,14 @@ const TeamRow = ({ seedTeam, teamWins }: TeamRowProps) => {
   const { abbrev, darkLogo, name } = seedTeam;
 
   return (
-    <div className="grid h-full grid-cols-2 items-center justify-between px-2 first:border-b first:border-gray-300 md:grid-cols-3">
+    <div className="grid h-full grid-cols-2 items-center justify-between px-2 text-base first:border-b first:border-gray-300 md:grid-cols-3">
       <img
         src={darkLogo}
         alt={name.default}
         width={25}
         className="flex justify-self-center"
       />
-      <span className="hidden md:flex">{abbrev} </span>
+      <span className="hidden md:flex">{abbrev}</span>
       <span className="flex justify-self-center">{teamWins}</span>
     </div>
   );
