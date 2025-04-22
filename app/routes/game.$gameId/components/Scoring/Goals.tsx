@@ -1,7 +1,6 @@
 import type { GoalsType, PeriodDescriptior } from "types/types";
 
 import { useLiveLoader } from "~/sse/use-live-loader";
-import { getRandomKey } from "~/utils";
 
 import GoalContainer from "./GoalContainer";
 
@@ -21,12 +20,14 @@ export default function Goals({ period }: GoalsProps) {
     return <span className="text-sm">No scoring.</span>;
   }
 
-  return period.goals.map((goal) => (
-    <GoalContainer
-      key={getRandomKey()}
-      goal={goal}
-      awayTeam={awayTeam}
-      homeTeam={homeTeam}
-    />
-  ));
+  return period.goals.map((goal) => {
+    return (
+      <GoalContainer
+        key={goal.eventId}
+        goal={goal}
+        awayTeam={awayTeam}
+        homeTeam={homeTeam}
+      />
+    );
+  });
 }
