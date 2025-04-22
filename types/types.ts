@@ -8,6 +8,9 @@ type Team = {
   logo: string;
   radioLink: string;
   record: string;
+  name: {
+    default: string;
+  };
 };
 
 type PeriodDescriptior = {
@@ -40,6 +43,7 @@ type Assists = {
 type GameState = "PRE" | "FUT" | "LIVE" | "CRIT" | "ON" | "OFF" | "FINAL";
 
 type GoalsType = {
+  eventId: number;
   situationCode: string;
   strength: string;
   playerId: number;
@@ -50,11 +54,13 @@ type GoalsType = {
   headshot: string;
   highlightClip: number;
   highlightClipFr: number;
+  highlightClipSrc: string;
   discreteClip: number;
   discreteClipFr: number;
   goalsToDate: number;
   awayScore: number;
   homeScore: number;
+  poster: string;
   leadingTeamAbbrev: { default: string };
   timeInPeriod: string;
   shotType: string;
@@ -275,14 +281,16 @@ type Shootout = {
   gameWinner: boolean;
 };
 
+type Scoring = {
+  periodDescriptor: PeriodDescriptior;
+  goals: GoalsType[];
+};
+
 type Summary = {
   shotsByPeriod: LinescoreByPeriodObject[];
   teamGameStats: TeamGameStats[];
   seasonSeries: SeasonSeries[];
-  scoring: {
-    periodDescriptor: PeriodDescriptior;
-    goals: GoalsType[];
-  }[];
+  scoring: Scoring[];
   penalties: {
     periodDescriptor: PeriodDescriptior;
     penalties: PenaltiesType[];
@@ -649,6 +657,7 @@ export type {
   PeriodDescriptior,
   PlayerByGameStats,
   PlayoffBracket,
+  Scoring,
   SeasonSeries,
   SeedTeam,
   SeriesStatus,

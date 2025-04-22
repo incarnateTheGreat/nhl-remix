@@ -22,7 +22,7 @@ function handleResultStr(result: string) {
 export default function Last10Games() {
   const gameDataToRender = useLiveLoader();
 
-  const { last10Record } = gameDataToRender;
+  const { last10Record = [] } = gameDataToRender;
 
   return (
     <>
