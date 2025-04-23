@@ -8,7 +8,8 @@ const CLASSES = {
     parentClasses:
       "order-2 flex w-full items-center lg:order-1 lg:flex-1 mb-2 lg:mb-0",
     scoreClasses: "ml-auto text-4xl font-bold",
-    teamClasses: "flex flex-col group",
+    teamClasses: "flex flex-col group mr-4",
+    powerplayClasses: "flex",
     imageClasses: "mr-4 w-20",
   },
   home: {
@@ -16,8 +17,9 @@ const CLASSES = {
       "order-3 flex w-full items-center lg:flex-1 lg:flex-row lg:items-center mt-2 md:mt-0",
     scoreClasses:
       "order-3 ml-auto text-4xl font-bold lg:order-1 lg:ml-0 lg:mr-auto",
-    teamClasses: "order-2 flex flex-col mr-4 group",
-    imageClasses: "order-1 lg:order-3 mr-4 lg:mr-0 w-20",
+    teamClasses: "order-2 flex flex-col mr-4 group lg:order-3",
+    powerplayClasses: "order-3 flex lg:order-2 lg:mr-4",
+    imageClasses: "order-1 lg:order-4 mr-4 lg:mr-0 w-20",
   },
 };
 
@@ -33,8 +35,13 @@ export default function TeamHeader({
   gameState,
 }: TeamHeaderProps) {
   const { abbrev, logo, placeName, commonName, sog = 0, score } = team;
-  const { parentClasses, scoreClasses, teamClasses, imageClasses } =
-    CLASSES[homeAway];
+  const {
+    parentClasses,
+    scoreClasses,
+    teamClasses,
+    imageClasses,
+    powerplayClasses,
+  } = CLASSES[homeAway];
 
   return (
     <div className={parentClasses}>
@@ -64,6 +71,14 @@ export default function TeamHeader({
           )}
         </div>
       </Link>
+      {/* <div
+        className={cn(
+          powerplayClasses,
+          "flex h-5 min-w-[30px] items-center justify-center rounded bg-red-600 px-1 text-[10px] font-semibold uppercase text-white",
+        )}
+      >
+        PP
+      </div> */}
       <div className={scoreClasses}>{score}</div>
     </div>
   );
