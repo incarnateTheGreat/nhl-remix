@@ -13,27 +13,21 @@ const tabData = [
   {
     id: 0,
     title: "Stats",
-    component: () => <div />,
+    component: () => (
+      <div className="grid gap-y-2">
+        <Scoring />
+        <Penalties />
+      </div>
+    ),
   },
   {
     id: 1,
     title: "Boxscore",
-    component: () => <div />,
+    component: () => <Boxscore />,
   },
 ];
 
 export default function ActiveGameData() {
-  tabData[0].component = () => (
-    <div className="grid gap-y-2">
-      <Scoring />
-      <Penalties />
-    </div>
-  );
-
-  tabData[1].component = () => {
-    return <Boxscore />;
-  };
-
   return (
     <div className="mt-2 flex flex-col xl:flex-row">
       <div className="flex-1">

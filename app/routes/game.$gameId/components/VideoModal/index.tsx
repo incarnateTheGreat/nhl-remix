@@ -37,7 +37,7 @@ export default function VideoModal({ videoData, setVisible }: VideoModalProps) {
   }, []);
 
   return (
-    <div className="fixed left-0 top-0 z-10 flex h-full w-full items-center justify-center bg-black/70">
+    <dialog className="fixed left-0 top-0 z-10 flex h-full w-full items-center justify-center bg-black/70">
       <div className="absolute w-5/6 md:w-9/12" id="video">
         <video
           controls
@@ -55,6 +55,6 @@ export default function VideoModal({ videoData, setVisible }: VideoModalProps) {
           X
         </button>
       </div>
-    </div>
+    </dialog>
   );
 }

@@ -1,4 +1,3 @@
-
 import { useLiveLoader } from "~/sse/use-live-loader";
 import { handlePeriodLabel } from "~/utils";
 
@@ -8,13 +7,9 @@ import Goals from "./Goals";
 export default function Scoring() {
   const gameDataToRender = useLiveLoader();
 
-  const {
-    awayTeam,
-    homeTeam,
-    summary: { scoring, shootout },
-  } = gameDataToRender;
+  const { awayTeam, homeTeam, summary } = gameDataToRender;
 
-  const scoringNoShootout = scoring.filter(
+  const scoringNoShootout = summary?.scoring.filter(
     (period) => period.periodDescriptor.periodType !== "SO",
   );
 
@@ -31,8 +26,12 @@ export default function Scoring() {
           </div>
         );
       })}
-      {shootout.length > 0 ? (
-        <Shootout shootout={shootout} awayTeam={awayTeam} homeTeam={homeTeam} />
+      {summary?.shootout.length > 0 ? (
+        <Shootout
+          shootout={summary?.shootout}
+          awayTeam={awayTeam}
+          homeTeam={homeTeam}
+        />
       ) : null}
     </div>
   );

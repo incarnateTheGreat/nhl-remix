@@ -1,3 +1,5 @@
+import { Game } from "types/types";
+
 import { deepMerge } from "~/utils";
 
 export default async function getGameData(gameId: string) {
@@ -14,7 +16,7 @@ export default async function getGameData(gameId: string) {
       rightRailResponse,
     ]: Response[] = await Promise.all(fetchGameDataUrls);
 
-    const gameData = await gameDataResponse.json();
+    const gameData: Game = await gameDataResponse.json();
     const boxscoreData = await boxscoreDataResponse.json();
     const rightRail = await rightRailResponse.json();
 
