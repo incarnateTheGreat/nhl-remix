@@ -21,6 +21,7 @@ export default function GameBox({ game }: GameBoxProps) {
     clock,
     gameType,
     seriesStatus,
+    situation,
   } = game;
 
   return (
@@ -44,8 +45,18 @@ export default function GameBox({ game }: GameBoxProps) {
           />
         </div>
         <div className="mt-3">
-          <TeamRow team={awayTeam} gameState={gameState} />
-          <TeamRow team={homeTeam} gameState={gameState} />
+          <TeamRow
+            homeAway="homeTeam"
+            team={awayTeam}
+            gameState={gameState}
+            situation={situation}
+          />
+          <TeamRow
+            homeAway="awayTeam"
+            team={homeTeam}
+            gameState={gameState}
+            situation={situation}
+          />
         </div>
       </div>
     </Link>

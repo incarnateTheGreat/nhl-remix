@@ -1,15 +1,12 @@
-import { Clock, PeriodDescriptior } from "types/types";
+import { Clock, PeriodDescriptior, Situation } from "types/types";
 
 import Whistle from "~/components/Whistle";
 import { cn, PERIODS } from "~/utils";
 
-type GameStateProps = {
-  gameState: string;
-  periodDescriptor: PeriodDescriptior;
-  clock: Clock;
-  startTimeUTC: string;
-  classnames?: string;
-};
+const OT_OR_CRITIAL =
+  "rounded bg-red-700 px-2 py-0.5 text-xs md:text-sm font-semibold text-white";
+const FINAL =
+  "rounded bg-gray-200 px-2 py-0.5 text-xs md:text-sm font-semibold text-black";
 
 type CurrentGameStatusType = {
   isPlayStopped: boolean;
@@ -28,10 +25,24 @@ const CurrentGameStatus = ({
   );
 };
 
-const OT_OR_CRITIAL =
-  "rounded bg-red-700 px-2 py-0.5 text-xs md:text-sm font-semibold text-white";
-const FINAL =
-  "rounded bg-gray-200 px-2 py-0.5 text-xs md:text-sm font-semibold text-black";
+type SituationStatusProps = {
+  situation: Situation;
+};
+
+const SituationStatus = ({ situation }: SituationStatusProps) => (
+  <span className="mt-0.5 text-sm font-semibold text-red-500">
+    {situation.timeRemaining}
+  </span>
+);
+
+type GameStateProps = {
+  gameState: string;
+  periodDescriptor: PeriodDescriptior;
+  clock: Clock;
+  startTimeUTC: string;
+  classnames?: string;
+  situation?: Situation;
+};
 
 export default function GameState({
   gameState,
@@ -39,6 +50,7 @@ export default function GameState({
   clock,
   startTimeUTC,
   classnames = "",
+  situation,
 }: GameStateProps) {
   const time = new Date(startTimeUTC).toLocaleString("en-US", {
     hour: "numeric",
@@ -53,11 +65,12 @@ export default function GameState({
     if (periodDescriptor.periodType === "OT") {
       return (
         <div className={classnames}>
-          <div className={OT_OR_CRITIAL}>OT</div>
           <CurrentGameStatus
             isPlayStopped={isPlayStopped}
             timeRemaining={clock?.timeRemaining}
           />
+          <div className={OT_OR_CRITIAL}>OT</div>
+          {situation ? <SituationStatus situation={situation} /> : null}
         </div>
       );
     }
@@ -65,16 +78,23 @@ export default function GameState({
     if ("otPeriods" in periodDescriptor) {
       return (
         <div className={classnames}>
+          <div className="text-sm">{clock?.timeRemaining}</div>
           <div className={OT_OR_CRITIAL}>
             {`${periodDescriptor.otPeriods}OT`}
           </div>
-          <div className="text-sm">{clock?.timeRemaining}</div>
+          {situation ? <SituationStatus situation={situation} /> : null}
         </div>
       );
     }
 
     return (
       <div className={classnames}>
+        <div className="md:mt-0.5">
+          <CurrentGameStatus
+            isPlayStopped={isPlayStopped}
+            timeRemaining={clock?.timeRemaining}
+          />
+        </div>
         <div
           className={cn(
             "rounded bg-green-700 px-2 py-0.5 text-xs font-semibold text-white md:text-sm",
@@ -85,12 +105,7 @@ export default function GameState({
         >
           {PERIODS[period]} {clock?.inIntermission ? "INT" : ""}
         </div>
-        <div className="md:mt-0.5">
-          <CurrentGameStatus
-            isPlayStopped={isPlayStopped}
-            timeRemaining={clock?.timeRemaining}
-          />
-        </div>
+        {situation ? <SituationStatus situation={situation} /> : null}
       </div>
     );
   }

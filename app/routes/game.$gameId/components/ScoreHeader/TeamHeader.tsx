@@ -1,10 +1,10 @@
 import { Link } from "@remix-run/react";
-import { GameState, Team } from "types/types";
+import { GameState, Situation, Team } from "types/types";
 
-import { isPreGame } from "~/utils";
+import { cn, getRandomKey, isPreGame } from "~/utils";
 
 const CLASSES = {
-  away: {
+  awayTeam: {
     parentClasses:
       "order-2 flex w-full items-center lg:order-1 lg:flex-1 mb-2 lg:mb-0",
     scoreClasses: "ml-auto text-4xl font-bold",
@@ -12,7 +12,7 @@ const CLASSES = {
     powerplayClasses: "flex",
     imageClasses: "mr-4 w-20",
   },
-  home: {
+  homeTeam: {
     parentClasses:
       "order-3 flex w-full items-center lg:flex-1 lg:flex-row lg:items-center mt-2 md:mt-0",
     scoreClasses:
@@ -25,16 +25,19 @@ const CLASSES = {
 
 type TeamHeaderProps = {
   team: Team;
-  homeAway: "home" | "away";
+  homeAway: "homeTeam" | "awayTeam";
   gameState: GameState;
+  situation?: Situation;
 };
 
 export default function TeamHeader({
   team,
   homeAway,
   gameState,
+  situation,
 }: TeamHeaderProps) {
   const { abbrev, logo, placeName, commonName, sog = 0, score } = team;
+
   const {
     parentClasses,
     scoreClasses,
@@ -71,14 +74,21 @@ export default function TeamHeader({
           )}
         </div>
       </Link>
-      {/* <div
-        className={cn(
-          powerplayClasses,
-          "flex h-5 min-w-[30px] items-center justify-center rounded bg-red-600 px-1 text-[10px] font-semibold uppercase text-white",
-        )}
-      >
-        PP
-      </div> */}
+
+      {situation?.[homeAway]?.situationDescriptions?.map((situationLabel) => {
+        return (
+          <div
+            key={getRandomKey()}
+            className={cn(
+              powerplayClasses,
+              "flex h-5 min-w-[30px] items-center justify-center rounded bg-red-600 px-1 text-[10px] font-semibold uppercase text-white",
+            )}
+          >
+            {situationLabel}
+          </div>
+        );
+      })}
+
       <div className={scoreClasses}>{score}</div>
     </div>
   );

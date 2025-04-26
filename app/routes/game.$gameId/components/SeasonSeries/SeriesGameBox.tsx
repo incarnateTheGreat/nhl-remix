@@ -44,6 +44,7 @@ export default function SeriesGameBox({ game }: SeriesGameBoxProps) {
 
   return (
     <Link
+      prefetch="intent"
       to={`/game/${id}`}
       className={cn(
         "cursor-pointer rounded border border-slate-200 p-2 transition-all hover:border-gray-800",

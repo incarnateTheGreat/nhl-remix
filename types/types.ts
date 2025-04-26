@@ -344,11 +344,7 @@ type GameBoxType = {
   period: number;
   periodDescriptor: PeriodDescriptior;
   clock: Clock;
-  situation: {
-    teamAbbrev: string;
-    timeRemaining: string;
-    situationCode: string;
-  };
+  situation: Situation;
   gameCenterLink: string;
   seriesUrl: string;
   neutralSite: false;
@@ -510,6 +506,22 @@ type Matchup = {
   };
 };
 
+type Situation = {
+  homeTeam: {
+    abbrev: string;
+    situationDescriptions?: string[];
+    strength: number;
+  };
+  awayTeam: {
+    abbrev: string;
+    situationDescriptions?: string[];
+    strength: number;
+  };
+  situationCode: string;
+  timeRemaining: string;
+  secondsRemaining: number;
+};
+
 type Game = {
   id: number;
   season: number;
@@ -534,6 +546,7 @@ type Game = {
       sequenceNumber: number;
     },
   ];
+  situation: Situation;
   gameState: GameState;
   gameScheduleState: string;
   awayTeam: Team;
@@ -662,6 +675,7 @@ export type {
   SeedTeam,
   SeriesStatus,
   Shootout,
+  Situation,
   SkaterStats,
   Summary,
   Team,

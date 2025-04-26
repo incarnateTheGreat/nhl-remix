@@ -1,9 +1,11 @@
 import { MetaFunction } from "@remix-run/node";
+import { useNavigation } from "@remix-run/react";
 import { format } from "date-fns";
 import type { Game } from "types/types";
 
 import getGameData from "~/api/getGameData";
 import ActiveGameData from "~/components/ActiveGameData";
+import Loading from "~/components/Loading";
 import { useLiveLoader } from "~/sse/use-live-loader";
 import { isGameActive, isGameComplete, isPreGame } from "~/utils";
 
@@ -43,17 +45,24 @@ export const loader = async ({ params }: LoaderProps) => {
 
 export default function Game() {
   const gameDataToRender = useLiveLoader<Game>();
+  const navigation = useNavigation();
 
   const { gameState } = gameDataToRender;
 
   return (
-    <div className="mx-auto flex w-full flex-col bg-white px-4 py-2">
-      <ScoreHeader />
+    <div className="mx-auto flex h-full w-full flex-col bg-white px-4 py-2">
+      {navigation.state === "loading" ? <Loading /> : null}
 
-      {isPreGame(gameState) ? <PreGameData /> : null}
+      {navigation.state === "idle" ? (
+        <>
+          <ScoreHeader />
 
-      {isGameActive(gameState) || isGameComplete(gameState) ? (
-        <ActiveGameData />
+          {isPreGame(gameState) ? <PreGameData /> : null}
+
+          {isGameActive(gameState) || isGameComplete(gameState) ? (
+            <ActiveGameData />
+          ) : null}
+        </>
       ) : null}
     </div>
   );
