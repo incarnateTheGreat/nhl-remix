@@ -23,8 +23,10 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async () => {
+  const currentYear = new Date().getFullYear();
+
   const playoffBracketResponse = await fetch(
-    "https://api-web.nhle.com/v1/playoff-bracket/2025",
+    `https://api-web.nhle.com/v1/playoff-bracket/${currentYear}`,
   );
 
   const playoffBracket: PlayoffBracket = await playoffBracketResponse.json();

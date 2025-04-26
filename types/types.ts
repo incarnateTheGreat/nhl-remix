@@ -296,34 +296,35 @@ type Summary = {
     penalties: PenaltiesType[];
   }[];
   shootout: Shootout[];
+  gameReports: {
+    gameSummary: string;
+    eventSummary: string;
+    playByPlay: string;
+    faceoffSummary: string;
+    faceoffComparison: string;
+    rosters: string;
+    shotSummary: string;
+    toiAway: string;
+    toiHome: string;
+  };
+  seasonSeriesWins: { awayTeamWins: 1; homeTeamWins: 1; neededToWin: 4 };
   linescore: {
     byPeriod: LinescoreByPeriod;
     totals: LinescoreTotals;
-
-    //   iceSurface: { awayTeam: [Object], homeTeam: [Object] },
-    //
-    //   shootout: [],
-    //   threeStars: [],
-
-    //   seasonSeries: [
-    //     [Object], [Object],
-    //     [Object], [Object],
-    //     [Object], [Object],
-    //     [Object]
-    //   ],
-
-    //   gameReports: {
-    //     gameSummary: string
-    //     eventSummary: string
-    //     playByPlay: string
-    //     faceoffSummary: string
-    //     faceoffComparison: string
-    //     rosters: string
-    //     shotSummary: string
-    //     toiAway: string
-    //     toiHome: string
-    //   },
-    //   seasonSeriesWins: { awayTeamWins: 1, homeTeamWins: 1, neededToWin: 4 }
+  };
+  gameVideo: {
+    threeMinRecap: number;
+    threeMinRecapVideoObject: {
+      poster: string;
+      videoUrl: string;
+    };
+    threeMinRecapFr: number;
+    condensedGame: number;
+    condensedGameVideoObject: {
+      poster: string;
+      videoUrl: string;
+    };
+    condensedGameFr: number;
   };
 };
 
@@ -350,7 +351,6 @@ type GameBoxType = {
   neutralSite: false;
   venueTimezone: string;
   ticketsLink: string;
-  // teamLeaders: [ [Object], [Object], [Object], [Object], [Object], [Object] ]
 };
 
 type Name = {

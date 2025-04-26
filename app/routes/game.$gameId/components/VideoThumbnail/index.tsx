@@ -1,5 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+
+import { brightcoveApi } from "~/utils";
 
 import VideoModal from "../VideoModal";
 
@@ -11,14 +12,6 @@ export type VideoData = {
   poster: string;
   videoUrl: string;
 };
-
-const brightcoveApi = axios.create({
-  baseURL: "https://edge.api.brightcove.com",
-  headers: {
-    Accept:
-      "application/json;pk=BCpkADawqM3l37Vq8trLJ95vVwxubXYZXYglAopEZXQTHTWX3YdalyF9xmkuknxjBgiMYwt8VZ_OZ1jAjYxz_yzuNh_cjC3uOaMspVTD-hZfNUHtNnBnhVD0Gmsih8TBF8QlQFXiCQM3W_u4ydJ1qK2Rx8ZutCUg3PHb7Q",
-  },
-});
 
 export default function VideoThumbnail({ videoId }: VideoThumbnailProps) {
   const [visible, setVisible] = useState(false);

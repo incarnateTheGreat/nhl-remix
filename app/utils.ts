@@ -1,3 +1,4 @@
+import axios from "axios";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -243,7 +244,16 @@ const reverseLeagueData = (data: DivisionsType | ConferencesType) => {
     }, {});
 };
 
+const brightcoveApi = axios.create({
+  baseURL: "https://edge.api.brightcove.com",
+  headers: {
+    Accept:
+      "application/json;pk=BCpkADawqM3l37Vq8trLJ95vVwxubXYZXYglAopEZXQTHTWX3YdalyF9xmkuknxjBgiMYwt8VZ_OZ1jAjYxz_yzuNh_cjC3uOaMspVTD-hZfNUHtNnBnhVD0Gmsih8TBF8QlQFXiCQM3W_u4ydJ1qK2Rx8ZutCUg3PHb7Q",
+  },
+});
+
 export {
+  brightcoveApi,
   cn,
   convertTime,
   deepMerge,

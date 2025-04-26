@@ -1,6 +1,6 @@
-import { Game } from "types/types";
+import { Game, Summary } from "types/types";
 
-import { deepMerge } from "~/utils";
+import { brightcoveApi, deepMerge } from "~/utils";
 
 export default async function getGameData(gameId: string) {
   try {
@@ -18,9 +18,33 @@ export default async function getGameData(gameId: string) {
 
     const gameData: Game = await gameDataResponse.json();
     const boxscoreData = await boxscoreDataResponse.json();
-    const rightRail = await rightRailResponse.json();
+    const rightRail: Summary = await rightRailResponse.json();
 
-    return deepMerge(gameData, boxscoreData, rightRail);
+    if (rightRail?.gameVideo) {
+      const { data: threeMinRecapData } = await brightcoveApi.get(
+        `/playback/v1/accounts/6415718365001/videos/${rightRail.gameVideo.threeMinRecap}`,
+      );
+
+      rightRail.gameVideo.threeMinRecapVideoObject = {
+        poster: threeMinRecapData.poster,
+        videoUrl:
+          threeMinRecapData.sources[threeMinRecapData.sources.length - 1].src,
+      };
+
+      const { data: condensedGameData } = await brightcoveApi.get(
+        `/playback/v1/accounts/6415718365001/videos/${rightRail.gameVideo.condensedGame}`,
+      );
+
+      rightRail.gameVideo.condensedGameVideoObject = {
+        poster: condensedGameData.poster,
+        videoUrl:
+          condensedGameData.sources[condensedGameData.sources.length - 1].src,
+      };
+    }
+
+    const data = deepMerge(gameData, boxscoreData, rightRail) as Game & Summary;
+
+    return data;
   } catch (e: unknown) {
     if (e instanceof Error) {
       return [];
