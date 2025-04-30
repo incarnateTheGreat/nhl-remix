@@ -46,13 +46,13 @@ export default function GameBox({ game }: GameBoxProps) {
         </div>
         <div className="mt-3">
           <TeamRow
-            homeAway="homeTeam"
+            homeAway="awayTeam"
             team={awayTeam}
             gameState={gameState}
             situation={situation}
           />
           <TeamRow
-            homeAway="awayTeam"
+            homeAway="homeTeam"
             team={homeTeam}
             gameState={gameState}
             situation={situation}
