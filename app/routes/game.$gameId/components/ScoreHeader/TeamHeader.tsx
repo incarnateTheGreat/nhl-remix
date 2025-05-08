@@ -81,7 +81,7 @@ export default function TeamHeader({
             key={getRandomKey()}
             className={cn(
               powerplayClasses,
-              "flex h-5 min-w-[30px] items-center justify-center rounded bg-red-600 px-1 text-[10px] font-semibold uppercase text-white",
+              "mr-2 flex h-5 min-w-[30px] items-center justify-center rounded bg-red-600 px-1 text-[10px] font-semibold uppercase text-white",
             )}
           >
             {situationLabel}
