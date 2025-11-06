@@ -8,6 +8,7 @@ import { getTeamColour } from "./utils";
 const LIST_GAME_STATS: { [k: string]: string } = {
   sog: "Shots on Goal",
   faceoffWinningPctg: "Faceoff %",
+  faceoffWins: "Faceoff Wins",
   powerPlayPctg: "Power-Play %",
   pim: "Penalty Minutes",
   hits: "Hits",
@@ -39,11 +40,19 @@ export default function ListGaneStats() {
   const awayBorderStyle = `border-r-[10px] border-t-[10px] border-r-transparent border-t-${awayColourStr}`;
   const homeBorderStyle = `border-b-[10px] border-l-[10px] border-l-transparent border-b-${homeColourStr} `;
 
+  const faceoffWins = filteredTeamGameStats().find(
+    (filter) => filter.category === "faceoffWins",
+  );
+
   return (
     <div className="mt-4">
       {filteredTeamGameStats().map((gameStat) => {
         const { category } = gameStat;
         const { awayValue, homeValue } = gameStat;
+
+        if (category === "faceoffWins") {
+          return;
+        }
 
         let awayValueToDisplay;
         let homeValueToDisplay;
@@ -60,8 +69,8 @@ export default function ListGaneStats() {
         }
 
         if (category === "faceoffWinningPctg") {
-          awayValueToDisplay = `${(awayValue * 100).toFixed(1)}%`;
-          homeValueToDisplay = `${(homeValue * 100).toFixed(1)}%`;
+          awayValueToDisplay = `${(awayValue * 100).toFixed(1)}% (${faceoffWins?.awayValue})`;
+          homeValueToDisplay = `${(homeValue * 100).toFixed(1)}% (${faceoffWins?.homeValue})`;
         } else if (category === "powerPlayPctg") {
           const powerPlayPctg = teamGameStats.find(
             (stat) => stat.category === "powerPlayPctg",

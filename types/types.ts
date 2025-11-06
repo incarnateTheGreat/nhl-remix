@@ -76,7 +76,9 @@ type PenaltiesType = {
   type: string;
   duration: number;
   committedByPlayer: {
-    default: string;
+    firstName: { default: string };
+    lastName: { default: string };
+    sweaterNumber: number;
   };
   teamAbbrev: {
     default: string;

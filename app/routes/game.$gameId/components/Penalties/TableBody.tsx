@@ -72,8 +72,9 @@ export default function TableBody({ penalties }: PenaltiesTableBodyProps) {
               {timeInPeriod}
             </td>
             <td className="w-28 border-r border-gray-400 p-2 md:w-44">
-              {committedByPlayer?.default
-                ? `${committedByPlayer?.default}`
+              {committedByPlayer?.firstName.default &&
+              committedByPlayer?.lastName.default
+                ? `${committedByPlayer.firstName.default} ${committedByPlayer.lastName.default}`
                 : "Team"}
             </td>
             <td className="p-2 capitalize">
