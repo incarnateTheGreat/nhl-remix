@@ -26,7 +26,7 @@ export default function Scoring() {
           </div>
         );
       })}
-      {summary?.shootout.length > 0 ? (
+      {summary?.shootout?.length > 0 ? (
         <Shootout
           shootout={summary?.shootout}
           awayTeam={awayTeam}
